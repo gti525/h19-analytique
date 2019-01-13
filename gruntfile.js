@@ -2,7 +2,7 @@ module.exports = function(grunt) {
  
     // Add the grunt-mocha-test tasks.
     grunt.loadNpmTasks('grunt-mocha-test');
-
+    process.env.NODE_ENV = 'test';
     grunt.initConfig({
       // Configure a mochaTest task
       mochaTest: {
@@ -11,6 +11,11 @@ module.exports = function(grunt) {
             reporter: 'spec',
             require: 'ts-node/register',
             delay: true,
+            execOptions: {
+              env: {
+                  'NODE_ENV': 'test'
+              }
+            },
             quiet: false, // Optionally suppress output to standard out (defaults to false)
             clearRequireCache: false, // Optionally clear the require cache before running tests (defaults to false)
             clearCacheFilter: (key) => true, // Optionally defines which files should keep in cache

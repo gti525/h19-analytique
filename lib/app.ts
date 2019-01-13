@@ -25,8 +25,9 @@ class App {
                 this.routePrv.routes(this.app);
                 https.createServer(httpsOptions, this.app).listen(PORT, () => {
                     console.log('Express server listening on port ' + PORT);
-                    console.log(process.env.NODE_ENV)
-                    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+                    if (process.env.NODE_ENV === 'test'){
+                        process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+                    }
                 })
             }
             catch (e) { console.log("ERROR ON START", e) }
