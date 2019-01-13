@@ -10,6 +10,7 @@ module.exports = function(grunt) {
           options: {
             reporter: 'spec',
             require: 'ts-node/register',
+            delay: true,
             quiet: false, // Optionally suppress output to standard out (defaults to false)
             clearRequireCache: false, // Optionally clear the require cache before running tests (defaults to false)
             clearCacheFilter: (key) => true, // Optionally defines which files should keep in cache

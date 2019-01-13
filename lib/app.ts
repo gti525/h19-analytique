@@ -10,8 +10,8 @@ const PORT = 3000;
 const httpsOptions = {
     key: fs.readFileSync('./config/key.pem'),
     cert: fs.readFileSync('./config/cert.pem')
-}
 
+}
 class App {
     public app: express.Application;
     public routePrv: Routes = new Routes();
@@ -25,9 +25,9 @@ class App {
                 this.routePrv.routes(this.app);
                 https.createServer(httpsOptions, this.app).listen(PORT, () => {
                     console.log('Express server listening on port ' + PORT);
+                    console.log(process.env.NODE_ENV)
+                    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
                 })
-                console.log("Up and running")
-                this.app.set('notready', false); 
             }
             catch (e) { console.log("ERROR ON START", e) }
         }).catch(error => console.log("TypeORM connection error: ", error));

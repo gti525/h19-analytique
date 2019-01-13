@@ -1,11 +1,17 @@
-import app from "../../lib/app"
+const app = require("../../lib/app")
 import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 import 'mocha';
 import { UserRepo } from "../../lib/DB/repo/user.repo";
-import { createConnection } from "typeorm";
 chai.use(chaiHttp);
 const expect = chai.expect;
+
+/**
+ * Used to start the server before running the tests.
+ */
+setTimeout(function() {
+    run()
+  }, 6000)
 
 describe('USER CONTROLLER TESTS', () => {
     before( async () => {
@@ -27,13 +33,13 @@ describe('USER CONTROLLER TESTS', () => {
 
     describe('POST authenticate', async () => {
         it('should return a valid token when valid credentials are sent', async () =>  {
-            const response = await chai.request(app).post('/authenticate')
+            const response = await chai.request('https://localhost:3000').post('/authenticate')
             .send({id:123456,password:'test'})
             expect(response).to.have.status(200);
         });
 
         it('should return an error when invalid credentials are sent', async () =>  {
-            const response = await chai.request(app).post('/authenticate')
+            const response = await chai.request('https://localhost:3000').post('/authenticate')
             .send({id:-1,password:'test'})
             expect(response).to.have.status(401);
         });
