@@ -5,6 +5,7 @@ import * as bodyParser from "body-parser";
 import { Routes } from "./routes/routes";
 import * as https from 'https';
 import * as fs from 'fs';
+import * as cors from 'cors';
 const PORT = 3000;
 
 const httpsOptions = {
@@ -15,12 +16,12 @@ const httpsOptions = {
 class App {
     public app: express.Application;
     public routePrv: Routes = new Routes();
-    //TODO export routes to configs
     constructor() {
         createConnection().then(async connection => {
             try {
                 this.app = express();
                 this.app.set('notready', true); 
+                this.app.use(cors());
                 this.config();
                 this.routePrv.routes(this.app);
                 https.createServer(httpsOptions, this.app).listen(PORT, () => {
@@ -41,10 +42,10 @@ class App {
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(express.static('public'));
         process.on('uncaughtException', (err) => {
-            console.log('uncaughtException', err);
+            console.log('uncaughtException in app.ts', err);
         });
         process.on('unhandledRejection', (err) => {
-            console.log('unhandledRejection', err);
+            console.log('unhandledRejection in app.ts', err);
         });
     }
 }

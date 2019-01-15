@@ -13,6 +13,7 @@ export class UserRepo {
     public static async delete(id: number){
         const userRepository = getRepository(User);
         const userToDelete  = await UserRepo.findById(id);
-        await userRepository.delete(userToDelete)
+        if (userToDelete)
+            await userRepository.delete(userToDelete);
     }
 }

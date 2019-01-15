@@ -13,7 +13,7 @@ export class UserController {
             res.json(token).status(200);
         }
         catch{
-            res.status(401).json('Invalid credentials');
+            res.status(401).send('Invalid credentials');
         }
     }
 

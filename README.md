@@ -20,6 +20,7 @@ Une recherche google devrait faire l'affaire :)
 4. Exécutez la commande suivante
 
 ```
+npm install --global --production windows-build-tools //En mode administrateur
 npm install -g grunt typescript ts-node
 npm install
 ```
