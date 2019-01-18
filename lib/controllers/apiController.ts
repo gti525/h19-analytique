@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { UserService } from '../service/user.service';
 import { QueryFailedError } from 'typeorm';
 
-export class UserController {
+export class apiController {
     private userService: UserService= new UserService();
 
     public async authenticate(req: Request, res: Response) {
@@ -35,5 +35,3 @@ export class UserController {
         }
     }
 }
-
-//ACM 499 token required, c'est le code a renvoyer si on a pas de token.
