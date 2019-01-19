@@ -5,8 +5,10 @@ Voici les étapes pour installer le back-end
 ## 1. Installation de maria db
 Via ce [lien](https://downloads.mariadb.org/mariadb/10.3.12/), télécharger et installer Maria DB sur votre ordinateur.
 Voici le [lien](https://dev.mysql.com/downloads/workbench/) vers le GUI pour mysql
-Le mot de poasse de l'utilisateur root sera : **gti525h2019analytics**
+Le mot de passe de l'utilisateur root sera : **gti525h2019analytics**
 Utiliser les caractères utf8 par défaut
+
+Vous devez créer une base de données qui se nomme **analytics**
 
 ## 2. Installation de vscode, git, postman et npm.
 
