@@ -9,5 +9,11 @@
     "logging": false,
     "entities": [
       "lib/DB/entity/*.ts"
-   ]
+   ],
+  "migrations": [
+    "lib/DB/migration/*.ts"
+  ],
+  "subscribers": [
+    "lib/DB/subscriber/*.ts"
+  ]
  }
