@@ -1,5 +1,6 @@
 {
     "type": "mariadb",
+    "tes": "TEST",
     "host": "localhost",
     "port": 3306,
     "username": "root",
