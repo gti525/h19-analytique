@@ -28,12 +28,17 @@ class App {
 
                 this.config();
                 this.routePrv.routes(this.app);
-                https.createServer(httpsOptions, this.app).listen(PORT, HOST, () => {
-                    console.log('Express server listening on port ' + PORT);
-                    if (process.env.NODE_ENV === 'test'){
+                if (process.env.NODE_ENV === 'test') {
+                    https.createServer(httpsOptions, this.app).listen(PORT, HOST, () => {
+                        console.log('Express server listening on port ' + PORT);
                         process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-                    }
-                })
+                    })
+                }
+                else {
+                    this.app.listen(PORT, () => {
+                        console.log('Express server listening on port ' + PORT);
+                    })
+                }
             }
             catch (e) { console.log("ERROR ON START", e) }
         }).catch(error => console.log("TypeORM connection error: ", error));

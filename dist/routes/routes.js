@@ -8,16 +8,33 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const UserController_1 = require("../controllers/UserController");
+const apiController_1 = require("../controllers/apiController");
+const token_guard_1 = require("../middlewares/token.guard");
+const role_guard_1 = require("../middlewares/role.guard");
+const ProfileController_1 = require("../controllers/ProfileController");
+const role_enums_1 = require("../models/enums/role-enums");
+const dashboardController_1 = require("../controllers/dashboardController");
 class Routes {
     constructor() {
-        this.userController = new UserController_1.UserController();
+        this.userController = new apiController_1.apiController();
+        this.profileController = new ProfileController_1.ProfileController();
+        this.dashboardController = new dashboardController_1.dashboardController();
     }
     routes(app) {
+        //Dashboard
+        app.route('/')
+            .get((req, res) => __awaiter(this, void 0, void 0, function* () { return this.dashboardController.index(req, res); }));
+        //Authentication
         app.route('/authenticate')
             .post((req, res) => __awaiter(this, void 0, void 0, function* () { return this.userController.authenticate(req, res); }));
-        app.route('/adduser')
+        app.use(token_guard_1.tokenGuard());
+        app.route('/user')
             .post((req, res) => __awaiter(this, void 0, void 0, function* () { return this.userController.addUser(req, res); }));
+        app.route('/profile')
+            .post((req, res, next) => __awaiter(this, void 0, void 0, function* () { return this.profileController.addProfile(req, res, next); }), [role_guard_1.roleGuard([role_enums_1.UserRoles.ADMIN])])
+            .delete((req, res) => __awaiter(this, void 0, void 0, function* () { return this.profileController.deleteProfile(req, res); }), [role_guard_1.roleGuard([role_enums_1.UserRoles.ADMIN])])
+            .put((req, res, next) => __awaiter(this, void 0, void 0, function* () { return this.profileController.update(req, res, next); }), [role_guard_1.roleGuard([role_enums_1.UserRoles.ADMIN])])
+            .get((req, res) => __awaiter(this, void 0, void 0, function* () { return this.profileController.getProfile(req, res); }), [role_guard_1.roleGuard([role_enums_1.UserRoles.ADMIN])]);
     }
 }
 exports.Routes = Routes;

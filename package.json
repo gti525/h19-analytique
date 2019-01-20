@@ -7,9 +7,7 @@
   "main": "dist/server.js",
   "scripts": {
     "build": "tsc",
-    "dev": "ts-node ./lib/app.ts",
-    "start": "nodemon ./dist/app.js",
-    "prod": "npm run build && npm run start",
+    "start": "ts-node ./lib/app.ts",
     "test": "mocha --require ts-node/register tests/**/*.tests.ts",
     "testWithCoverage": "nyc -r lcov -e .ts -x \"*.test.ts\" mocha -r ts-node/register tests/**/*.test.ts && nyc report"
   },

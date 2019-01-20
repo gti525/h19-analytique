@@ -27,7 +27,8 @@ class UserRepo {
         return __awaiter(this, void 0, void 0, function* () {
             const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
             const userToDelete = yield UserRepo.findById(id);
-            yield userRepository.delete(userToDelete);
+            if (userToDelete)
+                yield userRepository.delete(userToDelete);
         });
     }
 }

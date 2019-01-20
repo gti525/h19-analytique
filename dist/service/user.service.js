@@ -10,27 +10,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_repo_1 = require("../DB/repo/user.repo");
 const token_service_1 = require("./token.service");
+var sha1 = require('sha1');
 class UserService {
     adduser(user) {
         return __awaiter(this, void 0, void 0, function* () {
-            return user_repo_1.UserRepo.create(user);
+            user.password = sha1(user.password);
+            return yield user_repo_1.UserRepo.create(user);
         });
     }
-    // TODO hasher le password
     authenticate(id, password) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log('authenticating', id, password);
             const user = yield user_repo_1.UserRepo.findById(id);
-            console.log(user);
-            if (user && user.password === password) {
-                return yield token_service_1.TokenService.createToken(user.id, user.role);
+            if (user && user.password === sha1(password)) {
+                return token_service_1.TokenService.createToken(user.id, user.role);
             }
             throw new Error('Invalid password or username');
-        });
-    }
-    isAuthenticated(user) {
-        return __awaiter(this, void 0, void 0, function* () {
-            throw new Error("Not implemented");
         });
     }
 }
