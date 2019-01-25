@@ -2,6 +2,11 @@ import { User } from "../../DB/entity/user.entitiy";
 import {getRepository} from "typeorm";
 export class UserRepo {
 
+    public static async findByUsername(username:string): Promise<User>{
+        const userRepository = getRepository(User);
+        return await userRepository.findOne({ where: { username: username }});
+    }
+
     public static async findById(id:number): Promise<User>{
         const userRepository = getRepository(User);
         return await userRepository.findOne(id);

@@ -1,0 +1,22 @@
+extends ../shared/_anonymous.pug
+block content
+    div.container
+        div.row
+            div.Absolute-Center.is-Responsive
+                div.logo-contaioner
+                div.col-sm-12.col-md-12.col-md-offset-1
+                    form(action="/login", id = "loginForm", method="post")
+                        div.form-group.input-group
+                            span.input-group-text
+                                i.fa.fa-user.fa-lg
+                            input.form-control(type = "text", name="username", placeholder="username")
+                        div.form-group.input-group
+                            span.input-group-text
+                                i.fa.fa-lock.fa-lg
+                            input.form-control(type="password", name="password", placeholder="password")
+                        div.form-group
+                            button.btn.btn-def.btn-block(type="submit") Login
+                        div.form-group.text-center
+                            a(href="#") Forgot password
+                            br
+                            a(href="/register") register

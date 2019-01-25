@@ -1,0 +1,25 @@
+extends ../shared/_layout.pug
+
+block content
+    div.page-actions
+        a.btn.btn-info(href="/profile/create", role="button") Create a profile
+
+    table.table.table-striped.table-bordered(id="profileGrid")
+        thead
+            tr
+                th Name
+                th Url
+                th.grid-actions Actions
+        tbody
+            each profile in profiles
+                tr
+                    td= profile.name
+                    td= profile.url
+                    td.grid-actions
+                        a(href="/profile/edit/" + profile.id)
+                            i.fa.fa-edit
+                        a(href="/profile/delete/" + profile.id)
+                            i.fa.fa-trash
+
+block javascript
+    script(src="/javascripts/profile.js")

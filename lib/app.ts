@@ -7,6 +7,7 @@ import * as https from 'https';
 import * as fs from 'fs';
 import * as nodeSassMiddleware from "node-sass-middleware";
 import * as path from "path";
+import serveStatic = require("serve-static");
 const PORT = 3000;
 const HOST = "localhost";
 
@@ -35,7 +36,7 @@ class App {
                     })
                 }
                 else {
-                    this.app.listen(PORT, () => {
+                    this.app.listen(process.env.PORT || PORT, () => {
                         console.log('Express server listening on port ' + PORT);
                     })
                 }
@@ -51,12 +52,16 @@ class App {
         this.app.use(bodyParser.urlencoded({ extended: false }));
         //sass middleware support
         this.app.use(nodeSassMiddleware({
-            src: __dirname + 'public',
-            dest: __dirname + 'public',
-            indentedSyntax: true, // true = .sass and false = .scss
-            sourceMap: true
+            src: __dirname + '/public/styles/sass',
+            dest: __dirname + '/public/styles',
+            debug: true,
+            outputStyle: 'compressed',
+            indentedSyntax: true,
+            //sourceMap: true,
+            prefix:  '/styles'
         }));
-        this.app.use(express.static('public'));
+        this.app.use('/', serveStatic(path.join(__dirname, 'public')));
+
         process.on('uncaughtException', (err) => {
             console.log('uncaughtException in app.ts', err);
         });

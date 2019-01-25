@@ -6,6 +6,6 @@ export class WebSiteUrl{
     @PrimaryColumn()
     url: string;
 
-    @ManyToMany(type => Profile, profile => profile.websiteurls)
-    profiles?: Profile[];
-};
+/*    @ManyToMany(type => Profile, profile => profile.websiteurls)
+    profiles?: Profile[];*/
+}

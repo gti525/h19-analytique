@@ -7,9 +7,12 @@ export class Profile{
     id: number;
 
     @Column({unique:true})
-    profile: string;
+    name: string;
 
-    @ManyToMany(type => WebSiteUrl, websiteurl => websiteurl.profiles,{cascade: true})
+    @Column({unique:true})
+    url: string;
+
+/*    @ManyToMany(type => WebSiteUrl, websiteurl => websiteurl.profiles,{cascade: true})
     @JoinTable()
-    websiteurls?: WebSiteUrl[];
-};
+    websiteurls?: WebSiteUrl[];*/
+}

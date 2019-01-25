@@ -4,8 +4,14 @@ export class ProfileRepo {
 
     public static async findById(id:number): Promise<Profile>{
         const profileRepo = getRepository(Profile);
-        return await profileRepo.findOne(id, { relations: ["websiteurls"] });
+        return await profileRepo.findOne(id);
     }
+
+    public static async findAll(): Promise<Profile[]>{
+        const profileRepo = getRepository(Profile);
+        return await profileRepo.find();
+    }
+
     /**
      * Where parameter is not working yet as of 19 of december 2018, it was still on the low priority bug to fix.
      * for now, service will filter the request
