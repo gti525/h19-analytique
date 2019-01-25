@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dce65923-4df7-43f1-9465-e89888aa2dd8" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/controllers/accountController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/controllers/accountController.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/public/styles/anonymous.css" beforeDir="false" afterPath="$PROJECT_DIR$/lib/public/styles/anonymous.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/public/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/lib/public/styles/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/routes/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routes/routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/account/register.pug" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/account/register.pug" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -54,8 +46,8 @@
       <file leaf-file-name="routes.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/routes/routes.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="21" lean-forward="true" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+            <state relative-caret-position="221">
+              <caret line="22" column="16" selection-start-line="22" selection-start-column="16" selection-end-line="22" selection-end-column="16" />
               <folding>
                 <element signature="e#0#78#0" expanded="true" />
               </folding>
@@ -225,7 +217,7 @@
       <path value="$PROJECT_DIR$/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="286" />
     <option name="y" value="216" />
     <option name="width" value="1113" />
@@ -468,12 +460,12 @@
       <workItem from="1548426720876" duration="5881000" />
       <workItem from="1548456376450" duration="87000" />
       <workItem from="1548456581878" duration="1890000" />
-      <workItem from="1548458523886" duration="254000" />
+      <workItem from="1548458523886" duration="430000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57825000" />
+    <option name="totallyTimeSpent" value="58001000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -808,8 +800,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/routes/routes.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="21" lean-forward="true" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+        <state relative-caret-position="221">
+          <caret line="22" column="16" selection-start-line="22" selection-start-column="16" selection-end-line="22" selection-end-column="16" />
           <folding>
             <element signature="e#0#78#0" expanded="true" />
           </folding>

@@ -20,7 +20,7 @@ export class Routes{
     public routes(app: express.Application): void {
 
         app.use((req, res, next) => {
-            if (req.session.user && req.cookies.user_sid) {
+            if (req.cookies.user_sid) {
                 res.clearCookie('user_sid');
             }
             next();
