@@ -13,7 +13,8 @@ export class AccountController {
             const username = req.body.username;
             const password =  req.body.password;
             const token = await this.userService.authenticate(username, password);
-            res.json(token).status(200);
+
+            res.render("index");
         }
         catch{
             res.status(401).send('Invalid credentials');
@@ -40,7 +41,7 @@ export class AccountController {
 
             const result = await this.userService.adduser(user);
 
-            result ? res.json(result).status(200) : res.status(409)
+            res.render("index")
         }
         catch(error){
             if (error instanceof QueryFailedError && (error as any).code === 'ER_DUP_ENTRY'){

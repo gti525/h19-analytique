@@ -1,6 +1,5 @@
 import { apiController as ApiController } from "../controllers/apiController";
 import express = require("express");
-import { tokenGuard } from "../middlewares/token.guard";
 import { roleGuard } from "../middlewares/role.guard";
 import { ProfileController } from "../controllers/profileController";
 import { UserRoles } from "../models/enums/role-enums";
@@ -20,18 +19,37 @@ export class Routes{
     }
     public routes(app: express.Application): void {
 
+        app.use((req, res, next) => {
+            if (req.session.user && req.cookies.user_sid) {
+                res.clearCookie('user_sid');
+            }
+            next();
+        });
+
+        const sessionChecker = (req, res, next) => {
+            if (req.session.user && req.cookies.user_sid) {
+                res.redirect('/');
+            } else {
+                next();
+            }
+        };
+
+        app.get('/', sessionChecker, (req, res) => {
+            res.redirect('/login');
+        });
+
         //Account
         app.route('/login')
-            .post(async(req, res, next) => this.accountController.login(req, res, next))
-            .get(async(req, res, next) => this.accountController.getLoginPage(req, res, next));
+            .get(sessionChecker, (req, res, next) => {
+                this.accountController.getLoginPage(req, res, next)
+            })
+            .post(async(req, res, next) => this.accountController.login(req, res, next));
 
         app.route('/register')
-            .get(async(req, res, next) => this.accountController.getRegisterPage(req, res, next))
+            .get(sessionChecker, (req, res, next) => {
+                this.accountController.getRegisterPage(req, res, next);
+            })
             .post(async(req, res, next) => this.accountController.register(req, res, next));
-
-        //Authentication
-        app.route('/authenticate')
-            .post(async (req,res) => this.userController.authenticate(req,res));
 
         //Dashboard
         app.route('/')
@@ -53,9 +71,6 @@ export class Routes{
 
         app.route('/profile/delete/:id')
             .get(async (req,res) => this.profileController.delete(req,res),[roleGuard([UserRoles.ADMIN])]);
-
-        //TokenGuard
-        app.use(tokenGuard());
 
         app.route('/user')
             .post(async (req,res) => this.userController.addUser(req,res));

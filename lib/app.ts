@@ -10,6 +10,8 @@ import * as path from "path";
 import serveStatic = require("serve-static");
 const PORT = 3000;
 const HOST = "localhost";
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
 const httpsOptions = {
     key: fs.readFileSync('./config/key.pem'),
@@ -46,6 +48,8 @@ class App {
     }
 
     private config(): void {
+        //Cookie parser
+        this.app.use(cookieParser());
         // support application/json type post data
         this.app.use(bodyParser.json());
         //support application/x-www-form-urlencoded post data
@@ -61,6 +65,16 @@ class App {
             prefix:  '/styles'
         }));
         this.app.use('/', serveStatic(path.join(__dirname, 'public')));
+        //session
+        this.app.use(session({
+            key: 'user_sid',
+            secret: 'thisisasecret',
+            resave: false,
+            saveUninitialized: false,
+            cookie: {
+                expires: 600000
+            }
+        }));
 
         process.on('uncaughtException', (err) => {
             console.log('uncaughtException in app.ts', err);
