@@ -8,8 +8,8 @@ export class UserService {
         user.password = sha1(user.password);
         return await UserRepo.create(user);
     }
-    public async authenticate(id: number,password: string): Promise<string> {
-        const user = await UserRepo.findById(id);
+    public async authenticate(username: string,password: string): Promise<string> {
+        const user = await UserRepo.findByUsername(username);
         if (user && user.password === sha1(password)){
             return TokenService.createToken(user.id, user.role)
         }

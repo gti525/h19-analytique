@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { UserService } from '../service/user.service';
 import { QueryFailedError } from 'typeorm';
+import {User} from "../DB/entity/user.entitiy";
 
 export class apiController {
     private userService: UserService= new UserService();
@@ -19,11 +20,13 @@ export class apiController {
 
     public async addUser(req: Request, res: Response) {
         try{
-            const id = req.body.id;
-            const role = req.body.role;
-            const password =  req.body.password;
-            const user = await this.userService.adduser({id,role,password});
-            user ? res.json(user).status(200) : res.status(409)
+            const user = new User();
+            user.username = req.body.username;
+            user.role = req.body.password;
+            user.password = req.body.password;
+
+            const result = await this.userService.adduser(user);
+            result ? res.json(result).status(200) : res.status(409)
         }
         catch(error){
             if (error instanceof QueryFailedError && (error as any).code === 'ER_DUP_ENTRY'){
