@@ -5,6 +5,7 @@ import 'mocha';
 import { UserRepo } from "../../lib/DB/repo/user.repo";
 import { UserRoles } from '../../lib/models/enums/role-enums';
 import { UserService } from '../../lib/service/user.service';
+import { TokenService } from '../../lib/service/token.service';
 chai.use(chaiHttp);
 const expect = chai.expect;
 const assert = chai.assert;
@@ -13,7 +14,7 @@ describe('TOKEN GUARD TESTS', () => {
     before( async () => {
         try{
             const userService = new UserService();
-            await userService.adduser({id:777,password:'test',role:UserRoles.ADMIN});
+            await userService.adduser({id:777,password:'test',role:UserRoles.ADMIN, username:'Test User'});
         }
         catch (error){
             console.log(error)
@@ -30,12 +31,11 @@ describe('TOKEN GUARD TESTS', () => {
     })
 
     describe('POST valid user creation', async () => {
-        it('should allow the admin to create a user if the token is valid', async () =>  {
-            let response = await chai.request('https://localhost:3000').post('/authenticate')
-            .send({id:777,password:'test'})
-            const token = response.body;
-
-            response = await chai.request('https://localhost:3000')
+        it.only('should allow the admin to create a user if the token is valid', async () =>  {
+            
+            const token  = await TokenService.createToken(123,"Admin");
+            console.log("This is a valid token : " , token)
+            const response = await chai.request('https://localhost:3000')
             .post('/user')
             .set('x-access-token',token)
             .send({id:23456,password:'test',role:UserRoles.ADMIN})

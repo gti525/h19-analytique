@@ -1,21 +1,25 @@
 import { apiController as ApiController } from "../controllers/apiController";
 import express = require("express");
+const cors = require('cors');
 import { roleGuard } from "../middlewares/role.guard";
 import { ProfileController } from "../controllers/profileController";
 import { UserRoles } from "../models/enums/role-enums";
 import { DashboardController } from "../controllers/dashboardController";
 import { AccountController } from "../controllers/accountController";
+import { AdvertiseController } from "../controllers/advertiseController";
 
 export class Routes{ 
     private userController: ApiController;
     private dashboardController : DashboardController;
     private profileController: ProfileController;
     private accountController: AccountController;
+    private advertiseController: AdvertiseController;
     constructor (){
         this.userController = new ApiController();
         this.profileController = new ProfileController();
         this.dashboardController = new DashboardController();
         this.accountController = new AccountController();
+        this.advertiseController = new AdvertiseController();
     }
     public routes(app: express.Application): void {
 
@@ -74,6 +78,17 @@ export class Routes{
 
         app.route('/user')
             .post(async (req,res) => this.userController.addUser(req,res));
+
+        // addvertisements and analytics 
+        // **************************************
+        // *** WARNING           CORS ENABLED ***
+        // **************************************
+        
+        app.use(cors());
+        app.route('/api/analytics/code')
+            .get(async (req,res) => this.advertiseController.getAnalitycsCode(req,res));
+        app.route('/api/analytics/client')
+            .post(async (req,res) => this.advertiseController.trackClient(req,res));
 
     }
 }
