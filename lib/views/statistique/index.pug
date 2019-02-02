@@ -1,0 +1,10 @@
+extends ../shared/_layout.pug
+
+block content
+    canvas(id="myPieChart" width="400" height="400")
+
+block javascript
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js")
+    -var labels = ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"]
+    script(src="/javascripts/statistique.js")
+    
