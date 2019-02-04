@@ -7,7 +7,8 @@ export class AdvertiseController {
     private code;
     private clientService: ClientService;
     constructor(){
-        this.code = fs.readFileSync('analitycscode/code/analytics.min.js', 'utf8');
+        const codePath = process.env.NODE_ENV === 'production' ? 'analitycscode/code/analytics.prod.js': 'analitycscode/code/analytics.min.js';
+            this.code = fs.readFileSync(codePath, 'utf8');
         this.clientService = new ClientService();
     }
     public async getAnalitycsCode(req: Request, res: Response) {
