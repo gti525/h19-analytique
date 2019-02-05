@@ -7,6 +7,8 @@ import { DashboardController } from "../controllers/dashboardController";
 import { AccountController } from "../controllers/accountController";
 import { MoneyController }from "../controllers/moneyController";
 
+
+
 export class Routes{ 
     private userController: ApiController;
     private dashboardController : DashboardController;
@@ -60,7 +62,7 @@ export class Routes{
 
         //Money
         app.route('/money/pub')
-            .get(async (req, res) => this.moneyController.index(req, res));
+            .get(async (req, res) => this.moneyController.index(req,res));
 
         //Profile
         app.route('/profile')
