@@ -11,7 +11,7 @@ export class CampaignService {
     }
 
 
-    public async Campaign(campaign: Campaign): Promise<Campaign> {
+    public async addCampaign(campaign: Campaign): Promise<Campaign> {
         return await CampaignRepo.createOrUpdate(campaign);
     }
 
