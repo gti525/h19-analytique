@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 
-export class MontantController {
+export class MoneyController {
 
     public async index(req: Request, res: Response) {
-        res.render('montant/argent');
+        res.render('money/pub');
     }
 }

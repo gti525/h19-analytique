@@ -1,15 +1,17 @@
 import {Entity, Column, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity()
-export class argent{
+export class Money{
     @PrimaryGeneratedColumn()
-    id: number;
+    user: string;
     @Column()
-    visiteurregulier: string;
+    regulier: string;
     @Column()
-    visiteurcible: string;
+    cible: string;
     @Column()
-    publicitevue: number;
+    vue: number;
     @Column()
-    publicitecliquer: number;
+    cliquer: number;
+
+
 }

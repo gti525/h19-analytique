@@ -5,20 +5,20 @@ import { ProfileController } from "../controllers/profileController";
 import { UserRoles } from "../models/enums/role-enums";
 import { DashboardController } from "../controllers/dashboardController";
 import { AccountController } from "../controllers/accountController";
-import { MontantController }from "../controllers/montantController";
+import { MoneyController }from "../controllers/moneyController";
 
 export class Routes{ 
     private userController: ApiController;
     private dashboardController : DashboardController;
     private profileController: ProfileController;
     private accountController: AccountController;
-    private montantController : MontantController;
+    private moneyController : MoneyController;
     constructor (){
         this.userController = new ApiController();
         this.profileController = new ProfileController();
         this.dashboardController = new DashboardController();
         this.accountController = new AccountController();
-        this.montantController = new MontantController();
+        this.moneyController = new MoneyController();
     }
     public routes(app: express.Application): void {
 
@@ -58,9 +58,9 @@ export class Routes{
         app.route('/')
             .get(async (req, res) => this.dashboardController.index(req, res));
 
-        //Montant
-        app.route('/montant/argent')
-            .get(async (req, res) => this.montantController.index(req, res));
+        //Money
+        app.route('/money/pub')
+            .get(async (req, res) => this.moneyController.index(req, res));
 
         //Profile
         app.route('/profile')
