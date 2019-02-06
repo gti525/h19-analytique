@@ -80,7 +80,7 @@ export class Routes{
         
         //Website Statistique
         app.route('/statistique')
-            .get(async (req, res) => this.statistiqueController.index(req, res),[roleGuard([UserRoles.WEBSITEADMIN])]);
+            .get(async (req, res, next) => this.statistiqueController.index(req, res, next),[roleGuard([UserRoles.WEBSITEADMIN])]);
 
     }
 }

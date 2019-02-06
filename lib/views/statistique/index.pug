@@ -1,26 +1,22 @@
 extend ../shared/_layout.pug
 
 block content
-    table.table.table-striped.table-bordered(id="profileGrid")
-        thead
-            tr
-                th Name
-                th Url
-                th.grid-actions Actions
-        tbody
-            each statistique in statistiques
-                tr
-                    td= statistique.os
-                    td= statistique.resolution
-    canvas(id="OSChart" width="400" height="400")
-    canvas(id="CountryChart" width="400" height="400")
-    canvas(id="ResolutionChart" width="400" height="400")
+    div(class="chart-container")
+        p Système d'exploitation utilisés
+        canvas(id="OSChart")
+    div(class="chart-container")
+        p Nombre d'utilisateurs par pays
+        canvas(id="CountryChart")
+    div(class="chart-container")
+        p Résolution d'écran des utilisateurs
+        canvas(id="ResolutionChart")
 
 block javascript
     script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js")
 
     script(type="text/javascript").
-        var data = JSON.parse('!{JSON.stringify(statistiques)}');
-        console.log(data[0])
+        var dataOS = JSON.parse('!{JSON.stringify(os)}');
+        var dataResolution = JSON.parse('!{JSON.stringify(resolutions)}');
+        var dataPays = JSON.parse('!{JSON.stringify(pays)}');
 
     script(src="/javascripts/statistique.js")

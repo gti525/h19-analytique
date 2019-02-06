@@ -23,20 +23,29 @@ export class StatistiqueController {
         }
     }
 
-    public async index(req: Request, res: Response) {
+    /*public async index(req: Request, res: Response) {
         const statistiques = await this.statistiqueService.getStatistiques();
-        var a = [5, 5, 5, 2, 2, 2, 2, 2, 9, 4].reduce(function (acc, curr) {
-            if (typeof acc[curr] == 'undefined') {
-              acc[curr] = 1;
-            } else {
-              acc[curr] += 1;
-            }
-          
-            return acc;
-          }, {});
+        
         res.render('statistique/index', { statistiques: statistiques });
-    }
+        
+    }*/
 
+    public async index(req: Request, res: Response, next) {
+        req.params.id = 1;
+        try {
+            let os, resolutions, pays: any;
+            if (req.params.id) {
+                os = await this.statistiqueService.getOSBySiteWebId(req.params.id);
+                resolutions = await this.statistiqueService.getResolutionBySiteWebId(req.params.id);
+                pays = await this.statistiqueService.getPaysBySiteWebId(req.params.id);
+            }
+
+            res.render('statistique', { os: os, resolutions: resolutions, pays: pays });
+        }
+        catch (error) {
+            return res.json(error).status(500);
+        }
+    }
 
 
 

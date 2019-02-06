@@ -10,4 +10,15 @@ export class StatistiqueService {
         return await StatistiqueRepo.findById(id);
     }
 
+    public async getOSBySiteWebId(id: number): Promise<Statistique[]> {
+        return await StatistiqueRepo.findOSBySiteWebId(id);
+    }
+
+    public async getResolutionBySiteWebId(id: number): Promise<Statistique[]> {
+        return await StatistiqueRepo.findResolutionBySiteWebId(id);
+    }
+
+    public async getPaysBySiteWebId(id: number): Promise<Statistique[]> {
+        return await StatistiqueRepo.findPaysBySiteWebId(id);
+    }
 }
