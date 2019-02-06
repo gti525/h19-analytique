@@ -6,11 +6,18 @@ export class Statistique{
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({unique:true})
-    name: string;
+    @Column()
+    os: string;
 
-    @Column({unique:true})
-    url: string;
+    @Column()
+    resolution: string;
+
+    @Column()
+    pays: string;
+
+    @Column()
+    userId: number;
+
 
 /*    @ManyToMany(type => WebSiteUrl, websiteurl => websiteurl.profiles,{cascade: true})
     @JoinTable()
