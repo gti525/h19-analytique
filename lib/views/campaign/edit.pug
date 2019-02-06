@@ -4,12 +4,12 @@ block content
     div.page-actions
         h3 Modifier une campagne
 
-    form(action="/profile/edit", method="post")
-        input.form-control(name="id", type="hidden", value=profile.id)
+    form(action="/campaign/edit", method="post")
+        input.form-control(name="id", type="hidden", value=campaign.id)
         div.form-group
             label Nom
-            input.form-control(name="name", type="text", value=profile.name)
+            input.form-control(name="name", type="text", value=campaign.name)
         div.form-group
             label Url
-            input.form-control(name="url", type="text", value=profile.url)
-        button.btn.btn-primary(type="submit") Modifier
+            input.form-control(name="url", type="text", value=campaign.url)
+        button.btn.btn-primary(type="submit") Mettre à jour

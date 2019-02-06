@@ -27,7 +27,7 @@ export class AccountController {
 
     public async getRegisterPage(req: Request, res: Response, next) {
         const roles = {};
-        roles[UserRoles.CAMPAIGNMANAGER] = "Campaing administrator";
+        roles[UserRoles.CAMPAIGNMANAGER] = "Campaign administrator";
         roles[UserRoles.WEBSITEADMIN] = "Website administrator";
         res.render('account/register', { roles });
     }

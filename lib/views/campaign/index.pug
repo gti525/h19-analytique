@@ -2,7 +2,7 @@ extends ../shared/_layout.pug
 
 block content
     div.page-actions
-        a.btn.btn-info(href="/profile/create", role="button") Créer une campagne
+        a.btn.btn-info(href="/campaign/create", role="button") Créer une campagne
 
     table.table.table-striped.table-bordered(id="profileGrid")
         thead
@@ -11,15 +11,15 @@ block content
                 th Url
                 th.grid-actions Actions
         tbody
-            each profile in profiles
+            each campaign in campaigns
                 tr
-                    td= profile.name
-                    td= profile.url
+                    td= campaign.name
+                    td= campaign.url
                     td.grid-actions
-                        a(href="/profile/edit/" + profile.id)
+                        a(href="/campaign/edit/" + campaign.id)
                             i.fa.fa-edit
-                        a(href="/profile/delete/" + profile.id)
+                        a(href="/campaign/delete/" + campaign.id)
                             i.fa.fa-trash
 
 block javascript
-    script(src="/javascripts/profile.js")
+    script(src="/javascripts/campaign.js")

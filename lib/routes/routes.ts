@@ -5,19 +5,20 @@ import { ProfileController } from "../controllers/profileController";
 import { UserRoles } from "../models/enums/role-enums";
 import { DashboardController } from "../controllers/dashboardController";
 import { AccountController } from "../controllers/accountController";
+import {CampaignController} from "../controllers/campaignController";
 
 export class Routes{ 
     private userController: ApiController;
     private dashboardController : DashboardController;
     private profileController: ProfileController;
     private accountController: AccountController;
-    private compaignController: CompaignController;
+    private campaignController: CampaignController;
 
     constructor (){
         this.userController = new ApiController();
         this.profileController = new ProfileController();
         this.dashboardController = new DashboardController();
-        this.compaignController = new CompaignController();
+        this.campaignController = new CampaignController();
     }
     public routes(app: express.Application): void {
 
@@ -79,20 +80,20 @@ export class Routes{
 
         //Campaign
         app.route('/campaign')
-            .get(async (req, res) => this.compaignController.index(req, res),[roleGuard([UserRoles.ADMIN])]);
+            .get(async (req, res) => this.campaignController.index(req, res),[roleGuard([UserRoles.ADMIN])]);
 
         app.route('/campaign/create')
-            .post(async (req,res,next) => this.compaignController.create(req,res,next),[roleGuard([UserRoles.ADMIN])])
-            .get(async (req,res,next) => this.compaignController.getCreateCompaignPage(req,res,next),[roleGuard([UserRoles.ADMIN])]);
+            .post(async (req,res,next) => this.campaignController.create(req,res,next),[roleGuard([UserRoles.ADMIN])])
+            .get(async (req,res,next) => this.campaignController.getCreateCampaignPage(req,res,next),[roleGuard([UserRoles.ADMIN])]);
 
         app.route('/campaign/edit')
-            .post(async (req,res,next) => this.compaignController.edit(req,res,next),[roleGuard([UserRoles.ADMIN])]);
+            .post(async (req,res,next) => this.campaignController.edit(req,res,next),[roleGuard([UserRoles.ADMIN])]);
 
         app.route("/campaign/edit/:id")
-            .get(async (req,res,next) => this.compaignController.getCompaignPage(req,res,next),[roleGuard([UserRoles.ADMIN])]);
+            .get(async (req,res,next) => this.campaignController.getCampaignPage(req,res,next),[roleGuard([UserRoles.ADMIN])]);
 
         app.route('/campaign/delete/:id')
-            .get(async (req,res) => this.compaignController.delete(req,res),[roleGuard([UserRoles.ADMIN])]);
+            .get(async (req,res) => this.campaignController.delete(req,res),[roleGuard([UserRoles.ADMIN])]);
 
         app.route('/user')
             .post(async (req,res) => this.userController.addUser(req,res));
