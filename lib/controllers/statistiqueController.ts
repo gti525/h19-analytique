@@ -9,22 +9,8 @@ export class StatistiqueController {
     private statistiqueService: StatistiqueService = new StatistiqueService();
     private websiteurlService: WebsiteurlService = new WebsiteurlService();
 
-    public async getStatistiquePage(req: Request, res: Response, next) {
-        try {
-            let statistiques: any;
-            if (req.params.id) {
-                statistiques = await this.statistiqueService.getStatistiquesById(req.params.id);
-            }
-
-            res.render('statistique', { statistiques: statistiques });
-        }
-        catch (error) {
-            return res.json(error).status(500);
-        }
-    }
-
     public async index(req: Request, res: Response, next) {
-        req.params.id = 1;
+        req.params.id = 1; // à changé une fois les liens BDD ok
         try {
             let os, resolutions, pays: any;
             if (req.params.id) {
