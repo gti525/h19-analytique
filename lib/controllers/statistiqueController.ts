@@ -23,13 +23,6 @@ export class StatistiqueController {
         }
     }
 
-    /*public async index(req: Request, res: Response) {
-        const statistiques = await this.statistiqueService.getStatistiques();
-        
-        res.render('statistique/index', { statistiques: statistiques });
-        
-    }*/
-
     public async index(req: Request, res: Response, next) {
         req.params.id = 1;
         try {
