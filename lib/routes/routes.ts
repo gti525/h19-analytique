@@ -3,6 +3,7 @@ import express = require("express");
 const cors = require('cors');
 import { roleGuard } from "../middlewares/role.guard";
 import { ProfileController } from "../controllers/profileController";
+import { StatistiqueController } from "../controllers/statistiqueController";
 import { UserRoles } from "../models/enums/role-enums";
 import { DashboardController } from "../controllers/dashboardController";
 import { AccountController } from "../controllers/accountController";
@@ -12,11 +13,13 @@ export class Routes{
     private userController: ApiController;
     private dashboardController : DashboardController;
     private profileController: ProfileController;
+    private statistiqueController: StatistiqueController;
     private accountController: AccountController;
     private advertiseController: AdvertiseController;
     constructor (){
         this.userController = new ApiController();
         this.profileController = new ProfileController();
+        this.statistiqueController = new StatistiqueController();
         this.dashboardController = new DashboardController();
         this.accountController = new AccountController();
         this.advertiseController = new AdvertiseController();
@@ -78,6 +81,10 @@ export class Routes{
 
         app.route('/user')
             .post(async (req,res) => this.userController.addUser(req,res));
+        
+        //Website Statistique
+        app.route('/statistique')
+            .get(async (req, res, next) => this.statistiqueController.index(req, res, next),[roleGuard([UserRoles.WEBSITEADMIN])]);
 
         // addvertisements and analytics 
         // **************************************

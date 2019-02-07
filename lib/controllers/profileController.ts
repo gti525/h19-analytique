@@ -11,7 +11,6 @@ export class ProfileController {
 
     public async index(req: Request, res: Response) {
         const profiles = await this.profileService.getProfiles();
-        console.log(profiles);
         res.render('profile/index', { profiles: profiles });
     }
 
