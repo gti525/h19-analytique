@@ -1,10 +1,15 @@
 let ___infos = {};
 function ___startAnalytics() {
-    if (navigator.geolocation)
+    console.log("starting analytics in code")
+    if (navigator.geolocation){
         // TODO utiliser ca a la place : https://ip-api.io/#!
+        console.log("got geo")
         navigator.geolocation.getCurrentPosition(getPosition);
-    else 
+    }
+    else  {
+        console.log("no geo")
         postUserInfos(___analyticsToken);
+    }
 
     // In the callback function, it does all the logic
     function getPosition(position) {
@@ -14,13 +19,15 @@ function ___startAnalytics() {
 }
 
 function postUserInfos(token) {
-    const localUrl = "http://localhost:3000/api/analytics/client"
-    const devUrl = "https://gti525-analitycs.herokuapp.com/api/analytics/client"
+    console.log("posting pos geo")
+    const url = "http://localhost:3000/api/analytics/client"
     let xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("POST", localUrl, true); // false for synchronous request
+    xmlHttp.open("POST", url, true); // false for synchronous request
     xmlHttp.onload = function(e){
         if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+            console.log("got request")
             if(xmlHttp.responseText){
+                console.log("setting id")
                 setUserId(xmlHttp.responseText);
                 getAdvertisment();
             }
