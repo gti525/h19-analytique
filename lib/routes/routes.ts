@@ -72,6 +72,9 @@ export class Routes{
 
         app.route('/profile/edit')
             .post(async (req,res,next) => this.profileController.edit(req,res,next),[roleGuard([UserRoles.ADMIN])]);
+			
+		 app.route('/changermessage')
+            .get(async (req,res,next) => res.send(JSON.stringify({message: "ALLOOOOOO !!!!!"})); );
 
         app.route("/profile/edit/:id")
             .get(async (req,res,next) => this.profileController.getProfilePage(req,res,next),[roleGuard([UserRoles.ADMIN])]);
