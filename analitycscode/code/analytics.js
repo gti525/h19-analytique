@@ -17,13 +17,18 @@ function postUserInfos(token) {
     const localUrl = "http://localhost:3000/api/analytics/client"
     const devUrl = "https://gti525-analitycs.herokuapp.com/api/analytics/client"
     let xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("POST", localUrl, false); // false for synchronous request
+    xmlHttp.open("POST", localUrl, true); // false for synchronous request
+    xmlHttp.onload = function(e){
+        if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+            if(xmlHttp.responseText){
+                setUserId(xmlHttp.responseText);
+                getAdvertisment();
+            }
+        }
+    };
     xmlHttp.setRequestHeader('x-access-token', token);
     xmlHttp.setRequestHeader('Content-type', "application/json;charset=UTF-8");
     xmlHttp.send(JSON.stringify(___infos));
-    if(xmlHttp.responseText)
-        setUserId(xmlHttp.responseText);
-    getAdvertisment();
 }
 
 ___infos.plugins = ___arrayToString(navigator.plugins, ".", 'name');
