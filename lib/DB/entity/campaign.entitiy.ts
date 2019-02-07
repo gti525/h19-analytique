@@ -5,10 +5,10 @@ export class Campaign{
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({unique:true})
+    @Column()
     name: string;
 
-    @Column({unique:true})
+    @Column()
     url: string;
 
 }
