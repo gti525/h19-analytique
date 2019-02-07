@@ -4,7 +4,10 @@ function ___startAnalytics() {
     if (navigator.geolocation){
         // TODO utiliser ca a la place : https://ip-api.io/#!
         console.log("got geo")
-        navigator.geolocation.getCurrentPosition(getPosition);
+        navigator.geolocation.getCurrentPosition(getPosition,function(e){
+            console.log(e);
+            postUserInfos(___analyticsToken);
+        });
     }
     else  {
         console.log("no geo")
