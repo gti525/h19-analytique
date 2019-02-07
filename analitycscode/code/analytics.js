@@ -4,7 +4,14 @@ function ___startAnalytics() {
     if (navigator.geolocation){
         // TODO utiliser ca a la place : https://ip-api.io/#!
         console.log("got geo")
-        navigator.geolocation.getCurrentPosition(getPosition);
+        navigator.geolocation.getCurrentPosition(function(){
+            console.log("into callback");
+            ___infos.location = position.coords.latitude + 'X' + position.coords.longitude;
+            postUserInfos(___analyticsToken);
+        },function(){
+            console.log("oops error here getting geo");
+            postUserInfos(___analyticsToken);
+        });
     }
     else  {
         console.log("no geo")
@@ -13,8 +20,7 @@ function ___startAnalytics() {
 
     // In the callback function, it does all the logic
     function getPosition(position) {
-            ___infos.location = position.coords.latitude + 'X' + position.coords.longitude;
-            postUserInfos(___analyticsToken);
+            
     }
 }
 
