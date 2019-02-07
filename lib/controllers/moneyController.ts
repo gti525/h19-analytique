@@ -8,13 +8,19 @@ export class MoneyController {
 
     public async index(req: Request, res: Response) {
 
-        const money = new Money()
-        money.regulier = "test1"
-        money.cible    = "test2"
-        money.vue      =100
-        money.cliquer   = 100
+        const ClientRegulier = new Money()
+        ClientRegulier.regulier = "Client Regulier"
+        ClientRegulier.vue      =100
+        ClientRegulier.cliquer   = 100
 
-        console.log(money)
+        console.log(ClientRegulier)
+
+        const ClientCible = new Money()
+        ClientRegulier.regulier = "Client Cible"
+        ClientRegulier.vue      =50
+        ClientRegulier.cliquer   = 50
+
+        console.log(ClientCible )
         res.render('money/pub');
     }
 
