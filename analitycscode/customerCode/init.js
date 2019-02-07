@@ -3,13 +3,19 @@ const storageKey = "gti525userId";
 (function gti525Analyze(){
     const localUrl ="http://localhost:3000/api/analytics/code"
     const devUrl ="https://gti525-analitycs.herokuapp.com/api/analytics/code"
-       
+    
     function getAnalyticsCode(token){
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", localUrl, false ); // false for synchronous request
+        let xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", localUrl, true ); // false for synchronous request
+        xmlHttp.onload = function(e){
+            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                eval(xmlHttp.responseText);
+                ___startAnalytics();
+            }
+        };
         xmlHttp.setRequestHeader('x-access-token', token)
         xmlHttp.send( null );
-        return xmlHttp.responseText;
+        return 
     }
    
     
@@ -17,9 +23,7 @@ const storageKey = "gti525userId";
     // PROGRAM STARTS HERE.
     const userId = getUserId();
     if (!userId){
-        eval(getAnalyticsCode(___analyticsToken));
-        // from there, the code from analytics.js takes over
-        ___startAnalytics();
+        getAnalyticsCode(___analyticsToken);
     }
     else{
         getAdvertisment();
