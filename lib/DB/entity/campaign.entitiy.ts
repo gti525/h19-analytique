@@ -9,6 +9,6 @@ export class Campaign{
     name: string;
 
     @Column()
-    url: string;
+    profile: string;
 
 }

@@ -8,13 +8,13 @@ block content
         thead
             tr
                 th Nom
-                th Url
+                th Profile
                 th.grid-actions Actions
         tbody
             each campaign in campaigns
                 tr
                     td= campaign.name
-                    td= campaign.url
+                    td= campaign.profile
                     td.grid-actions
                         a(href="/campaign/edit/" + campaign.id)
                             i.fa.fa-edit

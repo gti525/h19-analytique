@@ -1,13 +1,9 @@
 import { Request, Response } from 'express';
 import { CampaignService } from '../service/campaign.service';
 import { Campaign } from '../DB/entity/campaign.entitiy';
-import { WebsiteurlService } from '../service/websiteurl.service';
-import { WebSiteUrl } from '../DB/entity/websiteurl.entity';
-import { AdvancedConsoleLogger } from 'typeorm';
 
 export class CampaignController {
     private campaignService: CampaignService = new CampaignService();
-    private websiteurlService: WebsiteurlService = new WebsiteurlService();
 
     public async index(req: Request, res: Response) {
         const campaigns = await this.campaignService.getCampaigns();
@@ -19,7 +15,7 @@ export class CampaignController {
         try {
             const campaign = new Campaign();
             campaign.name = req.body.name;
-            campaign.url = req.body.url;
+            campaign.profile = req.body.profile;
 
             if (campaign) {
                 await this.campaignService.addCampaign(campaign);
@@ -55,7 +51,7 @@ export class CampaignController {
             const campaign = await this.campaignService.getCampaignById(req.params.id);
             if (campaign) {
                 campaign.name = req.body.name;
-                campaign.url = req.body.url;
+                campaign.profile = req.body.profile;
                 await this.campaignService.updateCampaign(campaign);
                 res.render("campaign/edit", { campaign: campaign });
             }
