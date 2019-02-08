@@ -1,0 +1,27 @@
+extends ../shared/_layout.pug
+
+block content
+    div.page-actions
+        h3 Créer une campagne
+
+    form(method="post", action="/campaign/create")
+        div.campaign-wrapper
+            h5 Information générale
+            div.row
+                div.col-md-6.form-group
+                    label Date de début
+                    input.form-control.date(name="startDate", type="text", data-provide="datepicker", data-date-format="mm/dd/yyyy", value="")
+                div.col-md-6.form-group
+                    label Date de fin
+                    input.form-control.date(name="endDate", type="text", data-provide="datepicker", data-date-format="mm/dd/yyyy", value="")
+            h5 Configuration des bannières
+            div.row
+                include _banner
+        button.btn.btn-primary(type="submit") Enregistrer
+
+block stylesheets
+    link(rel='stylesheet', type='text/css', href='/styles/croppie.css')
+    link(rel='stylesheet', type='text/css', href='/styles/campaign.css')
+block javascript
+    script(src="/javascripts/croppie.js")
+    script(src="/javascripts/campaign.js")
