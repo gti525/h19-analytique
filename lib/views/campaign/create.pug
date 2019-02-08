@@ -1,0 +1,14 @@
+extends ../shared/_layout.pug
+
+block content
+    div.page-actions
+        h3 Créer une campagne
+
+    form(method="post", action="/campaign/create")
+        div.form-group
+            label Nom
+            input.form-control(name="name", type="text")
+        div.form-group
+            label Profile
+            input.form-control(name="profile", type="text")
+        button.btn.btn-primary(type="submit") Enregistrer

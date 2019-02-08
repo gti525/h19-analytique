@@ -1,0 +1,15 @@
+extends ../shared/_layout.pug
+
+block content
+    div.page-actions
+        h3 Modifier une campagne
+
+    form(action="/campaign/edit", method="post")
+        input.form-control(name="id", type="hidden", value=campaign.id)
+        div.form-group
+            label Nom
+            input.form-control(name="name", type="text", value=campaign.name)
+        div.form-group
+            label Profile
+            input.form-control(name="profile", type="text", value=campaign.profile)
+        button.btn.btn-primary(type="submit") Mettre à jour

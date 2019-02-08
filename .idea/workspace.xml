@@ -1,56 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/lib/views/shared/_layout.pug" line="10" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="dce65923-4df7-43f1-9465-e89888aa2dd8" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/lib/public/images/favicon.ico" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/lib/public/javascripts/main.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/lib/public/javascripts/profile.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/lib/public/styles/sass/anonymous.sass" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/lib/public/styles/sass/error.sass" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/lib/public/styles/sass/style.sass" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/lib/views/account/login.pug" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/lib/views/account/register.pug" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/lib/views/error/err400.pug" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/lib/views/error/err403.pug" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/lib/views/error/err404.pug" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/lib/views/error/err500.pug" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/lib/views/profile/create.pug" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/lib/views/profile/edit.pug" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/lib/views/profile/index.pug" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/lib/views/shared/_anonymous.pug" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/lib/views/shared/_error.pug" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/lib/views/shared/_layout.pug" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/lib/views/shared/_navbar.pug" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/lib/views/shared/_sidebar.pug" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/lib/DB/entity/profile.entitiy.ts" afterPath="$PROJECT_DIR$/lib/DB/entity/profile.entitiy.ts" />
-      <change beforePath="$PROJECT_DIR$/lib/DB/entity/user.entitiy.ts" afterPath="$PROJECT_DIR$/lib/DB/entity/user.entitiy.ts" />
-      <change beforePath="$PROJECT_DIR$/lib/DB/entity/websiteurl.entity.ts" afterPath="$PROJECT_DIR$/lib/DB/entity/websiteurl.entity.ts" />
-      <change beforePath="$PROJECT_DIR$/lib/DB/repo/profile.repo.ts" afterPath="$PROJECT_DIR$/lib/DB/repo/profile.repo.ts" />
-      <change beforePath="$PROJECT_DIR$/lib/DB/repo/user.repo.ts" afterPath="$PROJECT_DIR$/lib/DB/repo/user.repo.ts" />
-      <change beforePath="$PROJECT_DIR$/lib/app.ts" afterPath="$PROJECT_DIR$/lib/app.ts" />
-      <change beforePath="$PROJECT_DIR$/lib/controllers/ProfileController.ts" afterPath="$PROJECT_DIR$/lib/controllers/profileController.ts" />
-      <change beforePath="$PROJECT_DIR$/lib/controllers/accountController.ts" afterPath="$PROJECT_DIR$/lib/controllers/accountController.ts" />
-      <change beforePath="$PROJECT_DIR$/lib/controllers/apiController.ts" afterPath="$PROJECT_DIR$/lib/controllers/apiController.ts" />
-      <change beforePath="$PROJECT_DIR$/lib/controllers/dashboardController.ts" afterPath="$PROJECT_DIR$/lib/controllers/dashboardController.ts" />
-      <change beforePath="$PROJECT_DIR$/lib/middlewares/role.guard.ts" afterPath="$PROJECT_DIR$/lib/middlewares/role.guard.ts" />
-      <change beforePath="$PROJECT_DIR$/lib/middlewares/token.guard.ts" afterPath="$PROJECT_DIR$/lib/middlewares/token.guard.ts" />
-      <change beforePath="$PROJECT_DIR$/lib/models/enums/role-enums.ts" afterPath="$PROJECT_DIR$/lib/models/enums/role-enums.ts" />
-      <change beforePath="$PROJECT_DIR$/lib/public/stylesheets/style.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/lib/public/stylesheets/style.css.map" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/lib/public/stylesheets/style.sass" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/lib/routes/routes.ts" afterPath="$PROJECT_DIR$/lib/routes/routes.ts" />
-      <change beforePath="$PROJECT_DIR$/lib/service/profile.service.ts" afterPath="$PROJECT_DIR$/lib/service/profile.service.ts" />
-      <change beforePath="$PROJECT_DIR$/lib/service/user.service.ts" afterPath="$PROJECT_DIR$/lib/service/user.service.ts" />
-      <change beforePath="$PROJECT_DIR$/lib/views/error.pug" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/lib/views/index.pug" afterPath="$PROJECT_DIR$/lib/views/index.pug" />
-      <change beforePath="$PROJECT_DIR$/lib/views/layout.pug" afterPath="" />
+    <list default="true" id="eb25b88c-073a-458a-a484-2890e79e5a62" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/DB/repo/campaign.repo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/DB/repo/campaign.repo.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/controllers/accountController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/controllers/accountController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/routes/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routes/routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/views/campaign/create.pug" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/campaign/create.pug" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/views/campaign/edit.pug" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/campaign/edit.pug" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/views/campaign/index.pug" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/campaign/index.pug" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
     </list>
+    <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,102 +20,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.pug" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/views/profile/index.pug">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="17" column="35" lean-forward="true" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="edit.pug" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/views/profile/edit.pug">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="style.sass" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/public/styles/sass/style.sass">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="249">
-              <caret line="98" column="20" lean-forward="false" selection-start-line="98" selection-start-column="20" selection-end-line="98" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="token.guard.ts" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/lib/middlewares/token.guard.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="19" column="3" lean-forward="true" selection-start-line="19" selection-start-column="3" selection-end-line="19" selection-end-column="3" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="create.pug" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/views/profile/create.pug">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="55" lean-forward="false" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="55" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="profile.service.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/service/profile.service.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="14" column="57" lean-forward="true" selection-start-line="14" selection-start-column="57" selection-end-line="14" selection-end-column="57" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="profile.repo.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/DB/repo/profile.repo.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="26" column="37" lean-forward="false" selection-start-line="26" selection-start-column="33" selection-end-line="26" selection-end-column="37" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="profileController.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/controllers/profileController.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="71" column="51" lean-forward="true" selection-start-line="71" selection-start-column="51" selection-end-line="71" selection-end-column="51" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="routes.ts" pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/routes/routes.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="307">
-              <caret line="53" column="0" lean-forward="true" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="105">
+              <caret line="46" column="41" selection-start-line="46" selection-start-column="41" selection-end-line="46" selection-end-column="41" />
+              <folding>
+                <element signature="e#0#78#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="profile.entitiy.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/DB/entity/profile.entitiy.ts">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lib/controllers/accountController.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="17" column="1" lean-forward="true" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
-              <folding />
+            <state relative-caret-position="245">
+              <caret line="29" column="52" selection-start-line="29" selection-start-column="52" selection-end-line="29" selection-end-column="52" />
             </state>
           </provider>
         </entry>
@@ -162,124 +45,61 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>typeorm</find>
-      <find>sass</find>
-      <find>config</find>
-      <find>express.static(path.joi</find>
-      <find>express.static</find>
-      <find>process</find>
-      <find>lib</find>
-      <find>route</find>
-      <find>error</find>
-      <find>__dirname</find>
-      <find>path.join</find>
-      <find>007bff</find>
-      <find>shared</find>
-      <find>linear-gradient(to bottom, #00589F 50%, #0073CF) !important</find>
-      <find>sidebarCollapse</find>
-      <find>sidebar-header</find>
-      <find>active</find>
-      <find>#007bff</find>
-      <find>app-sidebar</find>
-      <find>create(</find>
-      <find>components</find>
+      <find>sidevar-item</find>
+      <find>findAll</find>
+      <find>findById</find>
+      <find>profile</find>
+      <find>id</find>
+      <find>pro</find>
+      <find>prof</find>
+      <find>getL</find>
+      <find>/logout</find>
+      <find>logou</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GradleLocalSettings">
-    <option name="externalProjectsViewState">
-      <projects_view />
-    </option>
-  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/lib/public/stylesheets/style.css.map" />
-        <option value="$PROJECT_DIR$/lib/public/stylesheets/style.scss" />
-        <option value="$PROJECT_DIR$/lib/controllers/UserController.ts" />
-        <option value="$PROJECT_DIR$/lib/controllers/DashboardController.ts" />
-        <option value="$PROJECT_DIR$/lib/routes/index.ts" />
-        <option value="$PROJECT_DIR$/lib/routes/dashboard.ts" />
-        <option value="$PROJECT_DIR$/lib/routes/dashbaord.ts" />
-        <option value="$PROJECT_DIR$/lib/routes/api.ts" />
-        <option value="$PROJECT_DIR$/lib/DB/entity/userRole.entity.ts" />
-        <option value="$PROJECT_DIR$/lib/views/layout.pug" />
-        <option value="$PROJECT_DIR$/gruntfile.js" />
-        <option value="$PROJECT_DIR$/lib/public/stylesheets/style.css" />
-        <option value="$PROJECT_DIR$/lib/public/stylesheets/style.sass" />
-        <option value="$PROJECT_DIR$/lib/sass/main.scss" />
-        <option value="$PROJECT_DIR$/lib/middlewares/role.guard.ts" />
-        <option value="$PROJECT_DIR$/lib/views/shared/_error.pug" />
-        <option value="$PROJECT_DIR$/lib/sass/error.sass" />
-        <option value="$PROJECT_DIR$/lib/views/error/err404.pug" />
-        <option value="$PROJECT_DIR$/lib/views/error/err400.pug" />
-        <option value="$PROJECT_DIR$/lib/sass/style.sass" />
-        <option value="$PROJECT_DIR$/lib/app.ts" />
-        <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/lib/views/shared/_anonymous.pug" />
-        <option value="$PROJECT_DIR$/lib/controllers/advertiseController.ts" />
-        <option value="$PROJECT_DIR$/lib/controllers/dashboardController.ts" />
-        <option value="$PROJECT_DIR$/lib/views/account/login.pug" />
-        <option value="$PROJECT_DIR$/lib/public/styles/sass/anonymous.sass" />
-        <option value="$PROJECT_DIR$/lib/DB/entity/user.entitiy.ts" />
-        <option value="$PROJECT_DIR$/lib/controllers/apiController.ts" />
-        <option value="$PROJECT_DIR$/lib/service/user.service.ts" />
-        <option value="$PROJECT_DIR$/lib/middlewares/token.guard.ts" />
-        <option value="$PROJECT_DIR$/lib/DB/repo/user.repo.ts" />
-        <option value="$PROJECT_DIR$/lib/views/index.pug" />
-        <option value="$PROJECT_DIR$/lib/public/javascripts/main.js" />
-        <option value="$PROJECT_DIR$/lib/views/shared/_sidebar.pug" />
-        <option value="$PROJECT_DIR$/lib/public/javascripts/profile.js" />
-        <option value="$PROJECT_DIR$/lib/views/shared/_layout.pug" />
-        <option value="$PROJECT_DIR$/lib/views/shared/_navbar.pug" />
-        <option value="$PROJECT_DIR$/lib/views/account/register.pug" />
-        <option value="$PROJECT_DIR$/lib/models/enums/role-enums.ts" />
-        <option value="$PROJECT_DIR$/lib/controllers/accountController.ts" />
-        <option value="$PROJECT_DIR$/lib/DB/entity/profile.entitiy.ts" />
-        <option value="$PROJECT_DIR$/lib/DB/entity/websiteurl.entity.ts" />
-        <option value="$PROJECT_DIR$/lib/views/profile/index.pug" />
+        <option value="$PROJECT_DIR$/lib/views/profile/edit.pug" />
         <option value="$PROJECT_DIR$/lib/views/profile/create.pug" />
+        <option value="$PROJECT_DIR$/ormconfig.json" />
+        <option value="$PROJECT_DIR$/lib/views/shared/_sidebar.pug" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/lib/service/compaign.service.ts" />
+        <option value="$PROJECT_DIR$/lib/controllers/compaignController.ts" />
+        <option value="$PROJECT_DIR$/lib/DB/entity/websiteurl.entity.ts" />
+        <option value="$PROJECT_DIR$/lib/DB/entity/campaign.entitiy.ts" />
+        <option value="$PROJECT_DIR$/lib/controllers/campaignController.ts" />
         <option value="$PROJECT_DIR$/lib/routes/routes.ts" />
         <option value="$PROJECT_DIR$/lib/DB/repo/profile.repo.ts" />
-        <option value="$PROJECT_DIR$/lib/service/profile.service.ts" />
-        <option value="$PROJECT_DIR$/lib/controllers/profileController.ts" />
-        <option value="$PROJECT_DIR$/lib/views/profile/edit.pug" />
-        <option value="$PROJECT_DIR$/lib/public/styles/sass/style.sass" />
+        <option value="$PROJECT_DIR$/lib/DB/repo/campaign.repo.ts" />
+        <option value="$PROJECT_DIR$/lib/service/campaign.service.ts" />
+        <option value="$PROJECT_DIR$/lib/views/campaign/create.pug" />
+        <option value="$PROJECT_DIR$/lib/views/profile/index.pug" />
+        <option value="$PROJECT_DIR$/lib/views/campaign/edit.pug" />
+        <option value="$PROJECT_DIR$/lib/views/campaign/index.pug" />
+        <option value="$PROJECT_DIR$/lib/controllers/accountController.ts" />
       </list>
     </option>
   </component>
-  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsGulpfileManager">
-    <detection-done>true</detection-done>
-    <sorting>DEFINITION_ORDER</sorting>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="676" />
+    <option name="width" value="697" />
+    <option name="height" value="735" />
   </component>
-  <component name="NodeModulesDirectoryManager">
-    <handled-path value="$PROJECT_DIR$/node_modules" />
-  </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="803" />
-    <option name="y" value="120" />
-    <option name="width" value="1113" />
-    <option name="height" value="1000" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
-      <flattenPackages />
-      <showMembers />
-      <showModules />
-      <showLibraryContents />
-      <hideEmptyPackages />
-      <abbreviatePackageNames />
-      <autoscrollToSource />
-      <autoscrollFromSource />
-      <sortByType />
-      <manualOrder />
+    <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -296,139 +116,31 @@
               <item name="h19-analytique" type="b2602c69:ProjectViewProjectNode" />
               <item name="h19-analytique" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="h19-analytique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="h19-analytique" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="DB" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="h19-analytique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="h19-analytique" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="DB" type="462c0819:PsiDirectoryNode" />
-              <item name="entity" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="h19-analytique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="h19-analytique" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="DB" type="462c0819:PsiDirectoryNode" />
-              <item name="repo" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="h19-analytique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="h19-analytique" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="middlewares" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="h19-analytique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="h19-analytique" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="h19-analytique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="h19-analytique" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
-              <item name="enums" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="h19-analytique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="h19-analytique" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="h19-analytique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="h19-analytique" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="javascripts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="h19-analytique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="h19-analytique" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="styles" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="h19-analytique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="h19-analytique" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="styles" type="462c0819:PsiDirectoryNode" />
-              <item name="sass" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="h19-analytique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="h19-analytique" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
               <item name="routes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="h19-analytique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="h19-analytique" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="h19-analytique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="h19-analytique" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="h19-analytique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="h19-analytique" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="account" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="h19-analytique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="h19-analytique" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="profile" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="h19-analytique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="h19-analytique" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="shared" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549468813763" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../GTI525-lab" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="C:\Users\Michel\Desktop\ETS\H2019\GTI525\h19-analytique\node_modules\typescript\lib" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Frederic\Desktop\h19-analytique\lib\public\styles\sass" />
-      <recent name="C:\Users\Frederic\Desktop\h19-analytique\lib\public\images" />
-      <recent name="C:\Users\Frederic\Desktop\h19-analytique\lib\public" />
-      <recent name="C:\Users\Frederic\Desktop\h19-analytique\lib\sass" />
-      <recent name="C:\Users\Frederic\Desktop\h19-analytique\lib\views\shared" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Frederic\Desktop\h19-analytique\lib\views\error" />
+      <recent name="C:\Users\Michel\Desktop\ETS\H2019\GTI525\h19-analytique\lib\DB\repo" />
+      <recent name="C:\Users\Michel\Desktop\ETS\H2019\GTI525\h19-analytique\lib\service" />
+      <recent name="C:\Users\Michel\Desktop\ETS\H2019\GTI525\h19-analytique\lib\DB\entity" />
+      <recent name="C:\Users\Michel\Desktop\ETS\H2019\GTI525\h19-analytique\lib\controllers" />
+      <recent name="C:\Users\Michel\Desktop\ETS\H2019\GTI525\h19-analytique\lib\views" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -443,486 +155,264 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <module />
-    </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
-      <envs />
-    </configuration>
-    <configuration default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
-    </configuration>
-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
-      <module name="" />
-      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
-      <option name="PROGRAM_PARAMETERS" />
-      <predefined_log_file id="idea.log" enabled="true" />
-    </configuration>
-    <configuration name="&lt;template&gt;" type="JUnit" default="true" selected="false">
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-    </configuration>
-    <configuration name="&lt;template&gt;" type="TestNG" default="true" selected="false">
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-    </configuration>
-  </component>
-  <component name="ShelveChangesManager" show_recycled="false">
-    <option name="remove_strategy" value="false" />
-  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="dce65923-4df7-43f1-9465-e89888aa2dd8" name="Default" comment="" />
-      <created>1547838207848</created>
+      <changelist id="eb25b88c-073a-458a-a484-2890e79e5a62" name="Default Changelist" comment="" />
+      <created>1548987712441</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1547838207848</updated>
-      <workItem from="1547838209404" duration="1268000" />
-      <workItem from="1547839512900" duration="1056000" />
-      <workItem from="1547840588416" duration="4206000" />
-      <workItem from="1548260224349" duration="3121000" />
-      <workItem from="1548265091322" duration="11745000" />
-      <workItem from="1548276917961" duration="90000" />
-      <workItem from="1548277031173" duration="4594000" />
-      <workItem from="1548341357191" duration="21022000" />
-      <workItem from="1548426720876" duration="5881000" />
+      <updated>1548987712441</updated>
+      <workItem from="1548987725473" duration="9589000" />
+      <workItem from="1549314968233" duration="8183000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="55594000" />
+    <option name="totallyTimeSpent" value="17772000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23260869" sideWeight="0.5021322" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38043478" sideWeight="0.4978678" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.141258" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25340393" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info id="npm" order="7" side_tool="true" />
+      <window_info id="Grunt " order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3289689" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="TypeScript" order="7" weight="0.3289689" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.2569558" />
+      <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Database Changes" order="11" />
+      <window_info anchor="bottom" id="Version Control" order="12" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24962178" />
+      <window_info anchor="right" id="Maven" order="3" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Database" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager />
-    <watches-manager />
-  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/lib/public/styles/sass/style.sass">
+    <entry file="file://$PROJECT_DIR$/ormconfig.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="158">
+          <caret line="14" column="4" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/views/shared/_head.pug" />
-    <entry file="file://$PROJECT_DIR$/gruntfile.js">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="29" column="4" lean-forward="true" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
+        <state relative-caret-position="352">
+          <caret line="177" column="8" lean-forward="true" selection-start-line="177" selection-start-column="8" selection-end-line="177" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/public/stylesheets/style.css" />
-    <entry file="file://$PROJECT_DIR$/lib/sass/main.scss" />
-    <entry file="file://$PROJECT_DIR$/lib/public/styles/error.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1076">
-          <caret line="11" column="10" lean-forward="true" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/views/shared/_error.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="8" lean-forward="true" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/views/error/err500.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/views/error/err403.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/views/error/err400.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/views/error/err404.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="9" lean-forward="false" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/public/styles/sass/error.sass">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1785">
-          <caret line="105" column="0" lean-forward="false" selection-start-line="105" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/resources/html5-schema/html5/block.rnc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1162">
-          <caret line="91" column="47" lean-forward="true" selection-start-line="91" selection-start-column="47" selection-end-line="91" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="647">
-          <caret line="40" column="29" lean-forward="false" selection-start-line="40" selection-start-column="29" selection-end-line="40" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/controllers/advertiseController.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/middlewares/role.guard.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="11" column="14" lean-forward="true" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/DB/entity/role.entity.ts" />
-    <entry file="file://$PROJECT_DIR$/lib/DB/entity/userRole.entity.ts" />
-    <entry file="file://$PROJECT_DIR$/lib/views/shared/_anonymous.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="12" lean-forward="true" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/controllers/apiController.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="10" column="35" lean-forward="true" selection-start-line="10" selection-start-column="35" selection-end-line="10" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/DB/repo/user.repo.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="59" lean-forward="true" selection-start-line="9" selection-start-column="59" selection-end-line="9" selection-end-column="59" />
-          <folding>
-            <element signature="e#0#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/controllers/dashboardController.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="8" lean-forward="true" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/public/styles/sass/anonymous.sass">
+    <entry file="file://$PROJECT_DIR$/lib/service/profile.service.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="1" column="21" lean-forward="false" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/app.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="73">
-          <caret line="32" column="67" lean-forward="true" selection-start-line="32" selection-start-column="67" selection-end-line="32" selection-end-column="67" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/public/javascripts/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="7" lean-forward="true" selection-start-line="4" selection-start-column="7" selection-end-line="4" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/views/index.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="25" lean-forward="false" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/views/shared/_layout.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="13" column="15" lean-forward="true" selection-start-line="13" selection-start-column="15" selection-end-line="13" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/views/shared/_sidebar.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="45" lean-forward="true" selection-start-line="8" selection-start-column="45" selection-end-line="8" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/views/shared/_navbar.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="40" lean-forward="true" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/controllers/accountController.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="39" column="16" lean-forward="true" selection-start-line="39" selection-start-column="16" selection-end-line="39" selection-end-column="16" />
+          <caret line="1" column="54" selection-start-line="1" selection-start-column="54" selection-end-line="1" selection-end-column="54" />
           <folding>
-            <element signature="e#0#44#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/views/account/register.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="19" column="44" lean-forward="false" selection-start-line="19" selection-start-column="44" selection-end-line="19" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/service/user.service.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="17" lean-forward="false" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#48#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/public/javascripts/profile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="34" lean-forward="false" selection-start-line="1" selection-start-column="34" selection-end-line="1" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/views/account/login.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="45" lean-forward="false" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/models/enums/role-enums.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="18" lean-forward="false" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/public/styles/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/service/websiteurl.service.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/DB/repo/websiteurl.repo.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
+            <element signature="e#0#55#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/DB/entity/websiteurl.entity.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/DB/entity/user.entitiy.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="9" lean-forward="true" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
-          <folding />
+        <state relative-caret-position="119">
+          <caret line="7" column="1" lean-forward="true" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/DB/entity/profile.entitiy.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="17" column="1" lean-forward="true" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
-          <folding />
+        <state relative-caret-position="119">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+          <folding>
+            <element signature="e#0#88#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/views/profile/index.pug">
+    <entry file="file://$PROJECT_DIR$/lib/DB/entity/campaign.entitiy.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="35" lean-forward="true" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/routes/routes.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="53" column="0" lean-forward="true" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/typeorm/repository/Repository.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="79">
-          <caret line="94" column="4" lean-forward="false" selection-start-line="94" selection-start-column="4" selection-end-line="94" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/service/profile.service.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="14" column="57" lean-forward="true" selection-start-line="14" selection-start-column="57" selection-end-line="14" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/DB/repo/profile.repo.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="26" column="37" lean-forward="false" selection-start-line="26" selection-start-column="33" selection-end-line="26" selection-end-column="37" />
-          <folding />
+        <state relative-caret-position="187">
+          <caret line="11" column="16" lean-forward="true" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/controllers/profileController.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="71" column="51" lean-forward="true" selection-start-line="71" selection-start-column="51" selection-end-line="71" selection-end-column="51" />
-          <folding />
+        <state relative-caret-position="-442">
+          <caret line="14" column="52" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@types/express-serve-static-core/index.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="602" column="21" selection-start-line="602" selection-start-column="18" selection-end-line="602" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/DB/repo/profile.repo.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-257">
+          <caret line="5" column="37" lean-forward="true" selection-start-line="5" selection-start-column="37" selection-end-line="5" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/typeorm/index.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="195" column="24" selection-start-line="195" selection-start-column="24" selection-end-line="195" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/typeorm/repository/Repository.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="102" column="4" selection-start-line="102" selection-start-column="4" selection-end-line="102" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/DB/repo/campaign.repo.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="134">
+          <caret line="28" column="47" selection-start-line="28" selection-start-column="47" selection-end-line="28" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/service/campaign.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="24" column="1" lean-forward="true" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#57#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/controllers/campaignController.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="37" column="17" selection-start-line="37" selection-start-column="17" selection-end-line="37" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/views/shared/_sidebar.pug">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="43" lean-forward="true" selection-start-line="18" selection-start-column="43" selection-end-line="18" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/views/profile/edit.pug">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/views/campaign/edit.pug">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="21" lean-forward="true" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/views/campaign/create.pug">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="40" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/views/profile/create.pug">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="55" lean-forward="false" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="55" />
-          <folding />
+        <state relative-caret-position="136">
+          <caret line="8" column="22" lean-forward="true" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/views/profile/edit.pug">
+    <entry file="file://$PROJECT_DIR$/lib/views/campaign/index.pug">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="327">
+          <caret line="24" column="28" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/public/styles/sass/style.sass">
+    <entry file="file://$PROJECT_DIR$/lib/views/profile/index.pug">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="98" column="20" lean-forward="false" selection-start-line="98" selection-start-column="20" selection-end-line="98" selection-end-column="20" />
-          <folding />
+        <state relative-caret-position="306">
+          <caret line="21" column="27" lean-forward="true" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/middlewares/token.guard.ts">
+    <entry file="file://$PROJECT_DIR$/lib/routes/routes.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="19" column="3" lean-forward="true" selection-start-line="19" selection-start-column="3" selection-end-line="19" selection-end-column="3" />
-          <folding />
+        <state relative-caret-position="105">
+          <caret line="46" column="41" selection-start-line="46" selection-start-column="41" selection-end-line="46" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#78#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/controllers/accountController.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="29" column="52" selection-start-line="29" selection-start-column="52" selection-end-line="29" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>
