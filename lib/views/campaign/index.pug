@@ -14,7 +14,7 @@ block content
             each campaign in campaigns
                 tr
                     td= campaign.name
-                    td= campaign.profile
+                    td= campaign.profile.name
                     td.grid-actions
                         a(href="/campaign/edit/" + campaign.id)
                             i.fa.fa-edit

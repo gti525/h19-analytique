@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, JoinColumn, OneToOne } from "typeorm";
+import { Profile } from "./profile.entitiy";
 
 @Entity()
 export class Campaign{
@@ -8,7 +9,8 @@ export class Campaign{
     @Column()
     name: string;
 
-    @Column()
-    profile: string;
+    @OneToOne(type => Profile)
+    @JoinColumn()
+    profile: Profile;
 
 }

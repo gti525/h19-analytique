@@ -11,5 +11,9 @@ block content
             input.form-control(name="name", type="text", value=campaign.name)
         div.form-group
             label Profile
-            input.form-control(name="profile", type="text", value=campaign.profile)
+            select.form-control(name="profile")
+                option(selected="") Select a profile
+                each profile in profiles
+                    option(value=profile.id,selected = campaign.profile.id == profile.id) #{profile.name}
+                    
         button.btn.btn-primary(type="submit") Mettre à jour
