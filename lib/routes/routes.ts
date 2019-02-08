@@ -113,7 +113,7 @@ export class Routes{
             .post(async (req,res,next) => this.campaignController.edit(req,res,next),[roleGuard([UserRoles.ADMIN])]);
 
         app.route("/campaign/edit/:id")
-            .get(async (req,res,next) => this.campaignController.getCampaignPage(req,res,next),[roleGuard([UserRoles.ADMIN])]);
+            .get(async (req,res,next) => this.campaignController.getEditCampaignPage(req,res,next),[roleGuard([UserRoles.ADMIN])]);
 
         app.route('/campaign/delete/:id')
             .get(async (req,res) => this.campaignController.delete(req,res),[roleGuard([UserRoles.ADMIN])]);
