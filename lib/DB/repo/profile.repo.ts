@@ -7,9 +7,9 @@ export class ProfileRepo {
         return await profileRepo.findOne(id, { relations: ["urls"] });
     }
 
-    public static async findAll(): Promise<Profile[]>{
+    public static async findAll(filter?: any): Promise<Profile[]>{
         const profileRepo = getRepository(Profile);
-        return await profileRepo.find({ relations: ["urls"] });
+        return await profileRepo.find({ where: filter, relations: ["urls"] });
     }
 
     public static async createOrUpdate(profile: Profile): Promise<Profile>{

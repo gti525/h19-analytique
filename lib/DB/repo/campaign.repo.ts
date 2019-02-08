@@ -9,7 +9,7 @@ export class CampaignRepo {
 
     public static async findAll(): Promise<Campaign[]>{
         const campaignRepo = getRepository(Campaign);
-        return await campaignRepo.find({ relations: ["banners"] });
+        return await campaignRepo.find({ relations: ["banners", "profiles"] });
     }
 
     public static async createOrUpdate(campaign: Campaign): Promise<Campaign>{

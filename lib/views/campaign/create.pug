@@ -8,12 +8,17 @@ block content
         div.campaign-wrapper
             h5 Information générale
             div.row
-                div.col-md-6.form-group
+                div.col-md-4.form-group
                     label Date de début
                     input.form-control.date(name="startDate", type="text", data-provide="datepicker", data-date-format="mm/dd/yyyy", value="")
-                div.col-md-6.form-group
+                div.col-md-4.form-group
                     label Date de fin
                     input.form-control.date(name="endDate", type="text", data-provide="datepicker", data-date-format="mm/dd/yyyy", value="")
+                div.col-md-4.form-group
+                    label Profiles
+                    select.form-control.super-select2(name="profileIds[]", multiple)
+                        each profile in profiles
+                            option(value=profile.id)= profile.identifier
             h5 Configuration des bannières
             div.row
                 include _banner

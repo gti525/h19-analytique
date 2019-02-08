@@ -3,10 +3,13 @@ import {CampaignService} from "../service/campaign.service";
 import {Campaign, CampaignTypes} from "../DB/entity/campaign.entity";
 import {EnumsToArray} from "../helpers/enumsToArray";
 import {Banner} from "../DB/entity/banner.entity";
+import {ProfileService} from "../service/profile.service";
+import {In} from "typeorm";
 
 export class CampaignController {
 
     private campaignService: CampaignService = new CampaignService();
+    private profileService: ProfileService = new ProfileService();
     private enumsToArray: EnumsToArray = new EnumsToArray();
 
     public async index(req: Request, res: Response) {
@@ -19,8 +22,9 @@ export class CampaignController {
             return next()
         }
         if (req.method == 'GET'){
-            let campaignTypes = this.enumsToArray.translateEnumToSelectArray(CampaignTypes);
-            res.render('campaign/create', { campaignTypes, uuidv4 : require('uuid/v4') });
+            let campaignTypes = await this.enumsToArray.translateEnumToSelectArray(CampaignTypes);
+            let profiles = await this.profileService.getProfiles();
+            res.render('campaign/create', { campaignTypes, uuidv4 : require('uuid/v4'), profiles: profiles });
         }else{
             try {
                 const banners = [];
@@ -32,10 +36,16 @@ export class CampaignController {
                     banners.push(banner);
                 });
 
+                const profileIds = req.body.profiles.map(function(value) {
+                    return parseInt(value, 10);
+                });
+                const profiles = await this.profileService.getProfiles({id: In(profileIds)});
+
                 const campaign = new Campaign();
                 campaign.startDate = req.body.startDate;
                 campaign.endDate = req.body.endDate;
                 campaign.banners = banners;
+                campaign.profiles = profiles;
                 this.campaignService.addCampaign(campaign);
 
                 res.redirect("/campaign")

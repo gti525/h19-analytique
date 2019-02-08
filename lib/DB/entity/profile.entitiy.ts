@@ -1,5 +1,6 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToMany} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne} from "typeorm";
 import { WebSiteUrl } from "./websiteurl.entity";
+import {Campaign} from "./campaign.entity";
 
 @Entity()
 export class Profile{
@@ -13,5 +14,8 @@ export class Profile{
     type: string;
 
     @OneToMany(type => WebSiteUrl, url => url.profile, { cascade: true})
-    urls: WebSiteUrl[]
+    urls: WebSiteUrl[];
+
+    @ManyToOne(type => Campaign, campaign => campaign.profiles)
+    campaign: Campaign;
 }
