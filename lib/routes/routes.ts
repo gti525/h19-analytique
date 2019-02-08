@@ -1,24 +1,37 @@
-import {apiController as ApiController} from "../controllers/apiController";
-import {roleGuard} from "../middlewares/role.guard";
-import {ProfileController} from "../controllers/profileController";
-import {UserRoles} from "../models/enums/role-enums";
-import {DashboardController} from "../controllers/dashboardController";
-import {AccountController} from "../controllers/accountController";
-import {InstructionController} from "../controllers/instructionController";
+import { apiController as ApiController } from "../controllers/apiController";
 import express = require("express");
+const cors = require('cors');
+import { roleGuard } from "../middlewares/role.guard";
+import { ProfileController } from "../controllers/profileController";
+import { StatistiqueController } from "../controllers/statistiqueController";
+import { UserRoles } from "../models/enums/role-enums";
+import { DashboardController } from "../controllers/dashboardController";
+import { AccountController } from "../controllers/accountController";
+import { AdvertiseController } from "../controllers/advertiseController";
+import {CampaignController} from "../controllers/campaignController";
+import { ProfitController as ProfitController }from "../controllers/profitController";
+import {InstructionController} from "../controllers/instructionController";
 
 export class Routes{ 
     private userController: ApiController;
     private dashboardController : DashboardController;
     private profileController: ProfileController;
+    private statistiqueController: StatistiqueController;
     private accountController: AccountController;
     private instructionController: InstructionController;
+    private advertiseController: AdvertiseController;
+    private campaignController: CampaignController;
+    private profitController : ProfitController;
     constructor (){
         this.userController = new ApiController();
         this.profileController = new ProfileController();
+        this.statistiqueController = new StatistiqueController();
         this.dashboardController = new DashboardController();
         this.accountController = new AccountController();
         this.instructionController = new InstructionController();
+        this.advertiseController = new AdvertiseController();
+        this.campaignController = new CampaignController();
+        this.profitController = new ProfitController();
     }
     public routes(app: express.Application): void {
 
@@ -64,13 +77,13 @@ export class Routes{
 
         app.route('/profile/create')
             .post(async (req,res,next) => this.profileController.create(req,res,next),[roleGuard([UserRoles.ADMIN])])
-            .get(async (req,res,next) => this.profileController.getCreateProfilePage(req,res,next),[roleGuard([UserRoles.ADMIN])]);
+            .get(async (req,res,next) => this.profileController.create(req,res,next),[roleGuard([UserRoles.ADMIN])]);
 
         app.route('/profile/edit')
             .post(async (req,res,next) => this.profileController.edit(req,res,next),[roleGuard([UserRoles.ADMIN])]);
 
         app.route("/profile/edit/:id")
-            .get(async (req,res,next) => this.profileController.getProfilePage(req,res,next),[roleGuard([UserRoles.ADMIN])]);
+            .get(async (req,res,next) => this.profileController.edit(req,res,next),[roleGuard([UserRoles.ADMIN])]);
 
         app.route('/profile/delete/:id')
             .get(async (req,res) => this.profileController.delete(req,res),[roleGuard([UserRoles.ADMIN])]);
@@ -78,9 +91,43 @@ export class Routes{
         app.route('/user')
             .post(async (req,res) => this.userController.addUser(req,res));
 
+        //Website Statistique
+        app.route('/statistique')
+            .get(async (req, res, next) => this.statistiqueController.index(req, res, next),[roleGuard([UserRoles.WEBSITEADMIN])]);
+        //Profit
+        app.route('/money/pub')
+            .get(async (req, res) => this.profitController.index(req,res));
+        //Campaign
+        app.route("/campaign")
+            .get(async (req, res) => this.campaignController.index(req, res));
+
         //Instruction
         app.route('/instruction')
             .get(async (req, res) => this.instructionController.index(req, res), [roleGuard([UserRoles.ADMIN])]);
+
+        app.route("/campaign/create")
+            .post(async (req, res, next) => this.campaignController.create(req, res, next))
+            .get(async (req, res, next) => this.campaignController.create(req, res, next));
+
+        app.route("/campaign/edit")
+            .post(async (req, res, next) => this.campaignController.edit(req, res, next));
+
+        app.route("/campaign/edit/:id")
+            .post(async (req, res, next) => this.campaignController.edit(req, res, next));
+
+        app.route("campaign/delete/:id")
+            .get(async (req, res) => this.campaignController.delete(req,res));
+
+        // addvertisements and analytics
+        // **************************************
+        // *** WARNING           CORS ENABLED ***
+        // **************************************
+
+        app.use(cors());
+        app.route('/api/analytics/code')
+            .get(async (req,res) => this.advertiseController.getAnalitycsCode(req,res));
+        app.route('/api/analytics/client')
+            .post(async (req,res) => this.advertiseController.trackClient(req,res));
 
     }
 }

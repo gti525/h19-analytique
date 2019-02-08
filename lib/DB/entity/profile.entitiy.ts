@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, OneToMany} from "typeorm";
 import { WebSiteUrl } from "./websiteurl.entity";
 
 @Entity()
@@ -6,13 +6,12 @@ export class Profile{
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({unique:true})
-    name: string;
+    @Column()
+    identifier: string;
 
-    @Column({unique:true})
-    url: string;
+    @Column()
+    type: string;
 
-/*    @ManyToMany(type => WebSiteUrl, websiteurl => websiteurl.profiles,{cascade: true})
-    @JoinTable()
-    websiteurls?: WebSiteUrl[];*/
+    @OneToMany(type => WebSiteUrl, url => url.profile, { cascade: true})
+    urls: WebSiteUrl[]
 }

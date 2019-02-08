@@ -53,7 +53,7 @@ class App {
         // support application/json type post data
         this.app.use(bodyParser.json());
         //support application/x-www-form-urlencoded post data
-        this.app.use(bodyParser.urlencoded({ extended: false }));
+        this.app.use(bodyParser.urlencoded({ extended: true , limit:'50mb' }));
         //sass middleware support
         this.app.use(nodeSassMiddleware({
             src: __dirname + '/public/styles/sass',
@@ -72,7 +72,7 @@ class App {
             resave: false,
             saveUninitialized: false,
             cookie: {
-                expires: 600000
+                expires: 60000
             }
         }));
 
