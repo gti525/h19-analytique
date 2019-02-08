@@ -178,3 +178,4 @@ typings/
 *.js.map
 
 ormconfig.json
+.idea/*
