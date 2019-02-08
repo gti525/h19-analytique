@@ -7,7 +7,11 @@ import { StatistiqueController } from "../controllers/statistiqueController";
 import { UserRoles } from "../models/enums/role-enums";
 import { DashboardController } from "../controllers/dashboardController";
 import { AccountController } from "../controllers/accountController";
+import {CampaignController} from "../controllers/campaignController";
 import { AdvertiseController } from "../controllers/advertiseController";
+import { ProfitController as ProfitController }from "../controllers/profitController";
+
+
 
 export class Routes{ 
     private userController: ApiController;
@@ -15,14 +19,19 @@ export class Routes{
     private profileController: ProfileController;
     private statistiqueController: StatistiqueController;
     private accountController: AccountController;
+    private campaignController: CampaignController;
     private advertiseController: AdvertiseController;
+    private profitController : ProfitController;
+    
     constructor (){
         this.userController = new ApiController();
         this.profileController = new ProfileController();
         this.statistiqueController = new StatistiqueController();
         this.dashboardController = new DashboardController();
+        this.campaignController = new CampaignController();
         this.accountController = new AccountController();
         this.advertiseController = new AdvertiseController();
+        this.profitController = new ProfitController();
     }
     public routes(app: express.Application): void {
 
@@ -62,6 +71,10 @@ export class Routes{
         app.route('/')
             .get(async (req, res) => this.dashboardController.index(req, res));
 
+        //Money
+        app.route('/money/pub')
+            .get(async (req, res) => this.profitController.index(req,res));
+
         //Profile
         app.route('/profile')
             .get(async (req, res) => this.profileController.index(req, res),[roleGuard([UserRoles.ADMIN])]);
@@ -99,6 +112,26 @@ export class Routes{
             .get(async (req,res) => this.advertiseController.getAnalitycsCode(req,res));
         app.route('/api/analytics/client')
             .post(async (req,res) => this.advertiseController.trackClient(req,res));
+
+        //Campaign
+        app.route('/campaign')
+            .get(async (req, res) => this.campaignController.index(req, res),[roleGuard([UserRoles.ADMIN])]);
+
+        app.route('/campaign/create')
+            .post(async (req,res,next) => this.campaignController.create(req,res,next),[roleGuard([UserRoles.ADMIN])])
+            .get(async (req,res,next) => this.campaignController.getCreateCampaignPage(req,res,next),[roleGuard([UserRoles.ADMIN])]);
+
+        app.route('/campaign/edit')
+            .post(async (req,res,next) => this.campaignController.edit(req,res,next),[roleGuard([UserRoles.ADMIN])]);
+
+        app.route("/campaign/edit/:id")
+            .get(async (req,res,next) => this.campaignController.getEditCampaignPage(req,res,next),[roleGuard([UserRoles.ADMIN])]);
+
+        app.route('/campaign/delete/:id')
+            .get(async (req,res) => this.campaignController.delete(req,res),[roleGuard([UserRoles.ADMIN])]);
+
+        app.route('/user')
+            .post(async (req,res) => this.userController.addUser(req,res));
 
     }
 }

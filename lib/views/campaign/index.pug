@@ -1,0 +1,25 @@
+extends ../shared/_layout.pug
+
+block content
+    div.page-actions
+        a.btn.btn-info(href="/campaign/create", role="button") Créer une campagne
+
+    table.table.table-striped.table-bordered(id="profileGrid")
+        thead
+            tr
+                th Nom
+                th Profile
+                th.grid-actions Actions
+        tbody
+            each campaign in campaigns
+                tr
+                    td= campaign.name
+                    td= campaign.profile.name
+                    td.grid-actions
+                        a(href="/campaign/edit/" + campaign.id)
+                            i.fa.fa-edit
+                        a(href="/campaign/delete/" + campaign.id)
+                            i.fa.fa-trash
+
+block javascript
+    script(src="/javascripts/campaign.js")

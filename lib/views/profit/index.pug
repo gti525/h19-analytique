@@ -1,0 +1,88 @@
+extends ../shared/_layout.pug
+
+block content
+    h1  Profits
+    h2 Légende
+    table.table.table-striped.table-bordered(id="chartGrid")
+        thead
+            tr
+                th Vue régulière
+                th Vue ciblée
+                th Clique régulier
+                th Clique ciblé
+        tbody
+            tr
+                td #{profitChart.regularView*100}¢
+                td #{profitChart.targetedView*100}¢
+                td #{profitChart.regularClick*100}¢
+                td #{profitChart.targetedClick*100}¢
+    hr
+    h2  Profits à encaisser
+    table.table.table-striped.table-bordered(id="profitGrid")
+        thead
+            tr
+                th Type de client
+                th Nombre de Vue
+                th Nombre de clique
+                th Montant du
+        tbody
+            tr
+                td client regulier
+                td #{profit.regularViews - profit.cashedRegularViews}
+                td #{profit.regularClicks - profit.cashedRegularClicks}
+                td 
+                    b #{((profit.regularViews - profit.cashedRegularViews) * profitChart.regularView + (profit.regularClicks - profit.cashedRegularClicks) * profitChart.regularClick).toFixed(2)}$
+            tr
+                td client ciblé
+                td #{profit.targetedClicks - profit.cashedTargetedClicks}
+                td #{profit.targetedViews - profit.cashedTargetedViews}
+                td 
+                    b #{((profit.targetedClicks - profit.cashedTargetedClicks) * profitChart.targetedClick + (profit.targetedViews - profit.cashedTargetedViews) * profitChart.targetedView).toFixed(2)}$
+    hr
+    h2  Profits générés au total
+    table.table.table-striped.table-bordered(id="profitGrid")
+        thead
+            tr
+                th Type de client
+                th Nombre de Vue
+                th Nombre de clique
+                th Montant du
+        tbody
+            tr
+                td client regulier
+                td #{profit.regularViews}
+                td #{profit.regularClicks}
+                td 
+                    b #{(profit.regularViews * profitChart.regularView + profit.regularClicks * profitChart.regularClick).toFixed(2)}$
+            tr
+                td client ciblé
+                td #{profit.targetedClicks}
+                td #{profit.targetedViews}
+                td 
+                 b #{(profit.targetedClicks * profitChart.targetedClick + profit.targetedViews * profitChart.targetedView).toFixed(2)}$
+    hr
+    h2  Profits Montant déjà encaissé
+    table.table.table-striped.table-bordered(id="profitGrid")
+        thead
+            tr
+                th Type de client
+                th Nombre de Vue
+                th Nombre de clique
+                th Montant du
+        tbody
+            tr
+                td client regulier
+                td #{profit.cashedRegularViews}
+                td #{profit.cashedRegularClicks}
+                td 
+                    b #{(profit.cashedRegularViews * profitChart.regularView + profit.cashedRegularClicks * profitChart.regularClick).toFixed(2)}$
+            tr
+                td client ciblé
+                td #{profit.cashedTargetedClicks}
+                td #{profit.cashedTargetedViews}
+                td 
+                    b #{(profit.cashedTargetedClicks * profitChart.targetedClick + profit.cashedTargetedViews * profitChart.targetedView).toFixed(2)}$
+    hr
+            
+
+
