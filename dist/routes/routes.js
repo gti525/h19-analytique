@@ -14,11 +14,13 @@ const role_guard_1 = require("../middlewares/role.guard");
 const ProfileController_1 = require("../controllers/ProfileController");
 const role_enums_1 = require("../models/enums/role-enums");
 const dashboardController_1 = require("../controllers/dashboardController");
+const InstructionController_1 = require("../controllers/InstructionController");
 class Routes {
     constructor() {
         this.userController = new apiController_1.apiController();
         this.profileController = new ProfileController_1.ProfileController();
         this.dashboardController = new dashboardController_1.dashboardController();
+        this.instructionController = new InstructionController_1.InstructionController_1();
     }
     routes(app) {
         //Dashboard
@@ -35,6 +37,10 @@ class Routes {
             .delete((req, res) => __awaiter(this, void 0, void 0, function* () { return this.profileController.deleteProfile(req, res); }), [role_guard_1.roleGuard([role_enums_1.UserRoles.ADMIN])])
             .put((req, res, next) => __awaiter(this, void 0, void 0, function* () { return this.profileController.update(req, res, next); }), [role_guard_1.roleGuard([role_enums_1.UserRoles.ADMIN])])
             .get((req, res) => __awaiter(this, void 0, void 0, function* () { return this.profileController.getProfile(req, res); }), [role_guard_1.roleGuard([role_enums_1.UserRoles.ADMIN])]);
+        app.route("/instruction")
+            .get((req, res) => __awaiter(this, void 0, void 0, function* () {
+                return this.instructionController.getInstruction(req, res);
+            }), [role_guard_1.roleGuard([role_enums_1.UserRoles.ADMIN])]);
     }
 }
 exports.Routes = Routes;

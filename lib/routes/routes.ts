@@ -1,21 +1,24 @@
-import { apiController as ApiController } from "../controllers/apiController";
+import {apiController as ApiController} from "../controllers/apiController";
+import {roleGuard} from "../middlewares/role.guard";
+import {ProfileController} from "../controllers/profileController";
+import {UserRoles} from "../models/enums/role-enums";
+import {DashboardController} from "../controllers/dashboardController";
+import {AccountController} from "../controllers/accountController";
+import {InstructionController} from "../controllers/instructionController";
 import express = require("express");
-import { roleGuard } from "../middlewares/role.guard";
-import { ProfileController } from "../controllers/profileController";
-import { UserRoles } from "../models/enums/role-enums";
-import { DashboardController } from "../controllers/dashboardController";
-import { AccountController } from "../controllers/accountController";
 
 export class Routes{ 
     private userController: ApiController;
     private dashboardController : DashboardController;
     private profileController: ProfileController;
     private accountController: AccountController;
+    private instructionController: InstructionController;
     constructor (){
         this.userController = new ApiController();
         this.profileController = new ProfileController();
         this.dashboardController = new DashboardController();
         this.accountController = new AccountController();
+        this.instructionController = new InstructionController();
     }
     public routes(app: express.Application): void {
 
@@ -74,6 +77,10 @@ export class Routes{
 
         app.route('/user')
             .post(async (req,res) => this.userController.addUser(req,res));
+
+        //Instruction
+        app.route('/instruction')
+            .get(async (req, res) => this.instructionController.index(req, res), [roleGuard([UserRoles.ADMIN])]);
 
     }
 }
