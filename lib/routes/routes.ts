@@ -9,7 +9,7 @@ import { DashboardController } from "../controllers/dashboardController";
 import { AccountController } from "../controllers/accountController";
 import {CampaignController} from "../controllers/campaignController";
 import { AdvertiseController } from "../controllers/advertiseController";
-import { MoneyController }from "../controllers/moneyController";
+import { ProfitController as ProfitController }from "../controllers/profitController";
 
 
 
@@ -21,7 +21,7 @@ export class Routes{
     private accountController: AccountController;
     private campaignController: CampaignController;
     private advertiseController: AdvertiseController;
-    private moneyController : MoneyController;
+    private profitController : ProfitController;
     
     constructor (){
         this.userController = new ApiController();
@@ -31,7 +31,7 @@ export class Routes{
         this.campaignController = new CampaignController();
         this.accountController = new AccountController();
         this.advertiseController = new AdvertiseController();
-        this.moneyController = new MoneyController();
+        this.profitController = new ProfitController();
     }
     public routes(app: express.Application): void {
 
@@ -73,7 +73,7 @@ export class Routes{
 
         //Money
         app.route('/money/pub')
-            .get(async (req, res) => this.moneyController.index(req,res));
+            .get(async (req, res) => this.profitController.index(req,res));
 
         //Profile
         app.route('/profile')
