@@ -20,7 +20,7 @@ describe('USER CONTROLLER TESTS', () => {
     before( async () => {
         try{
             const userService = new UserService();
-            await userService.adduser({id:123456,password:'test',role:UserRoles.ADMIN});
+            await userService.adduser({id:123456,password:'test',role:UserRoles.ADMIN, username: "Test User"});
         }
         catch (error){
             console.log(error)
