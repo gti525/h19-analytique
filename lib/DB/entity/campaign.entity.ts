@@ -8,10 +8,10 @@ export class Campaign{
     @Column() startDate: Date;
     @Column() endDate: Date;
 
-    @OneToMany(type => Banner, banner => banner.campaign, { cascade: true})
+    @OneToMany(type => Banner, banner => banner.campaign, { cascade: true })
     banners: Banner[];
 
-    @ManyToMany(type => Profile)
+    @ManyToMany(type => Profile, { cascade: false })
     @JoinTable()
     profiles: Profile[];
 }

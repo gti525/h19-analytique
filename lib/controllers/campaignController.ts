@@ -98,6 +98,17 @@ export class CampaignController {
     }
 
     public async delete(req: Request, res: Response){
-
+        try {
+            if (req.params.id) {
+                await this.campaignService.deleteCampaign(req.params.id);
+                res.redirect("/campaign");
+            }
+            else {
+                res.status(400).json(`no id was provided`);
+            }
+        }
+        catch (error) {
+            return res.json(error).status(500);
+        }
     }
 }
