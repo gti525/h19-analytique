@@ -9,8 +9,8 @@ import { DashboardController } from "../controllers/dashboardController";
 import { AccountController } from "../controllers/accountController";
 import {CampaignController} from "../controllers/campaignController";
 import { AdvertiseController } from "../controllers/advertiseController";
-import { ProfitController as ProfitController }from "../controllers/profitController";
 import { analyticsTokenGuard } from "../middlewares/token.guard"
+import { IncomeController }from "../controllers/incomeController";
 
 
 
@@ -22,7 +22,7 @@ export class Routes{
     private accountController: AccountController;
     private campaignController: CampaignController;
     private advertiseController: AdvertiseController;
-    private profitController : ProfitController;
+    private incomeController : IncomeController;
     
     constructor (){
         this.userController = new ApiController();
@@ -32,7 +32,7 @@ export class Routes{
         this.campaignController = new CampaignController();
         this.accountController = new AccountController();
         this.advertiseController = new AdvertiseController();
-        this.profitController = new ProfitController();
+        this.incomeController = new IncomeController();
     }
     public routes(app: express.Application): void {
 
@@ -72,9 +72,9 @@ export class Routes{
         app.route('/')
             .get(async (req, res) => this.dashboardController.index(req, res));
 
-        //Money
-        app.route('/money/pub')
-            .get(async (req, res) => this.profitController.index(req,res));
+        //Income
+        app.route('/income')
+            .get(async (req, res) => this.incomeController.index(req,res));
 
         //Profile
         app.route('/profile')
