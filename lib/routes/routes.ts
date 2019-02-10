@@ -10,6 +10,7 @@ import { AccountController } from "../controllers/accountController";
 import {CampaignController} from "../controllers/campaignController";
 import { AdvertiseController } from "../controllers/advertiseController";
 import { ProfitController as ProfitController }from "../controllers/profitController";
+import { analyticsTokenGuard } from "../middlewares/token.guard"
 
 
 
@@ -126,6 +127,7 @@ export class Routes{
         // **************************************
         
         app.use(cors());
+        app.use(analyticsTokenGuard())
         app.route('/api/analytics/code')
             .get(async (req,res) => this.advertiseController.getAnalitycsCode(req,res));
         app.route('/api/analytics/client')

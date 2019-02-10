@@ -53,11 +53,6 @@ function getAdvertisment(userId){
         if (vertical)
             getBanner("vertical-analytic-banner")
     }
-    const banners = getAdsId();
-    if (!banners){
-        console.log("NO VALID BANNERS IDS WERE FOUND - analytic script")
-        return;
-    }
     function getBanner(bannerId){
         let xmlHttp = new XMLHttpRequest();
         const url ="http://localhost:3000/api/analytics/banner"

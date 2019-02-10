@@ -1,7 +1,6 @@
 let ___infos = {};
 function ___startAnalytics() {
     if (navigator.geolocation){
-        // TODO utiliser ca a la place : https://ip-api.io/#!
         navigator.geolocation.getCurrentPosition(getPosition,function(e){
             postUserInfos(___analyticsToken);
         });
