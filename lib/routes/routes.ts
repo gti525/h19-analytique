@@ -99,16 +99,6 @@ export class Routes{
         app.route('/statistique')
             .get(async (req, res, next) => this.statistiqueController.index(req, res, next),[roleGuard([UserRoles.WEBSITEADMIN])]);
 
-        // addvertisements and analytics 
-        // **************************************
-        // *** WARNING           CORS ENABLED ***
-        // **************************************
-        
-        app.use(cors());
-        app.route('/api/analytics/code')
-            .get(async (req,res) => this.advertiseController.getAnalitycsCode(req,res));
-        app.route('/api/analytics/client')
-            .post(async (req,res) => this.advertiseController.trackClient(req,res));
 
         //Campaign
         app.route('/campaign')
@@ -129,6 +119,19 @@ export class Routes{
 
         app.route('/user')
             .post(async (req,res) => this.userController.addUser(req,res));
+
+        // addvertisements and analytics 
+        // **************************************
+        // *** WARNING           CORS ENABLED ***
+        // **************************************
+        
+        app.use(cors());
+        app.route('/api/analytics/code')
+            .get(async (req,res) => this.advertiseController.getAnalitycsCode(req,res));
+        app.route('/api/analytics/client')
+            .post(async (req,res) => this.advertiseController.trackClient(req,res));
+        app.route('/api/analytics/banner')
+            .post(async (req,res) => this.advertiseController.getBanner(req,res));
 
     }
 }
