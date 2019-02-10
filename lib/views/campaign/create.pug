@@ -5,28 +5,52 @@ block content
         h3 Créer une campagne
 
     form(method="post", action="/campaign/create")
-        div.campaign-wrapper
-            h5 Information générale
-            div.row
-                div.col-md-4.form-group
-                    label Date de début
-                    input.form-control.date(name="startDate", type="text", data-provide="datepicker", data-date-format="mm/dd/yyyy", value="")
-                div.col-md-4.form-group
-                    label Date de fin
-                    input.form-control.date(name="endDate", type="text", data-provide="datepicker", data-date-format="mm/dd/yyyy", value="")
-                div.col-md-4.form-group
-                    label Profiles
-                    select.form-control.super-select2(name="profileIds[]", multiple)
-                        each profile in profiles
-                            option(value=profile.id)= profile.identifier
-            h5 Configuration des bannières
-            div.row
-                include _banner
+        h5 Information générale
+        div.row
+            div.col-md-4.form-group
+                label Date de début
+                input.form-control.date(name="startDate", type="text", data-provide="datepicker", data-date-format="mm/dd/yyyy", value="")
+            div.col-md-4.form-group
+                label Date de fin
+                input.form-control.date(name="endDate", type="text", data-provide="datepicker", data-date-format="mm/dd/yyyy", value="")
+            div.col-md-4.form-group
+                label Profiles
+                select.form-control.super-select2(name="profileIds[]", multiple)
+                    each profile in profiles
+                        option(value=profile.id)= profile.identifier
+        h5 Configuration des bannières
+        div.row
+            mixin banner(index)
+                div.col-sm-4.col-md-4.pb-3
+                    div.card.border-secondary
+                        div.card-header
+                            span= campaignTypes[index].text
+                        div.card-body
+                            input.displaynone(name="banners[" + index + "][type]", value=index)
+                            input.displaynone.banner64(name="banners[" + index + "][image]")
+                            div.row.form-group
+                                div.col-md-12
+                                    label Url
+                                    input.form-control(name="banners[" + index + "][url]", type="text")
+                            div.row.from-group
+                                div.col-md-12
+                                    label Image publicitaire
+                                    div.upload-msg Téléversez une image
+                                    div.upload-wrapper
+                                        div.banner-container(data-type=index)
+                            div.col-md-12.text-center
+                                a.btn.btn-info.upload-button
+                                    span Upload
+                                    input.upload-image(type="file", accept="image/*")
+            +banner(0)
+            +banner(1)
+            +banner(2)
         button.btn.btn-primary(type="submit") Enregistrer
 
 block stylesheets
     link(rel='stylesheet', type='text/css', href='/styles/croppie.css')
     link(rel='stylesheet', type='text/css', href='/styles/campaign.css')
 block javascript
+    script(src="https://cdn.jsdelivr.net/npm/exif-js")
     script(src="/javascripts/croppie.js")
     script(src="/javascripts/campaign.js")

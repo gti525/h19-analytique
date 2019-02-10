@@ -14,7 +14,7 @@ export class CampaignController {
 
     public async index(req: Request, res: Response) {
         const campaigns = await this.campaignService.getCampaigns();
-        res.render('campaign/index', { campaigns, moment: require('moment') });
+        res.render('campaign/index', { campaigns, moment: require("moment") });
     }
 
     public async create(req: Request, res: Response, next){
@@ -24,19 +24,19 @@ export class CampaignController {
         if (req.method == 'GET'){
             let campaignTypes = await this.enumsToArray.translateEnumToSelectArray(CampaignTypes);
             let profiles = await this.profileService.getProfiles();
-            res.render('campaign/create', { campaignTypes, uuidv4 : require('uuid/v4'), profiles: profiles });
+            res.render('campaign/create', { campaignTypes, profiles: profiles });
         }else{
             try {
                 const banners = [];
-                req.body.banners.forEach(function(element){
+                req.body.banners.forEach(function(e){
                     const banner = new Banner();
-                    banner.type = element.type;
-                    banner.image = element.image;
-                    banner.url = element.url;
+                    banner.url = e.url;
+                    banner.image = e.image;
+                    banner.type = e.type;
                     banners.push(banner);
                 });
 
-                const profileIds = req.body.profiles.map(function(value) {
+                const profileIds = req.body.profileIds.map(function(value) {
                     return parseInt(value, 10);
                 });
                 const profiles = await this.profileService.getProfiles({id: In(profileIds)});
@@ -62,10 +62,14 @@ export class CampaignController {
         }
         if (req.method == 'GET'){
             let campaign: any;
+            let profiles: any;
+            let campaignTypes: any;
             if (req.params.id) {
+                campaignTypes = await this.enumsToArray.translateEnumToSelectArray(CampaignTypes);
+                profiles = await this.profileService.getProfiles();
                 campaign = await this.campaignService.getCampaignById(req.params.id);
             }
-            res.render('campaign/edit', { campaign: campaign });
+            res.render('campaign/edit', { campaign: campaign, profiles: profiles, campaignTypes: campaignTypes, moment: require("moment") });
         }else{
             try {
                 res.redirect("/campaign")

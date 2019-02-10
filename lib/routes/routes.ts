@@ -106,7 +106,7 @@ export class Routes{
             .post(async (req, res, next) => this.campaignController.edit(req, res, next));
 
         app.route("/campaign/edit/:id")
-            .post(async (req, res, next) => this.campaignController.edit(req, res, next));
+            .get(async (req, res, next) => this.campaignController.edit(req, res, next));
 
         app.route("campaign/delete/:id")
             .get(async (req, res) => this.campaignController.delete(req,res));

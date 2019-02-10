@@ -16,16 +16,17 @@
   margin: 50px auto
   border: 1px solid #aaa
 
-.campaign-wrapper.ready .upload-msg
-  display: none
-
-.campaign-wrapper
-  #banner-container
+.card-body
+  .banner-container
     width: 100%
     height: 300px
     margin: 0 auto
   .upload-wrapper
     display: none
   &.ready
+    .upload-msg
+      display: none
     .upload-wrapper
       display: block
+    .upload-button
+      margin-top: 10px

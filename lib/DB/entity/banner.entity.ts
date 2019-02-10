@@ -5,7 +5,7 @@ import {Campaign} from "./campaign.entity";
 export class Banner{
     @PrimaryGeneratedColumn() id: number;
     @Column() url: string;
-    @Column({type: "longblob"}) image: Buffer;
+    @Column({type: "longtext"}) image: string;
     @Column() type: number;
 
     @ManyToOne(type => Campaign, campaign => campaign.banners)

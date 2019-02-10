@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToMany} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable} from "typeorm";
 import {Banner} from "./banner.entity";
 import {Profile} from "./profile.entitiy";
 
@@ -9,14 +9,15 @@ export class Campaign{
     @Column() endDate: Date;
 
     @OneToMany(type => Banner, banner => banner.campaign, { cascade: true})
-    banners: Banner[]
+    banners: Banner[];
 
-    @OneToMany(type => Profile, profile => profile.campaign)
-    profiles: Profile[]
+    @ManyToMany(type => Profile)
+    @JoinTable()
+    profiles: Profile[];
 }
 
 export enum CampaignTypes {
-    Horizontal = 0,
-    Vertical = 1,
+    Horizontale = 0,
+    Verticale = 1,
     Mobile = 2
 }

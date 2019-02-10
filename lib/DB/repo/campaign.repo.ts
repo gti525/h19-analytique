@@ -4,7 +4,7 @@ export class CampaignRepo {
 
     public static async findById(id:number): Promise<Campaign>{
         const campaignRepo = getRepository(Campaign);
-        return await campaignRepo.findOne(id);
+        return await campaignRepo.findOne(id, { relations: ["banners", "profiles"] });
     }
 
     public static async findAll(): Promise<Campaign[]>{
