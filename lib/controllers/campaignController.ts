@@ -46,7 +46,7 @@ export class CampaignController {
                 campaign.endDate = req.body.endDate;
                 campaign.banners = banners;
                 campaign.profiles = profiles;
-                this.campaignService.addCampaign(campaign);
+                await this.campaignService.addCampaign(campaign);
 
                 res.redirect("/campaign")
             }
@@ -72,7 +72,24 @@ export class CampaignController {
             res.render('campaign/edit', { campaign: campaign, profiles: profiles, campaignTypes: campaignTypes, moment: require("moment") });
         }else{
             try {
-                res.redirect("/campaign")
+                const campaign = await this.campaignService.getCampaignById(req.body.id);
+                campaign.startDate = req.body.startDate;
+                campaign.endDate = req.body.endDate;
+
+                campaign.banners.forEach(function(banner) {
+                    const newBanner = req.body.banners.filter(function(b){ return b.id == banner.id })[0];
+                    banner.url = newBanner.url;
+                    banner.image = newBanner.image;
+                });
+
+                const profileIds = req.body.profileIds.map(function(value) {
+                    return parseInt(value, 10);
+                });
+                campaign.profiles = await this.profileService.getProfiles({id: In(profileIds)});
+
+                await this.campaignService.updateCampaign(campaign);
+
+                res.redirect("/campaign");
             }
             catch (error) {
                 return res.json(error).status(500);

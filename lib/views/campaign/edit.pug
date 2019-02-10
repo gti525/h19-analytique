@@ -4,7 +4,7 @@ block content
     div.page-actions
         h3 Modifier une campagne
 
-    form(method="post", action="/campaign/create")
+    form(method="post", action="/campaign/edit")
         h5 Information générale
         div.row
             div.col-md-4.form-group
@@ -27,6 +27,7 @@ block content
                         div.card-header
                             span= campaignTypes[index].text
                         div.card-body
+                            input.displaynone(name="banners[" + index + "][id]", value=campaign.banners[index].id)
                             input.displaynone(name="banners[" + index + "][type]", value=index)
                             input.displaynone.banner64(name="banners[" + index + "][image]", value=campaign.banners[index].image)
                             div.row.form-group
