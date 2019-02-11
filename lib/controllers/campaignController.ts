@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import {CampaignService} from "../service/campaign.service";
-import {Campaign, CampaignTypes} from "../DB/entity/campaign.entity";
+import {Campaign, BannerType} from "../DB/entity/campaign.entity";
 import {EnumsToArray} from "../helpers/enumsToArray";
 import {Banner} from "../DB/entity/banner.entity";
 import {ProfileService} from "../service/profile.service";
@@ -22,7 +22,7 @@ export class CampaignController {
             return next()
         }
         if (req.method == 'GET'){
-            let campaignTypes = await this.enumsToArray.translateEnumToSelectArray(CampaignTypes);
+            let campaignTypes = await this.enumsToArray.translateEnumToSelectArray(BannerType);
             let profiles = await this.profileService.getProfiles();
             res.render('campaign/create', { campaignTypes, profiles: profiles });
         }else{
@@ -65,7 +65,7 @@ export class CampaignController {
             let profiles: any;
             let campaignTypes: any;
             if (req.params.id) {
-                campaignTypes = await this.enumsToArray.translateEnumToSelectArray(CampaignTypes);
+                campaignTypes = await this.enumsToArray.translateEnumToSelectArray(BannerType);
                 profiles = await this.profileService.getProfiles();
                 campaign = await this.campaignService.getCampaignById(req.params.id);
             }

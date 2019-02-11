@@ -38,11 +38,14 @@ export class AdvertiseController {
         // le id du client traqued
         const [clientId,bannerId,userId] = this.validateBannerInfo(req,error);
         // TODO utiliser le token dans le header
-        const banner = this.advertismentService.getBanner(clientId,bannerId,userId)
+        const banner = await this.advertismentService.getBanner(clientId,bannerId,userId)
         if (banner && _.isEmpty(error))
             res.status(200).send(banner);
         else
             res.status(400).send(error);
+    }
+    public async addClick(req: Request, res: Response) {
+        console.log("CLICK");
     }
 
     private validateBannerInfo(req: Request,error:string) {

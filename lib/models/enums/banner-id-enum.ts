@@ -5,10 +5,10 @@ export enum BannerId {
 }
 
 export enum BannerSize {
-    horizontalHeight = 100,
-    horizontalWidth = 600,
-    verticalHeight = 600,
-    verticalWidth = 100,
-    mobileHeight = 300,
-    mobileWidth = 300
+    horizontalHeight = 200,
+    horizontalWidth = 400,
+    verticalHeight = 400,
+    verticalWidth = 200,
+    mobileHeight = 200,
+    mobileWidth = 200
 }

@@ -7,8 +7,8 @@ var sha1 = require('sha1');
 export class InitService {
     private static users = ['admin','antoine','webadmin'];
     public static async initDB() : Promise<void> {
-        this.users.forEach(u => {
-            if (!UserRepo.findByUsername(u)){
+        this.users.forEach(async (u) => {
+            if (!(await UserRepo.findByUsername(u))){
 
                 const user = new User();
                 user.password = sha1("test1234");

@@ -16,7 +16,7 @@ export class Campaign{
     profiles: Profile[];
 }
 
-export enum CampaignTypes {
+export enum BannerType {
     Horizontale = 0,
     Verticale = 1,
     Mobile = 2

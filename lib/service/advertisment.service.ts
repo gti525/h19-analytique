@@ -1,27 +1,54 @@
-import { UserRepo } from "../DB/repo/user.repo";
-import { ClientRepo } from "../DB/repo/client.repo";
-import { Client } from "../DB/entity/client.entity";
-import { User } from "../DB/entity/user.entitiy";
-import { TokenService } from "./token.service";
 import { BannerId, BannerSize } from "../models/enums/banner-id-enum";
+import { CampaignRepo } from "../DB/repo/campaign.repo";
+import { Banner } from "../DB/entity/banner.entity";
+import { BannerType, Campaign } from "../DB/entity/campaign.entity"
 var sha1 = require('sha1');
 
 export class AdvertismentService {
- 
     /**
      * Va permettre de donner les infos de la baniere et aussi d'empêcher de se faire hacker
      */
-    public getBanner(clientId,bannerId,userId): any {
-        // TODO aller cherhcer les images dans la bd.
-        // Ajouter une view au user
-        // Ajouter la gestion du click
+    public async getBanner(clientId,bannerType,userId): Promise<any> {
+        // TODO Ajouter une view au user
         const response: any = {};
-        response.bannerId = bannerId;
-        response.url = "https://ici.radio-canada.ca/premiere/emissions/desautels-le-dimanche";
-        // Todo aller cherhcer cette image dans la bd
-        response.img = "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=="
-        response.size = this.getBannerSize(bannerId);
+        response.bannerId = bannerType;
+        const banner = await this.findTargeterBanner(clientId,bannerType);
+        response.url = banner.url;
+        response.img = banner.image;
+        response.size = this.getBannerSize(bannerType);
         return response;
+    }
+
+    /**
+     * La logique des banières va se faire ici.
+     * @param clientId le id du client qui appelle la pub
+     */
+    private async findTargeterBanner(clientId,bannerType): Promise<Banner> {
+
+        const campaigns = await this.getTargetedCampaigns(clientId);
+        const max = campaigns.length-1;
+        let banner: Banner;
+        Math.floor(Math.random() * max);
+        switch (bannerType){
+            case BannerId.vertical:
+                banner = campaigns[max].banners.find(b => b.type === BannerType.Verticale)
+                break;
+            case BannerId.horizontal:
+                banner = campaigns[max].banners.find(b => b.type === BannerType.Horizontale)
+                break;
+            case BannerId.mobile:
+                banner = campaigns[max].banners.find(b => b.type === BannerType.Mobile)
+                break;
+        }
+        if (banner)
+            return banner;
+        else
+            throw Error("No banner " + bannerType + " was found for this campain : " + JSON.stringify(campaigns[max]));
+    }
+
+    private async getTargetedCampaigns(clientId): Promise<Campaign[]>{
+        // TODO aller chercher les bannières ciblées
+        return await CampaignRepo.findAll();
     }
 
     private getBannerSize(bannerId): any{

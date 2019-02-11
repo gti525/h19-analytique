@@ -126,5 +126,7 @@ export class Routes {
             .post(async (req, res) => this.advertiseController.trackClient(req, res));
         app.route('/api/analytics/banner')
             .post(async (req, res) => this.advertiseController.getBanner(req, res));
+        app.route('/api/analytics/banner/click')
+            .post(async (req, res) => this.advertiseController.addClick(req, res));
     }
 }
