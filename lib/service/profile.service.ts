@@ -2,8 +2,8 @@ import { Profile } from "../DB/entity/profile.entitiy";
 import { ProfileRepo } from "../DB/repo/profile.repo";
 
 export class ProfileService {
-    public async getProfiles() : Promise<Profile[]> {
-        return await ProfileRepo.findAll();
+    public async getProfiles(filter?: any) : Promise<Profile[]> {
+        return await ProfileRepo.findAll(filter);
     }
 
     public async getProfileById(id: number): Promise<Profile> {

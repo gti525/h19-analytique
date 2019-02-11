@@ -6,8 +6,6 @@ import { TokenService } from "../service/token.service";
 export const analyticsTokenGuard: (() => RequestHandler) = (() => (req, res, next) => {
     const tokenService = TokenService.getInstance();
     let token = req.headers['x-access-token'];
-    console.log('le token', token)
-    console.log('le token', req.headers)
     if (!token){
         return res.status(400).send("Analytic token is missing");
     }

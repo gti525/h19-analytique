@@ -20,7 +20,7 @@ export class TokenService {
         return TokenService.instance;
     }
 
-    public decodeToken(token: string): any
+    public decodeToken(token): any
     {
         try{
             return jwt.verify(token,secret);

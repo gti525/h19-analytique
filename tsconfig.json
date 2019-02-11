@@ -9,6 +9,7 @@
         "baseUrl": "./lib",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
+        "lib": [ "es2017", "dom", "es2017.object" ]
     },
     "include": [
         "lib/**/*.ts"
