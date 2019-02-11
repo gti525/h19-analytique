@@ -39,19 +39,8 @@ function getUserId(){
 }
 
 function getAdvertisment(userId){
-    function getAdsId(){
-        let banner = "";
-        const mobile = document.getElementById("mobile-analityc-banner");
-        const horizontal = document.getElementById("horizontal-analytic-banner");
-        const vertical = document.getElementById("vertical-analytic-banner");
-        if (mobile){
-            getBanner("mobile-analityc-banner")
-            return 
-        }
-        if (horizontal)
-            getBanner("horizontal-analytic-banner")
-        if (vertical)
-            getBanner("vertical-analytic-banner")
+    function setImageToBanner(id,url,img,size){
+        document.getElementById(`${id}`).innerHTML = `<a href="${url}"><img src="${img}" width="${size.width}" height="${size.height}"></a>`;
     }
     function getBanner(bannerId){
         let xmlHttp = new XMLHttpRequest();
@@ -68,8 +57,14 @@ function getAdvertisment(userId){
         const body = JSON.stringify({bannerId,userId});
         xmlHttp.send(body);
     }
+
+    if (document.getElementById("mobile-analityc-banner")){
+        getBanner("mobile-analityc-banner")
+        return;
+    }
+    if (document.getElementById("horizontal-analytic-banner"))
+        getBanner("horizontal-analytic-banner")
+    if (document.getElementById("vertical-analytic-banner"))
+        getBanner("vertical-analytic-banner")
 }
 
-function setImageToBanner(id,url,img,size){
-    document.getElementById(`${id}`).innerHTML = `<a href="${url}"><img src="${img}" width="${size.width}" height="${size.height}"></a>`;
-}

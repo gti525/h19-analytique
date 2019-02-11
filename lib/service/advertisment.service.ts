@@ -6,7 +6,11 @@ import { TokenService } from "./token.service";
 var sha1 = require('sha1');
 
 export class AdvertismentService {
+    private tokenService: TokenService;
+    constructor(){
+        this.tokenService = TokenService.getInstance();
+    }
     public generateAnalyticToken(user: User){
-        TokenService.createToken(user.id)
+        this.tokenService.createToken(user.id)
     }
 }
