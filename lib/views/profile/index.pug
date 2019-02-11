@@ -2,19 +2,21 @@ extends ../shared/_layout.pug
 
 block content
     div.page-actions
-        a.btn.btn-info(href="/profile/create", role="button") Create a profile
+        a.btn.btn-info(href="/profile/create", role="button") Créer un profile
 
     table.table.table-striped.table-bordered(id="profileGrid")
         thead
             tr
-                th Name
-                th Url
+                th Identifiant
+                th Type de profile
+                th Nombre d'urls
                 th.grid-actions Actions
         tbody
             each profile in profiles
                 tr
-                    td= profile.name
-                    td= profile.url
+                    td= profile.identifier
+                    td= profile.type
+                    td= profile.urls.length
                     td.grid-actions
                         a(href="/profile/edit/" + profile.id)
                             i.fa.fa-edit

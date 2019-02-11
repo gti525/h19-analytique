@@ -2,13 +2,31 @@ extends ../shared/_layout.pug
 
 block content
     div.page-actions
-        h3 Create a profile
+        h3 Créer un profile
 
     form(method="post", action="/profile/create")
-        div.form-group
-            label Name
-            input.form-control(name="name", type="text")
-        div.form-group
-            label Url
-            input.form-control(name="url", type="text")
-        button.btn.btn-primary(type="submit") Save
+        div.row
+            div.col-md-6.form-group
+                label Identifiant
+                input.form-control(name="identifier", type="text")
+            div.col-md-6.form-group
+                label Type de profile
+                input.form-control(name="type", type="text")
+        div.row
+            div.url-list.col-md-6
+                label Liste des URL
+                table.table(id="url-table")
+                    col(width="90%")
+                    col(width="10%")
+                    tbody
+                        tr
+                            td(colspan=2)
+                                input.form-control(name="urls[0]", type="text")
+                    tfoot
+                        tr
+                            td(colspan=2)
+                                input.btn.btn-lg.btn-block.add-url(type="button" value="Ajouter un url")
+        button.btn.btn-primary(type="submit") Enregistrer
+
+block javascript
+    script(src="/javascripts/profile.js")

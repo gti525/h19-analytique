@@ -16,8 +16,8 @@ function ___startAnalytics() {
 
     // In the callback function, it does all the logic
     function getPosition(position) {
-            ___infos.location = position.coords.latitude + 'X' + position.coords.longitude;
-            postUserInfos(___analyticsToken);
+        ___infos.location = position.coords.latitude + 'X' + position.coords.longitude;
+        postUserInfos(___analyticsToken);
     }
 }
 

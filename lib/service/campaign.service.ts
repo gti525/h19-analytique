@@ -1,5 +1,5 @@
-import { Campaign } from "../DB/entity/campaign.entitiy";
 import { CampaignRepo } from "../DB/repo/campaign.repo";
+import {Campaign} from "../DB/entity/campaign.entity";
 
 export class CampaignService {
     public async getCampaigns() : Promise<Campaign[]> {
