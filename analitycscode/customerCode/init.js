@@ -71,5 +71,5 @@ function getAdvertisment(userId){
 }
 
 function setImageToBanner(id,url,img,size){
-    document.getElementById(`${id}`).innerHTML = `<a href="${url}}"><img src="${img}" width="${size.width}" height="${size.height}"></a>`;
+    document.getElementById(`${id}`).innerHTML = `<a href="${url}"><img src="${img}" width="${size.width}" height="${size.height}"></a>`;
 }
