@@ -35,6 +35,20 @@ export class ClientInfo {
         client.resolution = `${this.screenWidth}X${this.screenHeight}X${this.screenColorDepth}`;
         client.date = new Date();
         client.identifier = this.hash;
+        client.os = this.getOs();
         return client;
     }
+
+    private getOs(): string{
+        if (this.os.indexOf("Windows NT 10.0")!= -1) return "Windows 10";
+        if (this.os.indexOf("Windows NT 6.2") != -1) return "Windows 8";
+        if (this.os.indexOf("Windows NT 6.1") != -1) return "Windows 7";
+        if (this.os.indexOf("Windows NT 6.0") != -1) return "Windows Vista";
+        if (this.os.indexOf("Windows NT 5.1") != -1) return "Windows XP";
+        if (this.os.indexOf("Windows NT 5.0") != -1) return "Windows 2000";
+        if (this.os.indexOf("Mac")            != -1) return "Mac/iOS";
+        if (this.os.indexOf("X11")            != -1) return "UNIX";
+        if (this.os.indexOf("Linux")          != -1) return "Linux";
+        else return "Unkown";
+    };
 }

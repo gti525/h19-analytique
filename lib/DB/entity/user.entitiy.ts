@@ -4,10 +4,12 @@ import {Entity, Column, PrimaryGeneratedColumn} from "typeorm";
 export class User{
     @PrimaryGeneratedColumn()
     id: number;
-    @Column()
+    @Column({unique:true})
     username: string;
     @Column()
     password?: string;
     @Column()
     role: string;
+    @Column({nullable:true})
+    analyticToken: string;
 }

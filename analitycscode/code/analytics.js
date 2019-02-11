@@ -1,16 +1,11 @@
 let ___infos = {};
 function ___startAnalytics() {
-    console.log("starting analytics in code")
     if (navigator.geolocation){
-        // TODO utiliser ca a la place : https://ip-api.io/#!
-        console.log("got geo")
         navigator.geolocation.getCurrentPosition(getPosition,function(e){
-            console.log(e);
             postUserInfos(___analyticsToken);
         });
     }
     else  {
-        console.log("no geo")
         postUserInfos(___analyticsToken);
     }
 
@@ -22,17 +17,14 @@ function ___startAnalytics() {
 }
 
 function postUserInfos(token) {
-    console.log("posting pos geo")
     const url = "http://localhost:3000/api/analytics/client"
     let xmlHttp = new XMLHttpRequest();
     xmlHttp.open("POST", url, true); // false for synchronous request
     xmlHttp.onload = function(e){
         if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-            console.log("got request")
             if(xmlHttp.responseText){
-                console.log("setting id")
                 setUserId(xmlHttp.responseText);
-                getAdvertisment();
+                getAdvertisment(xmlHttp.responseText);
             }
         }
     };
@@ -51,18 +43,7 @@ ___infos.host = window.location.host;
 
 ___infos.doNotTrack = typeof (Storage) !== "undefined";
 
-___infos.platform = (function getOs(){
-    if (window.navigator.userAgent.indexOf("Windows NT 10.0")!= -1) return "Windows 10";
-    if (window.navigator.userAgent.indexOf("Windows NT 6.2") != -1) return "Windows 8";
-    if (window.navigator.userAgent.indexOf("Windows NT 6.1") != -1) return "Windows 7";
-    if (window.navigator.userAgent.indexOf("Windows NT 6.0") != -1) return "Windows Vista";
-    if (window.navigator.userAgent.indexOf("Windows NT 5.1") != -1) return "Windows XP";
-    if (window.navigator.userAgent.indexOf("Windows NT 5.0") != -1) return "Windows 2000";
-    if (window.navigator.userAgent.indexOf("Mac")            != -1) return "Mac/iOS";
-    if (window.navigator.userAgent.indexOf("X11")            != -1) return "UNIX";
-    if (window.navigator.userAgent.indexOf("Linux")          != -1) return "Linux";
-    else return "Unkown";
-})();
+___infos.platform = window.navigator.userAgent;
 
 //https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser/9851769
 ___infos.browser = (function getBrowserName() {

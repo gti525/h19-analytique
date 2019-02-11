@@ -8,20 +8,21 @@ import { UserRoles } from "../models/enums/role-enums";
 import { DashboardController } from "../controllers/dashboardController";
 import { AccountController } from "../controllers/accountController";
 import { AdvertiseController } from "../controllers/advertiseController";
-import { IncomeController }from "../controllers/incomeController";
-import {CampaignController} from "../controllers/campaignController";
+import { analyticsTokenGuard } from "../middlewares/token.guard"
+import { IncomeController } from "../controllers/incomeController";
+import { CampaignController } from "../controllers/campaignController";
 
-export class Routes{ 
+export class Routes {
     private userController: ApiController;
-    private dashboardController : DashboardController;
+    private dashboardController: DashboardController;
     private profileController: ProfileController;
     private statistiqueController: StatistiqueController;
     private accountController: AccountController;
     private advertiseController: AdvertiseController;
-    private incomeController : IncomeController;
+    private incomeController: IncomeController;
     private campaignController: CampaignController;
-    
-    constructor (){
+
+    constructor() {
         this.userController = new ApiController();
         this.profileController = new ProfileController();
         this.statistiqueController = new StatistiqueController();
@@ -57,13 +58,13 @@ export class Routes{
             .get(sessionChecker, (req, res, next) => {
                 this.accountController.getLoginPage(req, res, next)
             })
-            .post(async(req, res, next) => this.accountController.login(req, res, next));
+            .post(async (req, res, next) => this.accountController.login(req, res, next));
 
         app.route('/register')
             .get(sessionChecker, (req, res, next) => {
                 this.accountController.getRegisterPage(req, res, next);
             })
-            .post(async(req, res, next) => this.accountController.register(req, res, next));
+            .post(async (req, res, next) => this.accountController.register(req, res, next));
 
         //Dashboard
         app.route('/')
@@ -71,31 +72,31 @@ export class Routes{
 
         //Income
         app.route('/income')
-            .get(async (req, res) => this.incomeController.index(req,res));
+            .get(async (req, res) => this.incomeController.index(req, res));
 
         //Profile
         app.route('/profile')
-            .get(async (req, res) => this.profileController.index(req, res),[roleGuard([UserRoles.ADMIN])]);
+            .get(async (req, res) => this.profileController.index(req, res), [roleGuard([UserRoles.ADMIN])]);
 
         app.route('/profile/create')
-            .post(async (req,res,next) => this.profileController.create(req,res,next),[roleGuard([UserRoles.ADMIN])])
-            .get(async (req,res,next) => this.profileController.create(req,res,next),[roleGuard([UserRoles.ADMIN])]);
+            .post(async (req, res, next) => this.profileController.create(req, res, next), [roleGuard([UserRoles.ADMIN])])
+            .get(async (req, res, next) => this.profileController.create(req, res, next), [roleGuard([UserRoles.ADMIN])]);
 
         app.route('/profile/edit')
-            .post(async (req,res,next) => this.profileController.edit(req,res,next),[roleGuard([UserRoles.ADMIN])]);
+            .post(async (req, res, next) => this.profileController.edit(req, res, next), [roleGuard([UserRoles.ADMIN])]);
 
         app.route("/profile/edit/:id")
-            .get(async (req,res,next) => this.profileController.edit(req,res,next),[roleGuard([UserRoles.ADMIN])]);
+            .get(async (req, res, next) => this.profileController.edit(req, res, next), [roleGuard([UserRoles.ADMIN])]);
 
         app.route('/profile/delete/:id')
-            .get(async (req,res) => this.profileController.delete(req,res),[roleGuard([UserRoles.ADMIN])]);
+            .get(async (req, res) => this.profileController.delete(req, res), [roleGuard([UserRoles.ADMIN])]);
 
         app.route('/user')
-            .post(async (req,res) => this.userController.addUser(req,res));
-        
+            .post(async (req, res) => this.userController.addUser(req, res));
+
         //Website Statistique
         app.route('/statistique')
-            .get(async (req, res, next) => this.statistiqueController.index(req, res, next),[roleGuard([UserRoles.WEBSITEADMIN])]);
+            .get(async (req, res, next) => this.statistiqueController.index(req, res, next), [roleGuard([UserRoles.WEBSITEADMIN])]);
         //Campaign
         app.route("/campaign")
             .get(async (req, res) => this.campaignController.index(req, res));
@@ -111,18 +112,21 @@ export class Routes{
             .get(async (req, res, next) => this.campaignController.edit(req, res, next));
 
         app.route("/campaign/delete/:id")
-            .get(async (req, res) => this.campaignController.delete(req,res));
-
+            .get(async (req, res) => this.campaignController.delete(req, res));
         // addvertisements and analytics 
         // **************************************
         // *** WARNING           CORS ENABLED ***
         // **************************************
-        
-        app.use(cors());
-        app.route('/api/analytics/code')
-            .get(async (req,res) => this.advertiseController.getAnalitycsCode(req,res));
-        app.route('/api/analytics/client')
-            .post(async (req,res) => this.advertiseController.trackClient(req,res));
 
+        app.use(cors());
+        app.use(analyticsTokenGuard())
+        app.route('/api/analytics/code')
+            .get(async (req, res) => this.advertiseController.getAnalitycsCode(req, res));
+        app.route('/api/analytics/client')
+            .post(async (req, res) => this.advertiseController.trackClient(req, res));
+        app.route('/api/analytics/banner')
+            .post(async (req, res) => this.advertiseController.getBanner(req, res));
+        app.route('/api/analytics/banner/click')
+            .post(async (req, res) => this.advertiseController.addClick(req, res));
     }
 }

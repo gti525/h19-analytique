@@ -3,6 +3,7 @@ import { createConnection } from "typeorm";
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import { Routes } from "./routes/routes";
+import { InitService } from "./service/init.service";
 import * as https from 'https';
 import * as fs from 'fs';
 import * as nodeSassMiddleware from "node-sass-middleware";
@@ -39,6 +40,7 @@ class App {
                 }
                 else {
                     this.app.listen(process.env.PORT || PORT, () => {
+                        InitService.initDB();
                         console.log('Express server listening on port ' + PORT);
                     })
                 }

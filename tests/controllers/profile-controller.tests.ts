@@ -29,9 +29,10 @@ let profileService: ProfileService = undefined;
 describe('PROFILE CONTROLLER TESTS', () => {
     before(async () => {
         try {
+            const tokenService = TokenService.getInstance();
             const userService = new UserService();
             await userService.adduser({ id: 555, password: 'test', role: UserRoles.ADMIN, username : "TestUser"});
-            token = TokenService.createToken(555, UserRoles.ADMIN);
+            token = tokenService.createToken(555);
             profileService = new ProfileService();
         }
         catch (error) {

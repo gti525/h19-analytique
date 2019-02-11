@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const jwt = require("jsonwebtoken");
-var secret = 'JFEAN9832u42348329048234FJNJKfjkjdlkf92349032'; // TODO mettre ca dans la config
+var secret = 'JFEAN9832u42348329048234FJNJKfjkjdlkf92349032';
 class TokenService {
     static createToken(id, role) {
         return jwt.sign({

@@ -5,7 +5,7 @@ import { WebsiteurlService } from '../service/websiteurl.service';
 import { WebSiteUrl } from '../DB/entity/websiteurl.entity';
 import { AdvancedConsoleLogger } from 'typeorm';
 import {Banner} from "../DB/entity/banner.entity";
-import {CampaignTypes} from "../DB/entity/campaign.entity";
+import {BannerType} from "../DB/entity/campaign.entity";
 
 export class ProfileController {
     private profileService: ProfileService = new ProfileService();
