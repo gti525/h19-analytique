@@ -5,18 +5,28 @@ import * as _ from 'lodash'
 import { ClientService } from '../service/client.service';
 import { TokenService } from '../service/token.service';
 import { AdvertismentService } from '../service/advertisment.service';
+import { UserService } from '../service/user.service';
+import { User } from '../DB/entity/user.entitiy';
+import { ClientStats } from '../DB/entity/clientStats';
+import { BannerService } from '../service/bannerService';
+import { Client } from '../DB/entity/client.entity';
+import { Banner } from '../DB/entity/banner.entity';
 const fs = require('fs');
 export class AdvertiseController {
     private code;
     private clientService: ClientService;
     private tokenService: TokenService;
     private advertismentService: AdvertismentService
+    private userService: UserService;
+    private bannerService: BannerService;
     constructor(){
         const codePath = process.env.NODE_ENV === 'production' ? 'analitycscode/code/analytics.prod.js': 'analitycscode/code/analytics.min.js';
             this.code = fs.readFileSync(codePath, 'utf8');
         this.clientService = new ClientService();
         this.tokenService = TokenService.getInstance();
         this.advertismentService = new AdvertismentService();
+        this.userService =  new UserService();
+        this.bannerService = new BannerService();
     }
     
     public async getAnalitycsCode(req: Request, res: Response) {
@@ -39,13 +49,63 @@ export class AdvertiseController {
         const [clientId,bannerId,userId] = this.validateBannerInfo(req,error);
         // TODO utiliser le token dans le header
         const banner = await this.advertismentService.getBanner(clientId,bannerId,userId)
-        if (banner && _.isEmpty(error))
+        if (banner && _.isEmpty(error)){
+            // TODO ajouter le userId dans le body
+            const { client, user } = await this.getClientUser(req);
+
+            await this.updateUserStatistics(client, user);
+            await this.addClientStatistic(client, req.headers.host, banner);
             res.status(200).send(banner);
+        }
         else
             res.status(400).send(error);
     }
+
+    private async getClientUser(req: Request) {
+        const client = req.body.userId ? await this.clientService.getClientByHashOrId(req.body.userId) : undefined;
+        const token = this.tokenService.decodeToken(req.headers['x-access-token'] as any).id;
+        const user = await this.userService.findByToken(token);
+        return { client, user };
+    }
+
     public async addClick(req: Request, res: Response) {
-        console.log("CLICK");
+        // TODO ajouter le userId dans le body
+        const { client, user } = await this.getClientUser(req);
+        const banner = await this.bannerService.findById(req.body.bannerId);
+
+        await this.updateUserStatistics(client, user);
+        await this.addClientStatistic(client, req.headers.host, banner);
+    }
+
+    private async addClientStatistic(client: Client, url: string, banner: Banner, isClick = false) {
+        if (client) {
+            const stats = new ClientStats();
+            stats.url = url;
+            stats.banner = banner;
+            stats.isClick = isClick;
+            stats.isView = !isClick;
+            client.clientStats.push(stats);
+            await this.clientService.updateClient(client);
+        }
+        else{
+            console.log("CLIENT WAS NOT FOUND WHEN ADDING STATISTIC")
+        }
+    }
+
+    private async updateUserStatistics(client: Client, user: User, isClick = false) {
+        if (client && user){
+            if (isClick){
+                client.isTargettable ? user.income.targetedViews-- : user.income.regularViews--;
+                client.isTargettable ? user.income.targetedClicks-- : user.income.regularClicks--;
+            }
+            else {
+                client.isTargettable ? user.income.targetedViews++ : user.income.regularViews++;
+            }
+            await this.userService.updateUser(user);
+        }
+        else{
+            console.log("CLIENT OR USER WAS NOT FOUND ON UPDATE",client,user)
+        }
     }
 
     private validateBannerInfo(req: Request,error:string) {

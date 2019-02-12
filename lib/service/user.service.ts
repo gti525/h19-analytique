@@ -10,7 +10,11 @@ export class UserService {
     }
     public async adduser(user: User): Promise<User> {
         user.password = sha1(user.password);
-        return await UserRepo.create(user);
+        return await UserRepo.createOrUpdate(user);
+    }
+
+    public async updateUser(user: User): Promise<User> {
+        return await UserRepo.createOrUpdate(user);
     }
     public async authenticate(username: string,password: string): Promise<string> {
         const user = await UserRepo.findByUsername(username);
@@ -19,7 +23,12 @@ export class UserService {
         }
         throw new Error('Invalid password or username');
     }
+
     public async userExists(id){
-        return UserRepo.findById(id) != undefined;
+        return await UserRepo.findById(id) != undefined;
+    }
+
+    public async findByToken(token): Promise<User>{
+        return token ? await UserRepo.findByToken(token) : undefined;
     }
 }

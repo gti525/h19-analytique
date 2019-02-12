@@ -3,6 +3,7 @@ import {UserService} from "../service/user.service";
 import {QueryFailedError} from "typeorm";
 import {User} from "../DB/entity/user.entitiy";
 import {UserRoles} from "../models/enums/role-enums";
+import { Income } from '../DB/entity/income.entitiy';
 
 export class AccountController {
 
@@ -38,8 +39,9 @@ export class AccountController {
             user.username = req.body.username;
             user.role = req.body.role;
             user.password = req.body.password;
+            user.income = new Income();
 
-            const result = await this.userService.adduser(user);
+            await this.userService.adduser(user);
 
             res.render("index")
         }

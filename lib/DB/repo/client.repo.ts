@@ -13,7 +13,7 @@ export class ClientRepo {
         return await userRepository.findOne(id);
     }
 
-    public static async create(user: Client): Promise<Client>{
+    public static async createOrUpdate(user: Client): Promise<Client>{
         const userRepository = getRepository(Client);
         return await userRepository.save(user);
     }

@@ -1,6 +1,7 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable, ManyToOne} from "typeorm";
 import {Banner} from "./banner.entity";
 import {Profile} from "./profile.entitiy";
+import { User } from "./user.entitiy";
 
 @Entity()
 export class Campaign{
@@ -11,6 +12,10 @@ export class Campaign{
     @OneToMany(type => Banner, banner => banner.campaign, { cascade: true })
     banners: Banner[];
 
+    
+    @ManyToOne(type => User, user => user.campaign, { cascade: true })
+    user: User;
+    
     @ManyToMany(type => Profile, { cascade: false })
     @JoinTable()
     profiles: Profile[];

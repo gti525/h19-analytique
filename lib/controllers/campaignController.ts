@@ -5,13 +5,16 @@ import {EnumsToArray} from "../helpers/enumsToArray";
 import {Banner} from "../DB/entity/banner.entity";
 import {ProfileService} from "../service/profile.service";
 import {In} from "typeorm";
+import { UserService } from '../service/user.service';
+import { TokenService } from '../service/token.service';
 
 export class CampaignController {
 
     private campaignService: CampaignService = new CampaignService();
     private profileService: ProfileService = new ProfileService();
     private enumsToArray: EnumsToArray = new EnumsToArray();
-
+    private userService: UserService = new UserService();
+    private tokenService: TokenService = TokenService.getInstance();
     public async index(req: Request, res: Response) {
         const campaigns = await this.campaignService.getCampaigns();
         res.render('campaign/index', { campaigns, moment: require("moment") });
@@ -40,12 +43,15 @@ export class CampaignController {
                     return parseInt(value, 10);
                 });
                 const profiles = await this.profileService.getProfiles({id: In(profileIds)});
-
+                //TODO fixe that
+                const token = this.tokenService.decodeToken(req.headers['x-access-token'] as any).id;
+                const user = await this.userService.findByToken(token);
                 const campaign = new Campaign();
                 campaign.startDate = req.body.startDate;
                 campaign.endDate = req.body.endDate;
                 campaign.banners = banners;
                 campaign.profiles = profiles;
+                campaign.user = user;
                 await this.campaignService.addCampaign(campaign);
 
                 res.redirect("/campaign")

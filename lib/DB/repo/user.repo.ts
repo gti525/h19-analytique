@@ -7,11 +7,16 @@ export class UserRepo {
         return await userRepository.findOne({ where: { username: username }});
     }
 
+    public static async findByToken(token:string): Promise<User>{
+        const userRepository = getRepository(User);
+        return await userRepository.findOne({ where: { analyticToken: token }});
+    }
+
     public static async findById(id:number): Promise<User>{
         const userRepository = getRepository(User);
         return await userRepository.findOne(id);
     }
-    public static async create(user: User): Promise<User>{
+    public static async createOrUpdate(user: User): Promise<User>{
         const userRepository = getRepository(User);
         return await userRepository.save(user);
     }
