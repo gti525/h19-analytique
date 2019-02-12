@@ -10,9 +10,9 @@ export class ClientService {
 
     public async getClientByHashOrId(idOrHash: string | number): Promise<Client> {
         if(typeof idOrHash === "string")
-            return ClientRepo.findByHash(idOrHash);
+            return await ClientRepo.findByHash(idOrHash);
         else if(typeof idOrHash === "number")
-            return ClientRepo.findById(idOrHash);
+            return await ClientRepo.findById(idOrHash);
         return undefined;
     }
 }
