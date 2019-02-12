@@ -10,30 +10,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-let User = class User {
+const profile_entitiy_1 = require("./profile.entitiy");
+let WebSiteUrl = class WebSiteUrl {
 };
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn(),
-    __metadata("design:type", Number)
-], User.prototype, "id", void 0);
-__decorate([
-    typeorm_1.Column({ unique: true }),
+    typeorm_1.PrimaryColumn(),
     __metadata("design:type", String)
-], User.prototype, "username", void 0);
+], WebSiteUrl.prototype, "url", void 0);
 __decorate([
-    typeorm_1.Column(),
-    __metadata("design:type", String)
-], User.prototype, "password", void 0);
-__decorate([
-    typeorm_1.Column(),
-    __metadata("design:type", String)
-], User.prototype, "role", void 0);
-__decorate([
-    typeorm_1.Column({ nullable: true }),
-    __metadata("design:type", String)
-], User.prototype, "analyticToken", void 0);
-User = __decorate([
+    typeorm_1.ManyToOne(type => profile_entitiy_1.Profile, profile => profile.urls),
+    __metadata("design:type", profile_entitiy_1.Profile)
+], WebSiteUrl.prototype, "profile", void 0);
+WebSiteUrl = __decorate([
     typeorm_1.Entity()
-], User);
-exports.User = User;
-//# sourceMappingURL=user.entitiy.js.map
+], WebSiteUrl);
+exports.WebSiteUrl = WebSiteUrl;
+//# sourceMappingURL=websiteurl.entity.js.map

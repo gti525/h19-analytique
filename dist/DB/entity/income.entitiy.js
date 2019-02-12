@@ -10,30 +10,46 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-let User = class User {
+let Income = class Income {
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
+    __metadata("design:type", String)
+], Income.prototype, "id", void 0);
+__decorate([
+    typeorm_1.Column(),
     __metadata("design:type", Number)
-], User.prototype, "id", void 0);
-__decorate([
-    typeorm_1.Column({ unique: true }),
-    __metadata("design:type", String)
-], User.prototype, "username", void 0);
+], Income.prototype, "targetedViews", void 0);
 __decorate([
     typeorm_1.Column(),
-    __metadata("design:type", String)
-], User.prototype, "password", void 0);
+    __metadata("design:type", Number)
+], Income.prototype, "targetedClicks", void 0);
 __decorate([
     typeorm_1.Column(),
-    __metadata("design:type", String)
-], User.prototype, "role", void 0);
+    __metadata("design:type", Number)
+], Income.prototype, "regularViews", void 0);
 __decorate([
-    typeorm_1.Column({ nullable: true }),
-    __metadata("design:type", String)
-], User.prototype, "analyticToken", void 0);
-User = __decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", Number)
+], Income.prototype, "regularClicks", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", Number)
+], Income.prototype, "cashedTargetedViews", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", Number)
+], Income.prototype, "cashedTargetedClicks", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", Number)
+], Income.prototype, "cashedRegularViews", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", Number)
+], Income.prototype, "cashedRegularClicks", void 0);
+Income = __decorate([
     typeorm_1.Entity()
-], User);
-exports.User = User;
-//# sourceMappingURL=user.entitiy.js.map
+], Income);
+exports.Income = Income;
+//# sourceMappingURL=income.entitiy.js.map

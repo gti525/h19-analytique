@@ -8,35 +8,33 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const user_entitiy_1 = require("../../DB/entity/user.entitiy");
-const typeorm_1 = require("typeorm");
-class UserRepo {
-    static findByUsername(username) {
+const profile_repo_1 = require("../DB/repo/profile.repo");
+class ProfileService {
+    getProfiles(filter) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
-            return yield userRepository.findOne({ where: { username: username } });
+            return yield profile_repo_1.ProfileRepo.findAll(filter);
         });
     }
-    static findById(id) {
+    getProfileById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
-            return yield userRepository.findOne(id);
+            return yield profile_repo_1.ProfileRepo.findById(id);
         });
     }
-    static create(user) {
+    addProfile(profile) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
-            return yield userRepository.save(user);
+            return yield profile_repo_1.ProfileRepo.createOrUpdate(profile);
         });
     }
-    static delete(id) {
+    updateProfile(profile) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
-            const userToDelete = yield UserRepo.findById(id);
-            if (userToDelete)
-                yield userRepository.delete(userToDelete);
+            return yield profile_repo_1.ProfileRepo.createOrUpdate(profile);
+        });
+    }
+    deleteProfile(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield profile_repo_1.ProfileRepo.deleteById(id);
         });
     }
 }
-exports.UserRepo = UserRepo;
-//# sourceMappingURL=user.repo.js.map
+exports.ProfileService = ProfileService;
+//# sourceMappingURL=profile.service.js.map

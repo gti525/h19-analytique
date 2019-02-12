@@ -8,35 +8,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const user_entitiy_1 = require("../../DB/entity/user.entitiy");
-const typeorm_1 = require("typeorm");
-class UserRepo {
-    static findByUsername(username) {
+const websiteurl_repo_1 = require("../DB/repo/websiteurl.repo");
+const _ = require("lodash");
+class WebsiteurlService {
+    addWebsiteurl(url) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
-            return yield userRepository.findOne({ where: { username: username } });
+            return yield websiteurl_repo_1.WebsiteurlRepo.createOrUpdate(url);
         });
     }
-    static findById(id) {
+    updateWebsiteurl(url) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
-            return yield userRepository.findOne(id);
+            return yield websiteurl_repo_1.WebsiteurlRepo.createOrUpdate(url);
         });
     }
-    static create(user) {
+    getProfileByUrl(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
-            return yield userRepository.save(user);
+            return yield websiteurl_repo_1.WebsiteurlRepo.findById(id);
         });
     }
-    static delete(id) {
+    deleteWebsiteurl(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
-            const userToDelete = yield UserRepo.findById(id);
-            if (userToDelete)
-                yield userRepository.delete(userToDelete);
+            yield websiteurl_repo_1.WebsiteurlRepo.delete(id);
         });
+    }
+    isWebsiteurlValid(websiteurl) {
+        return !_.isEmpty(websiteurl.url);
     }
 }
-exports.UserRepo = UserRepo;
-//# sourceMappingURL=user.repo.js.map
+exports.WebsiteurlService = WebsiteurlService;
+//# sourceMappingURL=websiteurl.service.js.map

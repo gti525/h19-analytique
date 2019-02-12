@@ -8,35 +8,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const user_entitiy_1 = require("../../DB/entity/user.entitiy");
+const client_entity_1 = require("../../DB/entity/client.entity");
 const typeorm_1 = require("typeorm");
-class UserRepo {
-    static findByUsername(username) {
+class ClientRepo {
+    static findByHash(hash) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
-            return yield userRepository.findOne({ where: { username: username } });
+            const userRepository = typeorm_1.getRepository(client_entity_1.Client);
+            return yield userRepository.findOne({ where: { hash } });
         });
     }
     static findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
+            const userRepository = typeorm_1.getRepository(client_entity_1.Client);
             return yield userRepository.findOne(id);
         });
     }
     static create(user) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
+            const userRepository = typeorm_1.getRepository(client_entity_1.Client);
             return yield userRepository.save(user);
         });
     }
-    static delete(id) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
-            const userToDelete = yield UserRepo.findById(id);
-            if (userToDelete)
-                yield userRepository.delete(userToDelete);
-        });
-    }
 }
-exports.UserRepo = UserRepo;
-//# sourceMappingURL=user.repo.js.map
+exports.ClientRepo = ClientRepo;
+//# sourceMappingURL=client.repo.js.map

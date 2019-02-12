@@ -8,35 +8,33 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const user_entitiy_1 = require("../../DB/entity/user.entitiy");
-const typeorm_1 = require("typeorm");
-class UserRepo {
-    static findByUsername(username) {
+const campaign_repo_1 = require("../DB/repo/campaign.repo");
+class CampaignService {
+    getCampaigns() {
         return __awaiter(this, void 0, void 0, function* () {
-            const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
-            return yield userRepository.findOne({ where: { username: username } });
+            return yield campaign_repo_1.CampaignRepo.findAll();
         });
     }
-    static findById(id) {
+    getCampaignById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
-            return yield userRepository.findOne(id);
+            return yield campaign_repo_1.CampaignRepo.findById(id);
         });
     }
-    static create(user) {
+    addCampaign(campaign) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
-            return yield userRepository.save(user);
+            return yield campaign_repo_1.CampaignRepo.createOrUpdate(campaign);
         });
     }
-    static delete(id) {
+    updateCampaign(campaign) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
-            const userToDelete = yield UserRepo.findById(id);
-            if (userToDelete)
-                yield userRepository.delete(userToDelete);
+            return yield campaign_repo_1.CampaignRepo.createOrUpdate(campaign);
+        });
+    }
+    deleteCampaign(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield campaign_repo_1.CampaignRepo.deleteById(id);
         });
     }
 }
-exports.UserRepo = UserRepo;
-//# sourceMappingURL=user.repo.js.map
+exports.CampaignService = CampaignService;
+//# sourceMappingURL=campaign.service.js.map
