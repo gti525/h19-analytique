@@ -39,8 +39,9 @@ function getUserId(){
 }
 
 function getAdvertisment(userId){
-    function setImageToBanner(id,url,img,size){
+    function setImageToBanner(id,url,img,size,bannerId){
         document.getElementById(`${id}`).innerHTML = `<a href="${url}"><img src="${img}" width="${size.width}" height="${size.height}"></a>`;
+        document.getElementById(`${id}`).setAttribute('bannerId',bannerId);
     }
     // Pour les banners
     function getBanner(bannerId){
@@ -50,7 +51,7 @@ function getAdvertisment(userId){
         xmlHttp.onload = function(e){
             if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
                 const imgData = JSON.parse(xmlHttp.responseText);
-                setImageToBanner(imgData.bannerId,imgData.url,imgData.img,imgData.size);
+                setImageToBanner(imgData.bannerId,imgData.url,imgData.img,imgData.size,imgData.id);
             }
         };
         xmlHttp.setRequestHeader('x-access-token', ___analyticsToken)
@@ -61,10 +62,11 @@ function getAdvertisment(userId){
     // Pour les clics
     function bannerClick(userId){
         let xmlHttp = new XMLHttpRequest();
-        const url ="http://localhost:3000/api/analytics/banner/click"
+        const url ="http://localhost:3000/api/analytics/banner/click/"
         xmlHttp.open( "POST", url, true );
         xmlHttp.setRequestHeader('x-access-token', ___analyticsToken)
         xmlHttp.setRequestHeader('Content-type', "application/json;charset=UTF-8");
+        url+=document.getElementById(`${id}`).getAttribute('bannerId');
         const body = JSON.stringify({userId});
         xmlHttp.send(body);
     }

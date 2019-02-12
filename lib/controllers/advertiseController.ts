@@ -71,7 +71,7 @@ export class AdvertiseController {
     public async addClick(req: Request, res: Response) {
         // TODO ajouter le userId dans le body
         const { client, user } = await this.getClientUser(req);
-        const banner = await this.bannerService.findById(req.body.bannerId);
+        const banner = await this.bannerService.findById(req.query.bannerId);
 
         await this.updateUserStatistics(client, user);
         await this.addClientStatistic(client, req.headers.host, banner);

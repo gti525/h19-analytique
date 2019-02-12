@@ -43,9 +43,15 @@ export class CampaignController {
                     return parseInt(value, 10);
                 });
                 const profiles = await this.profileService.getProfiles({id: In(profileIds)});
-                //TODO fixe that
+                
+                // TODO TROUER LE USER EN COURS
                 const token = this.tokenService.decodeToken(req.headers['x-access-token'] as any).id;
                 const user = await this.userService.findByToken(token);
+                // end TODO
+
+
+
+                
                 const campaign = new Campaign();
                 campaign.startDate = req.body.startDate;
                 campaign.endDate = req.body.endDate;
