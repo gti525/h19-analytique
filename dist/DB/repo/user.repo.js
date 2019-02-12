@@ -11,6 +11,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const user_entitiy_1 = require("../../DB/entity/user.entitiy");
 const typeorm_1 = require("typeorm");
 class UserRepo {
+    static findByUsername(username) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
+            return yield userRepository.findOne({ where: { username: username } });
+        });
+    }
     static findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const userRepository = typeorm_1.getRepository(user_entitiy_1.User);

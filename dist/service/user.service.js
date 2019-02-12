@@ -12,19 +12,27 @@ const user_repo_1 = require("../DB/repo/user.repo");
 const token_service_1 = require("./token.service");
 var sha1 = require('sha1');
 class UserService {
+    constructor() {
+        this.tokenService = token_service_1.TokenService.getInstance();
+    }
     adduser(user) {
         return __awaiter(this, void 0, void 0, function* () {
             user.password = sha1(user.password);
             return yield user_repo_1.UserRepo.create(user);
         });
     }
-    authenticate(id, password) {
+    authenticate(username, password) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = yield user_repo_1.UserRepo.findById(id);
+            const user = yield user_repo_1.UserRepo.findByUsername(username);
             if (user && user.password === sha1(password)) {
-                return token_service_1.TokenService.createToken(user.id, user.role);
+                return this.tokenService.createToken(user.id);
             }
             throw new Error('Invalid password or username');
+        });
+    }
+    userExists(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return user_repo_1.UserRepo.findById(id) != undefined;
         });
     }
 }

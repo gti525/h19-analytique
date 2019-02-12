@@ -13,12 +13,16 @@ const typeorm_1 = require("typeorm");
 const express = require("express");
 const bodyParser = require("body-parser");
 const routes_1 = require("./routes/routes");
+const init_service_1 = require("./service/init.service");
 const https = require("https");
 const fs = require("fs");
 const nodeSassMiddleware = require("node-sass-middleware");
 const path = require("path");
+const serveStatic = require("serve-static");
 const PORT = 3000;
 const HOST = "localhost";
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const httpsOptions = {
     key: fs.readFileSync('./config/key.pem'),
     cert: fs.readFileSync('./config/cert.pem')
@@ -41,7 +45,8 @@ class App {
                     });
                 }
                 else {
-                    this.app.listen(PORT, () => {
+                    this.app.listen(process.env.PORT || PORT, () => {
+                        init_service_1.InitService.initDB();
                         console.log('Express server listening on port ' + PORT);
                     });
                 }
@@ -50,23 +55,35 @@ class App {
                 console.log("ERROR ON START", e);
             }
         })).catch(error => console.log("TypeORM connection error: ", error));
-        setTimeout(function () {
-            console.log('starting');
-        }, 6000);
     }
     config() {
+        //Cookie parser
+        this.app.use(cookieParser());
         // support application/json type post data
         this.app.use(bodyParser.json());
         //support application/x-www-form-urlencoded post data
-        this.app.use(bodyParser.urlencoded({ extended: false }));
+        this.app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
         //sass middleware support
         this.app.use(nodeSassMiddleware({
-            src: __dirname + 'public',
-            dest: __dirname + 'public',
+            src: __dirname + '/public/styles/sass',
+            dest: __dirname + '/public/styles',
+            debug: true,
+            outputStyle: 'compressed',
             indentedSyntax: true,
-            sourceMap: true
+            //sourceMap: true,
+            prefix: '/styles'
         }));
-        this.app.use(express.static('public'));
+        this.app.use('/', serveStatic(path.join(__dirname, 'public')));
+        //session
+        this.app.use(session({
+            key: 'user_sid',
+            secret: 'thisisasecret',
+            resave: false,
+            saveUninitialized: false,
+            cookie: {
+                expires: 60000
+            }
+        }));
         process.on('uncaughtException', (err) => {
             console.log('uncaughtException in app.ts', err);
         });
