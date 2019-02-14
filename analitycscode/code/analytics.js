@@ -2,28 +2,28 @@ let ___infos = {};
 function ___startAnalytics() {
     if (navigator.geolocation){
         navigator.geolocation.getCurrentPosition(getPosition,function(e){
-            postUserInfos(___analyticsToken);
+            postClientInfos(___analyticsToken);
         });
     }
     else  {
-        postUserInfos(___analyticsToken);
+        postClientInfos(___analyticsToken);
     }
 
     // In the callback function, it does all the logic
     function getPosition(position) {
         ___infos.location = position.coords.latitude + 'X' + position.coords.longitude;
-        postUserInfos(___analyticsToken);
+        postClientInfos(___analyticsToken);
     }
 }
 
-function postUserInfos(token) {
+function postClientInfos(token) {
     const url = "http://localhost:3000/api/analytics/client"
     let xmlHttp = new XMLHttpRequest();
     xmlHttp.open("POST", url, true); // false for synchronous request
     xmlHttp.onload = function(e){
         if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
             if(xmlHttp.responseText){
-                setUserId(xmlHttp.responseText);
+                setclientId(xmlHttp.responseText);
                 getAdvertisment(xmlHttp.responseText);
             }
         }

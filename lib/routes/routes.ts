@@ -1,4 +1,3 @@
-import { apiController as ApiController } from "../controllers/apiController";
 import express = require("express");
 const cors = require('cors');
 import { roleGuard } from "../middlewares/role.guard";
@@ -11,9 +10,9 @@ import { AdvertiseController } from "../controllers/advertiseController";
 import { analyticsTokenGuard } from "../middlewares/token.guard"
 import { IncomeController } from "../controllers/incomeController";
 import { CampaignController } from "../controllers/campaignController";
+import { raw } from "body-parser";
 
 export class Routes {
-    private userController: ApiController;
     private dashboardController: DashboardController;
     private profileController: ProfileController;
     private statistiqueController: StatistiqueController;
@@ -23,7 +22,6 @@ export class Routes {
     private campaignController: CampaignController;
 
     constructor() {
-        this.userController = new ApiController();
         this.profileController = new ProfileController();
         this.statistiqueController = new StatistiqueController();
         this.dashboardController = new DashboardController();
@@ -34,41 +32,35 @@ export class Routes {
     }
     public routes(app: express.Application): void {
 
-        app.use((req, res, next) => {
-            if (req.cookies.user_sid) {
-                res.clearCookie('user_sid');
-            }
-            next();
-        });
-
         const sessionChecker = (req, res, next) => {
-            if (req.session.user && req.cookies.user_sid) {
+            if (req.session.user) {
                 res.redirect('/');
             } else {
                 next();
             }
         };
-
-        app.get('/', sessionChecker, (req, res) => {
-            res.redirect('/login');
-        });
-
+        
+        //Dashboard
+        app.route('/')
+            .get(async (req, res) => this.dashboardController.index(req, res));
+            
         //Account
         app.route('/login')
             .get(sessionChecker, (req, res, next) => {
                 this.accountController.getLoginPage(req, res, next)
             })
             .post(async (req, res, next) => this.accountController.login(req, res, next));
-
+        app.route('/logout')
+            .get((req, res, next) => {
+                req.session.destroy( (err) => res.redirect('/login'));
+            })
+            .post(async (req, res, next) => this.accountController.login(req, res, next));
         app.route('/register')
             .get(sessionChecker, (req, res, next) => {
                 this.accountController.getRegisterPage(req, res, next);
             })
             .post(async (req, res, next) => this.accountController.register(req, res, next));
 
-        //Dashboard
-        app.route('/')
-            .get(async (req, res) => this.dashboardController.index(req, res));
 
         //Income
         app.route('/income')
@@ -90,9 +82,6 @@ export class Routes {
 
         app.route('/profile/delete/:id')
             .get(async (req, res) => this.profileController.delete(req, res), [roleGuard([UserRoles.ADMIN])]);
-
-        app.route('/user')
-            .post(async (req, res) => this.userController.addUser(req, res));
 
         //Website Statistique
         app.route('/statistique')
@@ -126,7 +115,7 @@ export class Routes {
             .post(async (req, res) => this.advertiseController.trackClient(req, res));
         app.route('/api/analytics/banner')
             .post(async (req, res) => this.advertiseController.getBanner(req, res));
-        app.route('/api/analytics/banner/click')
+        app.route('/api/analytics/banner/click/:bannerId')
             .post(async (req, res) => this.advertiseController.addClick(req, res));
     }
 }

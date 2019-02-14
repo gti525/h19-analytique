@@ -1,17 +1,14 @@
 import { Request, Response } from 'express';
 import { ProfileService } from '../service/profile.service';
 import { Profile } from '../DB/entity/profile.entitiy';
-import { WebsiteurlService } from '../service/websiteurl.service';
 import { WebSiteUrl } from '../DB/entity/websiteurl.entity';
-import { AdvancedConsoleLogger } from 'typeorm';
-import {Banner} from "../DB/entity/banner.entity";
-import {BannerType} from "../DB/entity/campaign.entity";
+import { BaseController } from './baseController';
 
-export class ProfileController {
+export class ProfileController extends BaseController {
     private profileService: ProfileService = new ProfileService();
 
     public async index(req: Request, res: Response) {
-        const profiles = await this.profileService.getProfiles();
+        const profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
         res.render('profile/index', { profiles });
     }
 
@@ -34,6 +31,7 @@ export class ProfileController {
                 profile.identifier = req.body.identifier;
                 profile.type = req.body.type;
                 profile.urls = urls;
+                profile.user = await this.getUser(req);
 
                 await this.profileService.addProfile(profile);
                 res.redirect("/profile")
