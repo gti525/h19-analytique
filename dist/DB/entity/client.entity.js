@@ -10,30 +10,46 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-let User = class User {
+let Client = class Client {
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
-], User.prototype, "id", void 0);
-__decorate([
-    typeorm_1.Column({ unique: true }),
-    __metadata("design:type", String)
-], User.prototype, "username", void 0);
+], Client.prototype, "id", void 0);
 __decorate([
     typeorm_1.Column(),
     __metadata("design:type", String)
-], User.prototype, "password", void 0);
+], Client.prototype, "os", void 0);
 __decorate([
     typeorm_1.Column(),
     __metadata("design:type", String)
-], User.prototype, "role", void 0);
+], Client.prototype, "resolution", void 0);
 __decorate([
-    typeorm_1.Column({ nullable: true }),
+    typeorm_1.Column(),
     __metadata("design:type", String)
-], User.prototype, "analyticToken", void 0);
-User = __decorate([
+], Client.prototype, "browser", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", Date)
+], Client.prototype, "date", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", String)
+], Client.prototype, "identifier", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", String)
+], Client.prototype, "graphicCard", void 0);
+__decorate([
+    typeorm_1.Column("double"),
+    __metadata("design:type", Number)
+], Client.prototype, "latitude", void 0);
+__decorate([
+    typeorm_1.Column("double"),
+    __metadata("design:type", Number)
+], Client.prototype, "longitude", void 0);
+Client = __decorate([
     typeorm_1.Entity()
-], User);
-exports.User = User;
-//# sourceMappingURL=user.entitiy.js.map
+], Client);
+exports.Client = Client;
+//# sourceMappingURL=client.entity.js.map

@@ -10,30 +10,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-let User = class User {
+const campaign_entity_1 = require("./campaign.entity");
+let Banner = class Banner {
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
-], User.prototype, "id", void 0);
-__decorate([
-    typeorm_1.Column({ unique: true }),
-    __metadata("design:type", String)
-], User.prototype, "username", void 0);
+], Banner.prototype, "id", void 0);
 __decorate([
     typeorm_1.Column(),
     __metadata("design:type", String)
-], User.prototype, "password", void 0);
+], Banner.prototype, "url", void 0);
+__decorate([
+    typeorm_1.Column({ type: "longtext" }),
+    __metadata("design:type", String)
+], Banner.prototype, "image", void 0);
 __decorate([
     typeorm_1.Column(),
-    __metadata("design:type", String)
-], User.prototype, "role", void 0);
+    __metadata("design:type", Number)
+], Banner.prototype, "type", void 0);
 __decorate([
-    typeorm_1.Column({ nullable: true }),
-    __metadata("design:type", String)
-], User.prototype, "analyticToken", void 0);
-User = __decorate([
+    typeorm_1.ManyToOne(type => campaign_entity_1.Campaign, campaign => campaign.banners),
+    __metadata("design:type", campaign_entity_1.Campaign)
+], Banner.prototype, "campaign", void 0);
+Banner = __decorate([
     typeorm_1.Entity()
-], User);
-exports.User = User;
-//# sourceMappingURL=user.entitiy.js.map
+], Banner);
+exports.Banner = Banner;
+//# sourceMappingURL=banner.entity.js.map

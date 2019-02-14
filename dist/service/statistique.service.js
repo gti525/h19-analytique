@@ -8,33 +8,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const user_repo_1 = require("../DB/repo/user.repo");
-const token_service_1 = require("./token.service");
-var sha1 = require('sha1');
-class UserService {
-    constructor() {
-        this.tokenService = token_service_1.TokenService.getInstance();
-    }
-    adduser(user) {
+const statistique_repo_1 = require("../DB/repo/statistique.repo");
+class StatistiqueService {
+    getOSBySiteWebId(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            user.password = sha1(user.password);
-            return yield user_repo_1.UserRepo.create(user);
+            return yield statistique_repo_1.StatistiqueRepo.findOSBySiteWebId(id);
         });
     }
-    authenticate(username, password) {
+    getResolutionBySiteWebId(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = yield user_repo_1.UserRepo.findByUsername(username);
-            if (user && user.password === sha1(password)) {
-                return this.tokenService.createToken(user.id);
-            }
-            throw new Error('Invalid password or username');
+            return yield statistique_repo_1.StatistiqueRepo.findResolutionBySiteWebId(id);
         });
     }
-    userExists(id) {
+    getPaysBySiteWebId(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return user_repo_1.UserRepo.findById(id) != undefined;
+            return yield statistique_repo_1.StatistiqueRepo.findPaysBySiteWebId(id);
         });
     }
 }
-exports.UserService = UserService;
-//# sourceMappingURL=user.service.js.map
+exports.StatistiqueService = StatistiqueService;
+//# sourceMappingURL=statistique.service.js.map

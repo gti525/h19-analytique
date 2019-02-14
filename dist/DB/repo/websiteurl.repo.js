@@ -8,35 +8,29 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const user_entitiy_1 = require("../../DB/entity/user.entitiy");
 const typeorm_1 = require("typeorm");
-class UserRepo {
-    static findByUsername(username) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
-            return yield userRepository.findOne({ where: { username: username } });
-        });
-    }
+const websiteurl_entity_1 = require("../entity/websiteurl.entity");
+class WebsiteurlRepo {
     static findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
-            return yield userRepository.findOne(id);
+            const websiteurlRepo = typeorm_1.getRepository(websiteurl_entity_1.WebSiteUrl);
+            return yield websiteurlRepo.findOne(id, { relations: ["profiles"] });
         });
     }
-    static create(user) {
+    static createOrUpdate(profile) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
-            return yield userRepository.save(user);
+            const websiteurlRepo = typeorm_1.getRepository(websiteurl_entity_1.WebSiteUrl);
+            return yield websiteurlRepo.save(profile);
         });
     }
     static delete(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
-            const userToDelete = yield UserRepo.findById(id);
-            if (userToDelete)
-                yield userRepository.delete(userToDelete);
+            const websiteurlRepo = typeorm_1.getRepository(typeorm_1.getRepository);
+            const urlToDelete = yield WebsiteurlRepo.findById(id);
+            if (urlToDelete)
+                yield websiteurlRepo.delete(urlToDelete);
         });
     }
 }
-exports.UserRepo = UserRepo;
-//# sourceMappingURL=user.repo.js.map
+exports.WebsiteurlRepo = WebsiteurlRepo;
+//# sourceMappingURL=websiteurl.repo.js.map

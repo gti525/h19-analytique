@@ -25,7 +25,7 @@ export class ClientInfo {
     
     public generateHash(){
         const concat = this.graphicCard + this.languages + this.os + this.plugins + this.screenColorDepth + this.screenHeight 
-        + this.screenWidth +  this.browser + this.browser + this.doNotTrack + this.canvasHash + this.longitude + this.latitude;
+        + this.screenWidth +  this.browser +  this.doNotTrack + this.canvasHash + this.longitude + this.latitude;
         this.hash = sha1(concat);
     }
 
