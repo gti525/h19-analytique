@@ -76,7 +76,7 @@ class App {
             resave: false,
             saveUninitialized: true,
             cookie: {
-                expires: 60000
+                expires: 600000
             },
             store: new MongoStore({
                 url: 'mongodb://root:gti525h2019analytics@ds135305.mlab.com:35305/heroku_pff57jrg'

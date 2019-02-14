@@ -1,9 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, OneToOne } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, OneToOne, JoinColumn, OneToMany } from "typeorm";
 import { Client } from "./client.entity";
 import { Banner } from "./banner.entity";
 
 @Entity()
-export class ClientStats{
+export class ClientStatistic{
     constructor(){
         this.date = new Date();
     }
@@ -16,7 +16,7 @@ export class ClientStats{
     @Column()
     date: Date;
 
-    @OneToOne(banner => Banner, banner => banner.clientStats)
+    @ManyToOne(banner => Banner, banner => banner.clientStats)
     banner: Banner;
 
     @Column()
@@ -25,7 +25,10 @@ export class ClientStats{
     @Column()
     isClick: boolean;
     
-    
     @Column()
     url: string;
+
+    @Column()
+    isTargeted: boolean;
+    
 }

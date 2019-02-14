@@ -7,10 +7,10 @@ export class IncomeController extends BaseController{
     private incomeService: IncomeService = new IncomeService();
 
     public async index(req: Request, res: Response) {
-        // TODO trouver le id du user actuel
         // TODO si income n'existe pas, retourner la page 404
-        const user = await this.getUser(req.session.id);
-        res.render('income/index', {income: user.income,incomeChart : IncomeChart});
+        const user = await this.getUser(req);
+        const income = await this.incomeService.getIncome(user);
+        res.render('income/index', {income,incomeChart : IncomeChart});
     }
 
 

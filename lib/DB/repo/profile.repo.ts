@@ -1,6 +1,11 @@
 import {getRepository} from "typeorm";
 import { Profile } from "../entity/profile.entitiy";
+import { User } from "../entity/user.entitiy";
 export class ProfileRepo {
+    public static async findUserProfile(user: User):Promise<Profile[]> {
+        const profileRepo = getRepository(Profile);
+        return await profileRepo.find({ where: {user}, relations: ["urls"] });
+    }
 
     public static async findById(id:number): Promise<Profile>{
         const profileRepo = getRepository(Profile);

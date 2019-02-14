@@ -10,6 +10,7 @@ import { AdvertiseController } from "../controllers/advertiseController";
 import { analyticsTokenGuard } from "../middlewares/token.guard"
 import { IncomeController } from "../controllers/incomeController";
 import { CampaignController } from "../controllers/campaignController";
+import { raw } from "body-parser";
 
 export class Routes {
     private dashboardController: DashboardController;
@@ -49,7 +50,11 @@ export class Routes {
                 this.accountController.getLoginPage(req, res, next)
             })
             .post(async (req, res, next) => this.accountController.login(req, res, next));
-
+        app.route('/logout')
+            .get((req, res, next) => {
+                req.session.destroy( (err) => res.redirect('/login'));
+            })
+            .post(async (req, res, next) => this.accountController.login(req, res, next));
         app.route('/register')
             .get(sessionChecker, (req, res, next) => {
                 this.accountController.getRegisterPage(req, res, next);

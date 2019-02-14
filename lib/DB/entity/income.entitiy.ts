@@ -15,13 +15,10 @@ export class Income{
     }
     @PrimaryGeneratedColumn()
     id: string;
-    @Column()
+    
     targetedViews: number;
-    @Column()
     targetedClicks: number;
-    @Column()
     regularViews: number;
-    @Column()
     regularClicks: number;
 
     @Column()

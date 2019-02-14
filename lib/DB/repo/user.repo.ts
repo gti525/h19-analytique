@@ -4,17 +4,17 @@ export class UserRepo {
 
     public static async findByUsername(username:string): Promise<User>{
         const userRepository = getRepository(User);
-        return await userRepository.findOne({where: { username: username }});
+        return await userRepository.findOne({where: { username: username },relations: ["income","campaigns"]});
     }
 
     public static async findByToken(token:string): Promise<User>{
         const userRepository = getRepository(User);
-        return await userRepository.findOne({ where: { analyticToken: token }});
+        return await userRepository.findOne({ where: { analyticToken: token },relations: ["income","campaigns"]});
     }
 
     public static async findById(id:number): Promise<User>{
         const userRepository = getRepository(User);
-        return await userRepository.findOne(id, {relations: ["income"]});
+        return await userRepository.findOne(id, {relations: ["income","campaigns"]});
     }
     public static async createOrUpdate(user: User): Promise<User>{
         const userRepository = getRepository(User);

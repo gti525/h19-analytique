@@ -6,7 +6,7 @@ import { TokenService } from '../service/token.service';
 import { AdvertismentService } from '../service/advertisment.service';
 import { UserService } from '../service/user.service';
 import { User } from '../DB/entity/user.entitiy';
-import { ClientStats } from '../DB/entity/clientStats';
+import { ClientStatistic } from '../DB/entity/clientStats';
 import { BannerService } from '../service/bannerService';
 import { Client } from '../DB/entity/client.entity';
 import { Banner } from '../DB/entity/banner.entity';
@@ -45,41 +45,39 @@ export class AdvertiseController extends BaseController {
     }
     
     public async getBanner(req: Request, res: Response) {
-        let error:string = "";
-        
-        const [clientId,bannerId,userId] = this.validateBannerInfo(req,error);
-        // TODO utiliser le token dans le header
-        const banner = await this.advertismentService.getBanner(clientId,bannerId,userId,req.headers.host)
-        if (banner && _.isEmpty(error)){
-            // TODO ajouter le userId dans le body
-            res.status(200).send(banner);
+        try{
+            const [clientId,bannerStyle] = this.validateBannerInfo(req);
+            const client = await this.getClient(clientId);
+            const banner = await this.advertismentService.getBanner(client,bannerStyle,req.headers.host)
+            if (banner){
+                res.status(200).send(banner);
+            }
         }
-        else
-            res.status(400).send(error);
+        catch (error){
+            console.log(error);
+            res.status(500).send({message:JSON.stringify(error)});
+        }
     }
 
-    private async getClient(req: Request) {
-        return req.body.userId ? await this.clientService.getClientByHashOrId(req.body.userId) : undefined;
+    private async getClient(clientId) {
+        return await this.clientService.getClientByHashOrId(clientId);
     }
 
     public async addClick(req: Request, res: Response) {
-        // TODO ajouter le userId dans le body
-        const user = await this.getUser(req);
-        const client = await this.getClient(req);
+        const client = await this.getClient(req.body.clientId);
         const banner = await this.bannerService.findById(req.query.bannerId);
-        await this.advertismentService.updateBannerStatistics(client, user,req.headers.host,banner,true);
+        await this.advertismentService.addClientStatistic(client, req.headers.host,banner,true);
     }
 
-    private validateBannerInfo(req: Request,error:string) {
-        const clientId = req.body.userId;
+    private validateBannerInfo(req: Request) {
+        const clientId = req.body.clientId;
         // le id de la baniere
-        const bannerId = req.body.bannerId;
+        const bannerStyle = req.body.bannerId;
         // le token de ladmin si site web
-        const userId = this.tokenService.decodeToken(req.headers['x-access-token'] as any).id;
-        if (_.isEmpty(clientId) || _.isEmpty(bannerId)){
-            error = "clientId or bannerId missing"
+        if (_.isEmpty(clientId) || _.isEmpty(bannerStyle)){
+            throw new Error("clientId or bannerId missing");
         }
-        return [clientId,bannerId,userId];
+        return [clientId,bannerStyle];
     }
 
     private generateClientInfos(body: any): ClientInfo {

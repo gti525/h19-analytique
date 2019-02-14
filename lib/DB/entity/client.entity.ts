@@ -1,7 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, OneToOne, OneToMany } from "typeorm";
-import { Campaign } from "./campaign.entity";
-import { Banner } from "./banner.entity";
-import { ClientStats } from "./clientStats";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { ClientStatistic } from "./clientStats";
 
 @Entity()
 export class Client{
@@ -35,6 +33,6 @@ export class Client{
     @Column("double")
     public longitude? : number;
 
-    @OneToMany(clientStats => ClientStats, clientStats => clientStats.client)
-    clientStats: ClientStats[];
+    @OneToMany(clientStats => ClientStatistic, clientStats => clientStats.client,{cascade:true})
+    clientStats: ClientStatistic[];
 }
