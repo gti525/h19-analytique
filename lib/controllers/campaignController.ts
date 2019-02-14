@@ -5,8 +5,6 @@ import {EnumsToArray} from "../helpers/enumsToArray";
 import {Banner} from "../DB/entity/banner.entity";
 import {ProfileService} from "../service/profile.service";
 import {In} from "typeorm";
-import { UserService } from '../service/user.service';
-import { TokenService } from '../service/token.service';
 import { BaseController } from './baseController';
 
 export class CampaignController extends BaseController{
@@ -14,10 +12,8 @@ export class CampaignController extends BaseController{
     private campaignService: CampaignService = new CampaignService();
     private profileService: ProfileService = new ProfileService();
     private enumsToArray: EnumsToArray = new EnumsToArray();
-    private userService: UserService = new UserService();
-    private tokenService: TokenService = TokenService.getInstance();
     public async index(req: Request, res: Response) {
-        const campaigns = await this.campaignService.getCampaigns();
+        const campaigns = await this.campaignService.getCampaignByUser(await this.getUser(req));
         res.render('campaign/index', { campaigns, moment: require("moment") });
     }
 
@@ -27,11 +23,10 @@ export class CampaignController extends BaseController{
         }
         if (req.method == 'GET'){
             let campaignTypes = await this.enumsToArray.translateEnumToSelectArray(BannerType);
-            let profiles = await this.profileService.getProfiles();
+            let profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
             res.render('campaign/create', { campaignTypes, profiles: profiles });
         }else{
             try {
-                const user = await this.getUser(req);
                 const banners = [];
                 req.body.banners.forEach(function(e){
                     const banner = new Banner();
@@ -51,7 +46,7 @@ export class CampaignController extends BaseController{
                 campaign.endDate = req.body.endDate;
                 campaign.banners = banners;
                 campaign.profiles = profiles;
-                campaign.user = user;
+                campaign.user = await this.getUser(req);
                 await this.campaignService.addCampaign(campaign);
 
                 res.redirect("/campaign")
@@ -72,7 +67,7 @@ export class CampaignController extends BaseController{
             let campaignTypes: any;
             if (req.params.id) {
                 campaignTypes = await this.enumsToArray.translateEnumToSelectArray(BannerType);
-                profiles = await this.profileService.getProfiles();
+                profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
                 campaign = await this.campaignService.getCampaignById(req.params.id);
             }
             res.render('campaign/edit', { campaign: campaign, profiles: profiles, campaignTypes: campaignTypes, moment: require("moment") });
