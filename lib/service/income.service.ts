@@ -1,23 +1,21 @@
 import { Income } from "../DB/entity/income.entitiy";
+import { UserService } from "./user.service";
+import { User } from "../DB/entity/user.entitiy";
+import * as _ from 'lodash'
+import { ClientStatisticsService } from "./clientStatistics.service";
 
 export class IncomeService {
+    private clientStatisticService: ClientStatisticsService = new ClientStatisticsService();
 
-
-    public async getIncomeByUserId(userId: number): Promise<Income> {
-        // NOT IMPLEMENTED YET
-        console.log("NOT IMPLEMENTED YET");
-        const income = new Income()
-        income.regularClicks  = Math.floor(Math.random()* 100)+20;
-        income.regularViews  = Math.floor(Math.random()* 100)+20;
-        income.targetedClicks  = Math.floor(Math.random()* 100)+20;
-        income.targetedViews  = Math.floor(Math.random()* 100)+20;
-
-        income.cashedRegularClicks  = Math.floor(Math.random()* 20);
-        income.cashedRegularViews  = Math.floor(Math.random()* 20);
-        income.cashedTargetedClicks  = Math.floor(Math.random()* 20);
-        income.cashedTargetedViews  = Math.floor(Math.random()* 20);
-        
+    public async getIncome(user: User): Promise<Income> {
+        const income = new Income();
+        _.merge(income,user.income);
+        income.regularClicks = await this.clientStatisticService.countBannersClicked(user,false);
+        income.regularViews = await this.clientStatisticService.countBannersViewed(user,false);
+        income.targetedClicks = await this.clientStatisticService.countBannersClicked(user,true);
+        income.targetedViews = await this.clientStatisticService.countBannersViewed(user,true);
         return income;
     }
+
 
 }

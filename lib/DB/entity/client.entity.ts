@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { ClientStatistic } from "./clientStats";
 
 @Entity()
 export class Client{
@@ -16,8 +17,12 @@ export class Client{
 
     @Column()
     date: Date;
+    
     @Column()
     identifier: string
+
+    @Column()
+    isTargettable: boolean
 
     @Column()
     public graphicCard? : string;
@@ -27,4 +32,7 @@ export class Client{
     
     @Column("double")
     public longitude? : number;
+
+    @OneToMany(clientStats => ClientStatistic, clientStats => clientStats.client,{cascade:true})
+    clientStats: ClientStatistic[];
 }

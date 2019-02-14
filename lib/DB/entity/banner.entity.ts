@@ -1,5 +1,6 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, OneToMany} from "typeorm";
 import {Campaign} from "./campaign.entity";
+import { ClientStatistic } from "./clientStats";
 
 @Entity()
 export class Banner{
@@ -9,5 +10,8 @@ export class Banner{
     @Column() type: number;
 
     @ManyToOne(type => Campaign, campaign => campaign.banners)
-    campaign: Campaign;
+    campaigns: Campaign;
+
+    @OneToMany(clientStats => ClientStatistic, clientStats => clientStats.banner)
+    clientStats: ClientStatistic[];
 }

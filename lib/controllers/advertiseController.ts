@@ -1,22 +1,33 @@
 import { Request, Response } from 'express';
 import { ClientInfo } from '../models/interfaces/client-infos'
-import { BannerId, BannerSize } from '../models/enums/banner-id-enum'
 import * as _ from 'lodash'
 import { ClientService } from '../service/client.service';
 import { TokenService } from '../service/token.service';
 import { AdvertismentService } from '../service/advertisment.service';
+import { UserService } from '../service/user.service';
+import { User } from '../DB/entity/user.entitiy';
+import { ClientStatistic } from '../DB/entity/clientStats';
+import { BannerService } from '../service/bannerService';
+import { Client } from '../DB/entity/client.entity';
+import { Banner } from '../DB/entity/banner.entity';
+import { BaseController } from './baseController';
 const fs = require('fs');
-export class AdvertiseController {
+export class AdvertiseController extends BaseController {
     private code;
     private clientService: ClientService;
     private tokenService: TokenService;
     private advertismentService: AdvertismentService
+    private userService: UserService;
+    private bannerService: BannerService;
     constructor(){
+        super ();
         const codePath = process.env.NODE_ENV === 'production' ? 'analitycscode/code/analytics.prod.js': 'analitycscode/code/analytics.min.js';
             this.code = fs.readFileSync(codePath, 'utf8');
         this.clientService = new ClientService();
         this.tokenService = TokenService.getInstance();
         this.advertismentService = new AdvertismentService();
+        this.userService =  new UserService();
+        this.bannerService = new BannerService();
     }
     
     public async getAnalitycsCode(req: Request, res: Response) {
@@ -34,30 +45,39 @@ export class AdvertiseController {
     }
     
     public async getBanner(req: Request, res: Response) {
-        let error:string = "";
-        // le id du client traqued
-        const [clientId,bannerId,userId] = this.validateBannerInfo(req,error);
-        // TODO utiliser le token dans le header
-        const banner = await this.advertismentService.getBanner(clientId,bannerId,userId)
-        if (banner && _.isEmpty(error))
-            res.status(200).send(banner);
-        else
-            res.status(400).send(error);
-    }
-    public async addClick(req: Request, res: Response) {
-        console.log("CLICK");
+        try{
+            const [clientId,bannerStyle] = this.validateBannerInfo(req);
+            const client = await this.getClient(clientId);
+            const banner = await this.advertismentService.getBanner(client,bannerStyle,req.headers.host)
+            if (banner){
+                res.status(200).send(banner);
+            }
+        }
+        catch (error){
+            console.log(error);
+            res.status(500).send({message:JSON.stringify(error)});
+        }
     }
 
-    private validateBannerInfo(req: Request,error:string) {
-        const clientId = req.body.userId;
+    private async getClient(clientId) {
+        return await this.clientService.getClientByHashOrId(clientId);
+    }
+
+    public async addClick(req: Request, res: Response) {
+        const client = await this.getClient(req.body.clientId);
+        const banner = await this.bannerService.findById(req.query.bannerId);
+        await this.advertismentService.addClientStatistic(client, req.headers.host,banner,true);
+    }
+
+    private validateBannerInfo(req: Request) {
+        const clientId = req.body.clientId;
         // le id de la baniere
-        const bannerId = req.body.bannerId;
+        const bannerStyle = req.body.bannerId;
         // le token de ladmin si site web
-        const userId = this.tokenService.decodeToken(req.headers['x-access-token'] as any).id;
-        if (_.isEmpty(clientId) || _.isEmpty(bannerId)){
-            error = "clientId or bannerId missing"
+        if (_.isEmpty(clientId) || _.isEmpty(bannerStyle)){
+            throw new Error("clientId or bannerId missing");
         }
-        return [clientId,bannerId,userId];
+        return [clientId,bannerStyle];
     }
 
     private generateClientInfos(body: any): ClientInfo {

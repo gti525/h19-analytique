@@ -2,69 +2,94 @@ import { BannerId, BannerSize } from "../models/enums/banner-id-enum";
 import { CampaignRepo } from "../DB/repo/campaign.repo";
 import { Banner } from "../DB/entity/banner.entity";
 import { BannerType, Campaign } from "../DB/entity/campaign.entity"
-var sha1 = require('sha1');
+import { Client } from "../DB/entity/client.entity";
+import { ClientService } from "./client.service";
+import { ClientStatistic } from "../DB/entity/clientStats";
+import { ClientStatisticsService } from "./clientStatistics.service";
 
 export class AdvertismentService {
+    private clientService = new ClientService();
+    private clientStatisticsService = new ClientStatisticsService()
     /**
      * Va permettre de donner les infos de la baniere et aussi d'empêcher de se faire hacker
      */
-    public async getBanner(clientId,bannerType,userId): Promise<any> {
-        // TODO Ajouter une view au user
+    public async getBanner(client: Client, bannerType, url): Promise<any> {
         const response: any = {};
         response.bannerId = bannerType;
-        const banner = await this.findTargeterBanner(clientId,bannerType);
+        const banner = await this.findTargeterBanner(client, bannerType);
+        if (!banner)
+            return undefined;
         response.url = banner.url;
         response.img = banner.image;
         response.size = this.getBannerSize(bannerType);
+        await this.addClientStatistic(client, url, banner);
         return response;
     }
 
-    /**
-     * La logique des banières va se faire ici.
-     * @param clientId le id du client qui appelle la pub
-     */
-    private async findTargeterBanner(clientId,bannerType): Promise<Banner> {
+    public async addClientStatistic(client: Client, url: string, banner: Banner, isClick = false) {
+        if (client) {
+            let stats = new ClientStatistic();
+            stats.url = url;
+            stats.banner = banner;
+            stats.isClick = isClick;
+            stats.isView = !isClick;
+            stats.isTargeted = client.isTargettable;
+            stats.client = client;
+            stats = await this.clientStatisticsService.save(stats);
+        }
+        else {
+            throw new Error("CLIENT WAS NOT FOUND WHEN ADDING STATISTIC")
+        }
 
-        const campaigns = await this.getTargetedCampaigns(clientId);
-        const max = campaigns.length-1;
+    }
+
+    private async findTargeterBanner(client: Client, bannerType): Promise<Banner> {
+
+        const campaigns = await this.getTargetedCampaigns(client);
+
+        const max = campaigns.length;
+        if (max < 1)
+            throw new Error("No banners found!");
         let banner: Banner;
-        Math.floor(Math.random() * max);
-        switch (bannerType){
+        const index = Math.floor(Math.random() * max);
+        switch (bannerType) {
             case BannerId.vertical:
-                banner = campaigns[max].banners.find(b => b.type === BannerType.Verticale)
+                banner = campaigns[index].banners.find(b => b.type === BannerType.Verticale)
                 break;
             case BannerId.horizontal:
-                banner = campaigns[max].banners.find(b => b.type === BannerType.Horizontale)
+                banner = campaigns[index].banners.find(b => b.type === BannerType.Horizontale)
                 break;
             case BannerId.mobile:
-                banner = campaigns[max].banners.find(b => b.type === BannerType.Mobile)
+                banner = campaigns[index].banners.find(b => b.type === BannerType.Mobile)
                 break;
         }
         if (banner)
             return banner;
         else
-            throw Error("No banner " + bannerType + " was found for this campain : " + JSON.stringify(campaigns[max]));
+            throw new Error("No banner " + bannerType + " was found for this campain : " + JSON.stringify(campaigns));
     }
 
-    private async getTargetedCampaigns(clientId): Promise<Campaign[]>{
+    private async getTargetedCampaigns(client: Client): Promise<Campaign[]> {
         // TODO aller chercher les bannières ciblées
+        // Si jamais on est capable de cibler un client, mettre client.isTargettable a true
+
         return await CampaignRepo.findAll();
     }
 
-    private getBannerSize(bannerId): any{
+    private getBannerSize(bannerId): any {
         const size: any = {};
-        switch (bannerId){
+        switch (bannerId) {
             case BannerId.vertical:
-                size.height =  BannerSize.verticalHeight;
-                size.width =  BannerSize.verticalWidth;
+                size.height = BannerSize.verticalHeight;
+                size.width = BannerSize.verticalWidth;
                 break;
             case BannerId.horizontal:
-                size.height =  BannerSize.horizontalHeight;
-                size.width =  BannerSize.horizontalWidth;
+                size.height = BannerSize.horizontalHeight;
+                size.width = BannerSize.horizontalWidth;
                 break;
             case BannerId.mobile:
-                size.height =  BannerSize.mobileHeight;
-                size.width =  BannerSize.mobileWidth;
+                size.height = BannerSize.mobileHeight;
+                size.width = BannerSize.mobileWidth;
                 break;
         }
         return size;
