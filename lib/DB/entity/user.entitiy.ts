@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne, JoinColumn} from "typeorm";
 import { Campaign } from "./campaign.entity";
 import { Income } from "./income.entitiy";
 
@@ -14,9 +14,11 @@ export class User{
     role: string;
     @Column({nullable:true})
     analyticToken: string;
+
     @OneToMany(type => Campaign, campaign => campaign.user)
     campaign: Campaign[];
 
-    @OneToOne(income => Income, income => income.user)
+    @OneToOne(type => Income)
+    @JoinColumn()
     income: Income;
 }

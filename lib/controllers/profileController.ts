@@ -1,11 +1,7 @@
 import { Request, Response } from 'express';
 import { ProfileService } from '../service/profile.service';
 import { Profile } from '../DB/entity/profile.entitiy';
-import { WebsiteurlService } from '../service/websiteurl.service';
 import { WebSiteUrl } from '../DB/entity/websiteurl.entity';
-import { AdvancedConsoleLogger } from 'typeorm';
-import {Banner} from "../DB/entity/banner.entity";
-import {BannerType} from "../DB/entity/campaign.entity";
 
 export class ProfileController {
     private profileService: ProfileService = new ProfileService();

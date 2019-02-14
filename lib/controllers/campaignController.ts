@@ -7,8 +7,9 @@ import {ProfileService} from "../service/profile.service";
 import {In} from "typeorm";
 import { UserService } from '../service/user.service';
 import { TokenService } from '../service/token.service';
+import { BaseController } from './baseController';
 
-export class CampaignController {
+export class CampaignController extends BaseController{
 
     private campaignService: CampaignService = new CampaignService();
     private profileService: ProfileService = new ProfileService();
@@ -30,6 +31,7 @@ export class CampaignController {
             res.render('campaign/create', { campaignTypes, profiles: profiles });
         }else{
             try {
+                const user = await this.getUser(req);
                 const banners = [];
                 req.body.banners.forEach(function(e){
                     const banner = new Banner();
@@ -43,15 +45,7 @@ export class CampaignController {
                     return parseInt(value, 10);
                 });
                 const profiles = await this.profileService.getProfiles({id: In(profileIds)});
-                
-                // TODO TROUER LE USER EN COURS
-                const token = this.tokenService.decodeToken(req.headers['x-access-token'] as any).id;
-                const user = await this.userService.findByToken(token);
-                // end TODO
 
-
-
-                
                 const campaign = new Campaign();
                 campaign.startDate = req.body.startDate;
                 campaign.endDate = req.body.endDate;

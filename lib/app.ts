@@ -9,10 +9,11 @@ import * as fs from 'fs';
 import * as nodeSassMiddleware from "node-sass-middleware";
 import * as path from "path";
 import serveStatic = require("serve-static");
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const PORT = 3000;
 const HOST = "localhost";
 const cookieParser = require('cookie-parser');
-const session = require('express-session');
 
 const httpsOptions = {
     key: fs.readFileSync('./config/key.pem'),
@@ -68,14 +69,18 @@ class App {
         }));
         this.app.use('/', serveStatic(path.join(__dirname, 'public')));
         //session
+        this.app.set('trust proxy', 1) 
         this.app.use(session({
             key: 'user_sid',
             secret: 'thisisasecret',
             resave: false,
-            saveUninitialized: false,
+            saveUninitialized: true,
             cookie: {
                 expires: 60000
-            }
+            },
+            store: new MongoStore({
+                url: 'mongodb://root:gti525h2019analytics@ds135305.mlab.com:35305/heroku_pff57jrg'
+              })
         }));
 
         process.on('uncaughtException', (err) => {

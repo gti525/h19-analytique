@@ -4,7 +4,7 @@ export class UserRepo {
 
     public static async findByUsername(username:string): Promise<User>{
         const userRepository = getRepository(User);
-        return await userRepository.findOne({ where: { username: username }});
+        return await userRepository.findOne({where: { username: username }});
     }
 
     public static async findByToken(token:string): Promise<User>{
@@ -14,7 +14,7 @@ export class UserRepo {
 
     public static async findById(id:number): Promise<User>{
         const userRepository = getRepository(User);
-        return await userRepository.findOne(id);
+        return await userRepository.findOne(id, {relations: ["income"]});
     }
     public static async createOrUpdate(user: User): Promise<User>{
         const userRepository = getRepository(User);

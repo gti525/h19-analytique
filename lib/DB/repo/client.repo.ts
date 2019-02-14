@@ -4,7 +4,6 @@ export class ClientRepo {
 
     public static async findByHash(hash:string): Promise<Client>{
         const userRepository = getRepository(Client);
-        console.log(await userRepository.findOne({ where: { identifier:hash }}));
         return await userRepository.findOne({ where: { identifier:hash }})
     }
 

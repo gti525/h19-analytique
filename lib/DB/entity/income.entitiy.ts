@@ -32,7 +32,7 @@ export class Income{
     cashedRegularViews: number;
     @Column()
     cashedRegularClicks: number;
-    @OneToOne(user => User, user => user.income)
-    user: User;
 
+    @OneToOne(type => User, user => user.income)
+    user: User;
 }

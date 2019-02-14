@@ -13,13 +13,22 @@ export class AccountController {
         try{
             const username = req.body.username;
             const password =  req.body.password;
-            const token = await this.userService.authenticate(username, password);
-
-            res.render("index");
+            const user = await this.userService.authenticate(username, password);
+            this.userService.findByToken
+            this.createUserSession(req, user, res);
         }
         catch{
             res.status(401).send('Invalid credentials');
         }
+    }
+
+    private createUserSession(req: Request, user: User, res: Response) {
+        req.session.user = user.id;
+        req.session.save((err) => {
+            if (!err) {
+                res.redirect('/');
+            }
+        });
     }
 
     public async getLoginPage(req: Request, res: Response, next) {
@@ -43,7 +52,7 @@ export class AccountController {
 
             await this.userService.adduser(user);
 
-            res.render("index")
+            this.createUserSession(req, user, res);
         }
         catch(error){
             if (error instanceof QueryFailedError && (error as any).code === 'ER_DUP_ENTRY'){
