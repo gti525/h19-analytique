@@ -30,7 +30,7 @@ Effectuer le test via la commande grunt test.  Les tests devraient passer.
 
 Assurez-vous d'avoir démarré une instance de votre base de données.
 
-Pour démarrer le serveur, faites npm run-script dev.
+Pour démarrer le serveur, faites npm run-script start.
 
 ---
 
