@@ -18,6 +18,12 @@ block content
                             option(selected="") Select a role
                             each role in roles
                                 option= role
+                    if option === "Website administrator"
+                        div.form-group.input-group
+                            div.input-group-prepend
+                                span.input-group-text
+                                    i.fa.fa-cc-visa
+                            input.form-control(name="accountNumber", placeholder="Numéro de compte bancaire" type="text")
                     div.form-group.input-group
                         div.input-group-prepend
                             span.input-group-text
