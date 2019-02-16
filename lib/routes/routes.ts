@@ -108,14 +108,16 @@ export class Routes {
         // **************************************
 
         app.use(cors());
-        app.use(analyticsTokenGuard())
-        app.route('/api/analytics/code')
+        app.use('/api/v1',analyticsTokenGuard())
+        app.route('/api/v1/analytics/code')
             .get(async (req, res) => this.advertiseController.getAnalitycsCode(req, res));
-        app.route('/api/analytics/client')
+        app.route('/api/v1/analytics/client')
             .post(async (req, res) => this.advertiseController.trackClient(req, res));
-        app.route('/api/analytics/banner')
-            .post(async (req, res) => this.advertiseController.getBanner(req, res));
-        app.route('/api/analytics/banner/click/:bannerId')
+        app.route('/api/v1/banners/code')
+            .get(async (req, res) => this.advertiseController.getBannersCode(req, res));
+        app.route('/api/v1/banner/:bannerType/:clientId')
+            .get(async (req, res) => this.advertiseController.getBanner(req, res));
+        app.route('/api/v1/banner/click/:bannerId/:clientId')
             .post(async (req, res) => this.advertiseController.addClick(req, res));
     }
 }

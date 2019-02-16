@@ -1,4 +1,4 @@
-import { BannerId, BannerSize } from "../models/enums/banner-id-enum";
+import { BannerOrientation, BannerSize } from "../models/enums/banner-id-enum";
 import { CampaignRepo } from "../DB/repo/campaign.repo";
 import { Banner } from "../DB/entity/banner.entity";
 import { BannerType, Campaign } from "../DB/entity/campaign.entity"
@@ -15,12 +15,14 @@ export class AdvertismentService {
      */
     public async getBanner(client: Client, bannerType, url): Promise<any> {
         const response: any = {};
-        response.bannerId = bannerType;
         const banner = await this.findTargeterBanner(client, bannerType);
         if (!banner)
-            return undefined;
+        return undefined;
         response.url = banner.url;
         response.img = banner.image;
+        response.bannerId = banner.id;
+        response.bannerType = bannerType;
+
         response.size = this.getBannerSize(bannerType);
         await this.addClientStatistic(client, url, banner);
         return response;
@@ -53,20 +55,20 @@ export class AdvertismentService {
         let banner: Banner;
         const index = Math.floor(Math.random() * max);
         switch (bannerType) {
-            case BannerId.vertical:
+            case BannerOrientation.vertical:
                 banner = campaigns[index].banners.find(b => b.type === BannerType.Verticale)
                 break;
-            case BannerId.horizontal:
+            case BannerOrientation.horizontal:
                 banner = campaigns[index].banners.find(b => b.type === BannerType.Horizontale)
                 break;
-            case BannerId.mobile:
+            case BannerOrientation.mobile:
                 banner = campaigns[index].banners.find(b => b.type === BannerType.Mobile)
                 break;
         }
         if (banner)
             return banner;
         else
-            throw new Error("No banner " + bannerType + " was found for this campain : " + JSON.stringify(campaigns));
+            throw new Error("No banner " + bannerType + " was found for this campain : " + JSON.stringify(campaigns.map(c => c)));
     }
 
     private async getTargetedCampaigns(client: Client): Promise<Campaign[]> {
@@ -76,18 +78,18 @@ export class AdvertismentService {
         return await CampaignRepo.findAll();
     }
 
-    private getBannerSize(bannerId): any {
+    private getBannerSize(bannerType): any {
         const size: any = {};
-        switch (bannerId) {
-            case BannerId.vertical:
+        switch (bannerType) {
+            case BannerType.Verticale:
                 size.height = BannerSize.verticalHeight;
                 size.width = BannerSize.verticalWidth;
                 break;
-            case BannerId.horizontal:
+            case BannerType.Horizontale:
                 size.height = BannerSize.horizontalHeight;
                 size.width = BannerSize.horizontalWidth;
                 break;
-            case BannerId.mobile:
+            case BannerType.Mobile:
                 size.height = BannerSize.mobileHeight;
                 size.width = BannerSize.mobileWidth;
                 break;
