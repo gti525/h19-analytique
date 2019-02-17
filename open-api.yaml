@@ -1,0 +1,199 @@
+swagger: "2.0"
+info:
+  description: "Voici les routes utilisées par l'API de l'équipe analytics.  Ces routes sont utilisées pour la logique d'affichage des publicités et le suivi des clients"
+  version: "1.0.0"
+  title: "Analytics"
+  termsOfService: "http://swagger.io/terms/"
+  license:
+    name: "ETS"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "gti525-analitycs.herokuapp.com"
+basePath: "/api/v1"
+tags:
+- name: "Analytics"
+  description: "Suivi des clients."
+- name: "Banner"
+  description: "Gestion de la publicité et des bannières."
+schemes:
+- "https"
+paths:
+  /banners/code:
+    get:
+      tags:
+      - "Banner"
+      summary: "Permet d'aller chercher le code javascript qui donne les bannières"
+      description: "Envoie les informations sur le client et retourne sa clef unique"
+      operationId: "getBannerCode"
+      consumes:
+        - application/json
+      parameters:
+      - name: "x-access-token"
+        in: "header"
+        required: true
+        type: "string"
+      produces:
+      - "application/javacsript"
+      responses:
+        200:
+          description: "Javascript code was found and returned"
+  /banner/{bannerType}/{clientId}:
+    get:
+      tags:
+      - "Banner"
+      summary: "Permet d'aller chercher les bannieres"
+      description: "Envoie les informations sur le client et retourne sa clef unique"
+      operationId: "getBanner"
+      consumes:
+        - application/json
+      parameters:
+      - name: bannerType
+        in: path
+        required: true
+        description: Le type de bannière désiré
+        type : string
+      - name: clientId
+        in: path
+        required: true
+        description: Le id du client qui navigue
+        type : string
+      - in: "header"
+        name: "x-access-token"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "L'identifiant unique du client a été créé"
+          schema:
+            $ref: "#/definitions/Banner"
+  /banner/click/{bannerId}/{clientId}:
+    post:
+      tags:
+      - "Banner"
+      summary: "Envoie les informations sur le client"
+      description: "Envoie les informations sur le client et retourne sa clef unique"
+      operationId: "addClick"
+      consumes:
+        - application/json
+      parameters:
+      - name: bannerId
+        in: path
+        required: true
+        description: L'identifiant unique de la banière
+        type : integer
+      - name: clientId
+        in: path
+        required: true
+        description: Le id du client qui navigue
+        type : string
+      - in: "header"
+        name: "x-access-token"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "L'opération a fonctionné"
+  /analytics/code:
+    get:
+      tags:
+      - "Analytics"
+      summary: "Permet d'acquérir le code qui va évaluer le client."
+      description: "Retourne le code javascript qui évalue le client et qui envoi ses informations au serveur."
+      operationId: "getAnalitycsCode"
+      parameters:
+      - name: "x-access-token"
+        in: "header"
+        required: true
+        type: "string"
+      produces:
+      - "application/javacsript"
+      responses:
+        200:
+          description: "Javascript code was found and returned"
+  /analytics/client:          
+    post:
+      tags:
+      - "Analytics"
+      summary: "Envoie les informations sur le client"
+      description: "Envoie les informations sur le client et retourne sa clef unique"
+      operationId: "trackClient"
+      consumes:
+        - application/json
+      parameters:
+      - in: body
+        name: user
+        description: "Les informations du client"
+        required: true
+        schema:
+          $ref: "#/definitions/Client"
+      - in: "header"
+        name: "x-access-token"
+        required: true
+        type: "string"
+      responses:
+        201:
+          description: "L'identifiant unique du client a été créé"
+          schema:
+            type: "string"
+            description: "L'identifiant unique du client"
+securityDefinitions:
+  x-access-token:
+    type: "apiKey"
+    name: "'x-access-token"
+    in: "header"
+definitions:
+  Client:
+    type: "object"
+    properties:
+      webglinfo:
+        type: "string"
+        description:  "Infos de la carte graphique"
+      screen:
+        type: "string"
+        description:  "Resolution de l'écran"
+      location:
+        type: "string"
+        description:  "Localisation de l'utilisateur"
+      host:
+        type: "string"
+        description:  "Hôte de l'utilisateur"
+      platform:
+        type: "string"
+        description:  "OS de l'utilisateur"
+      href:
+        type: "string"
+        description:  "Url complet du site"
+      doNotTrack:
+        type: "string"
+        description:  "Option doNotTrack de l'utilisateur"
+      canvas:
+        type: "string"
+        description:  "id unique du canvas"
+      browser:
+        type: "string"
+        description:  "Fureteur utilisé"
+      plugins:
+        description:  "Les différents plugins utilisés"
+        type: array
+        items:
+          type: "string"
+  Banner:
+    type: "object"
+    properties:
+      url:
+        type: "string"
+        description: "Le lien de l'image"
+      img:
+        type: "string"
+        description: "L'image en string"
+      size:
+        type: "string"
+        description: "La grandeur de la bannière"
+      bannerType:
+        description: "Le type de bannière"
+        type: "string"
+      bannerId:
+        description: "L'identifiant unique de la bannière"
+        type: "string"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
