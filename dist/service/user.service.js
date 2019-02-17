@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_repo_1 = require("../DB/repo/user.repo");
 const token_service_1 = require("./token.service");
+const role_enums_1 = require("../models/enums/role-enums");
 var sha1 = require('sha1');
 class UserService {
     constructor() {
@@ -18,21 +19,40 @@ class UserService {
     adduser(user) {
         return __awaiter(this, void 0, void 0, function* () {
             user.password = sha1(user.password);
-            return yield user_repo_1.UserRepo.create(user);
+            if (user.role === role_enums_1.UserRoles.WEBSITEADMIN) {
+            }
+            const savedUser = yield user_repo_1.UserRepo.createOrUpdate(user);
+            user.analyticToken = this.tokenService.createToken(savedUser.id);
+            return yield user_repo_1.UserRepo.createOrUpdate(user);
+        });
+    }
+    updateUser(user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield user_repo_1.UserRepo.createOrUpdate(user);
         });
     }
     authenticate(username, password) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield user_repo_1.UserRepo.findByUsername(username);
             if (user && user.password === sha1(password)) {
-                return this.tokenService.createToken(user.id);
+                return user;
             }
             throw new Error('Invalid password or username');
         });
     }
     userExists(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return user_repo_1.UserRepo.findById(id) != undefined;
+            return (yield user_repo_1.UserRepo.findById(id)) != undefined;
+        });
+    }
+    findByToken(token) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return token ? yield user_repo_1.UserRepo.findByToken(token) : undefined;
+        });
+    }
+    findById(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return id ? yield user_repo_1.UserRepo.findById(id) : undefined;
         });
     }
 }

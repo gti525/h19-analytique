@@ -10,28 +10,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
+const user_entitiy_1 = require("./user.entitiy");
 let Income = class Income {
+    constructor() {
+        this.targetedViews = 0;
+        this.targetedClicks = 0;
+        this.regularViews = 0;
+        this.regularClicks = 0;
+        this.cashedTargetedViews = 0;
+        this.cashedTargetedClicks = 0;
+        this.cashedRegularViews = 0;
+        this.cashedRegularClicks = 0;
+    }
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
     __metadata("design:type", String)
 ], Income.prototype, "id", void 0);
-__decorate([
-    typeorm_1.Column(),
-    __metadata("design:type", Number)
-], Income.prototype, "targetedViews", void 0);
-__decorate([
-    typeorm_1.Column(),
-    __metadata("design:type", Number)
-], Income.prototype, "targetedClicks", void 0);
-__decorate([
-    typeorm_1.Column(),
-    __metadata("design:type", Number)
-], Income.prototype, "regularViews", void 0);
-__decorate([
-    typeorm_1.Column(),
-    __metadata("design:type", Number)
-], Income.prototype, "regularClicks", void 0);
 __decorate([
     typeorm_1.Column(),
     __metadata("design:type", Number)
@@ -48,8 +43,13 @@ __decorate([
     typeorm_1.Column(),
     __metadata("design:type", Number)
 ], Income.prototype, "cashedRegularClicks", void 0);
+__decorate([
+    typeorm_1.OneToOne(type => user_entitiy_1.User, user => user.income),
+    __metadata("design:type", user_entitiy_1.User)
+], Income.prototype, "user", void 0);
 Income = __decorate([
-    typeorm_1.Entity()
+    typeorm_1.Entity(),
+    __metadata("design:paramtypes", [])
 ], Income);
 exports.Income = Income;
 //# sourceMappingURL=income.entitiy.js.map

@@ -3,12 +3,17 @@ import { CampaignRepo } from "../DB/repo/campaign.repo";
 import { Banner } from "../DB/entity/banner.entity";
 import { BannerType, Campaign } from "../DB/entity/campaign.entity"
 import { Client } from "../DB/entity/client.entity";
-import { ClientService } from "./client.service";
 import { ClientStatistic } from "../DB/entity/clientStats";
 import { ClientStatisticsService } from "./clientStatistics.service";
+import * as moment from 'moment';
+import { In } from "typeorm";
+import { WebsiteurlService } from "./websiteurl.service";
+import { ClientService } from "./client.service";
+import * as _ from 'lodash'
 
 export class AdvertismentService {
-    private clientService = new ClientService();
+    private webSiteUrlService = new WebsiteurlService();
+    private clientService = new ClientService()
     private clientStatisticsService = new ClientStatisticsService()
     /**
      * Va permettre de donner les infos de la baniere et aussi d'empêcher de se faire hacker
@@ -72,10 +77,48 @@ export class AdvertismentService {
     }
 
     private async getTargetedCampaigns(client: Client): Promise<Campaign[]> {
-        // TODO aller chercher les bannières ciblées
-        // Si jamais on est capable de cibler un client, mettre client.isTargettable a true
+        let targettedCampaigns = undefined;
+        const tagettedUrls: string[] = this.getTargettedUrls(client);
 
-        return await CampaignRepo.findAll();
+        const campaigns = (await CampaignRepo.findAll()).filter(c => moment(c.endDate).endOf('day').isSameOrBefore(new Date()) && 
+            moment(c.startDate).startOf('day').isSameOrAfter(new Date())
+        );
+        console.log(tagettedUrls.length)
+        const webSiteUrls = await this.webSiteUrlService.findProfilesByUrl({url: In(tagettedUrls)})
+        console.log(campaigns.length)
+        console.log(webSiteUrls.length)
+        console.log("avant la boucle",campaigns && webSiteUrls)
+        if (campaigns && webSiteUrls){
+                //finding the existing campaings that have profiles that matches the urls
+            targettedCampaigns = campaigns.map(c =>{
+                for(const w of webSiteUrls){
+                    for (const  profile of c.profiles){
+                        if (profile.id === w.profile.id){
+                            return c;
+                        }
+                    }
+                }
+            })
+        }
+        client.isTargettable = !_.isEmpty(targettedCampaigns);
+        this.clientService.updateClient(client);
+        return _.isEmpty(targettedCampaigns) ? campaigns : targettedCampaigns;
+    }
+
+    private getTargettedUrls(client: Client):string[] {
+        const url_visits = {};
+        const tagettedUrls: string[] = [];
+        // grouping urls and counting the number of occurences
+        client.clientStats.forEach(s => {
+            url_visits[s.url] = (url_visits[s.url] || 0) + 1;
+        });
+        // if 10 or more visits
+        Object.keys(url_visits).forEach(k => {
+            if (url_visits[k] > 20) {
+                tagettedUrls.push(k);
+            }
+        });
+        return tagettedUrls;
     }
 
     private getBannerSize(bannerType): any {

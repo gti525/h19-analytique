@@ -14,16 +14,22 @@ class UserRepo {
     static findByUsername(username) {
         return __awaiter(this, void 0, void 0, function* () {
             const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
-            return yield userRepository.findOne({ where: { username: username } });
+            return yield userRepository.findOne({ where: { username: username }, relations: ["income", "campaigns"] });
+        });
+    }
+    static findByToken(token) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
+            return yield userRepository.findOne({ where: { analyticToken: token }, relations: ["income", "campaigns"] });
         });
     }
     static findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
-            return yield userRepository.findOne(id);
+            return yield userRepository.findOne(id, { relations: ["income", "campaigns"] });
         });
     }
-    static create(user) {
+    static createOrUpdate(user) {
         return __awaiter(this, void 0, void 0, function* () {
             const userRepository = typeorm_1.getRepository(user_entitiy_1.User);
             return yield userRepository.save(user);

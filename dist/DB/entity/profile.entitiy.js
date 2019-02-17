@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const websiteurl_entity_1 = require("./websiteurl.entity");
 const campaign_entity_1 = require("./campaign.entity");
+const user_entitiy_1 = require("./user.entitiy");
 let Profile = class Profile {
 };
 __decorate([
@@ -31,7 +32,11 @@ __decorate([
     __metadata("design:type", Array)
 ], Profile.prototype, "urls", void 0);
 __decorate([
-    typeorm_1.ManyToOne(type => campaign_entity_1.Campaign, campaign => campaign.profiles),
+    typeorm_1.ManyToOne(type => user_entitiy_1.User, user => user.profile, { cascade: true }),
+    __metadata("design:type", user_entitiy_1.User)
+], Profile.prototype, "user", void 0);
+__decorate([
+    typeorm_1.ManyToMany(type => campaign_entity_1.Campaign),
     __metadata("design:type", campaign_entity_1.Campaign)
 ], Profile.prototype, "campaign", void 0);
 Profile = __decorate([

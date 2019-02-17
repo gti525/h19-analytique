@@ -6,6 +6,10 @@ export class WebsiteurlRepo {
         const websiteurlRepo = getRepository(WebSiteUrl);
         return await websiteurlRepo.findOne(id, { relations: ["profiles"] });
     }
+    public static async find(filter: any): Promise<WebSiteUrl[]>{
+        const websiteurlRepo = getRepository(WebSiteUrl);
+        return await websiteurlRepo.find({where: filter,relations: ["profiles"]});
+    }
     public static async createOrUpdate(profile: WebSiteUrl): Promise<WebSiteUrl>{
         const websiteurlRepo = getRepository(WebSiteUrl);
         return await websiteurlRepo.save(profile);

@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const banner_entity_1 = require("./banner.entity");
 const profile_entitiy_1 = require("./profile.entitiy");
+const user_entitiy_1 = require("./user.entitiy");
 let Campaign = class Campaign {
 };
 __decorate([
@@ -27,11 +28,15 @@ __decorate([
     __metadata("design:type", Date)
 ], Campaign.prototype, "endDate", void 0);
 __decorate([
-    typeorm_1.OneToMany(type => banner_entity_1.Banner, banner => banner.campaign, { cascade: true }),
+    typeorm_1.OneToMany(banner => banner_entity_1.Banner, banner => banner.campaigns, { cascade: true }),
     __metadata("design:type", Array)
 ], Campaign.prototype, "banners", void 0);
 __decorate([
-    typeorm_1.ManyToMany(type => profile_entitiy_1.Profile, { cascade: false }),
+    typeorm_1.ManyToOne(type => user_entitiy_1.User, user => user.campaigns),
+    __metadata("design:type", user_entitiy_1.User)
+], Campaign.prototype, "user", void 0);
+__decorate([
+    typeorm_1.ManyToMany(profiles => profile_entitiy_1.Profile),
     typeorm_1.JoinTable(),
     __metadata("design:type", Array)
 ], Campaign.prototype, "profiles", void 0);

@@ -14,16 +14,16 @@ class ClientRepo {
     static findByHash(hash) {
         return __awaiter(this, void 0, void 0, function* () {
             const userRepository = typeorm_1.getRepository(client_entity_1.Client);
-            return yield userRepository.findOne({ where: { hash } });
+            return yield userRepository.findOne({ where: { identifier: hash }, relations: ["clientStats"] });
         });
     }
     static findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const userRepository = typeorm_1.getRepository(client_entity_1.Client);
-            return yield userRepository.findOne(id);
+            return yield userRepository.findOne(id, { relations: ["clientStats"] });
         });
     }
-    static create(user) {
+    static createOrUpdate(user) {
         return __awaiter(this, void 0, void 0, function* () {
             const userRepository = typeorm_1.getRepository(client_entity_1.Client);
             return yield userRepository.save(user);

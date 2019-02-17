@@ -11,8 +11,8 @@ export class WebsiteurlService {
         return await WebsiteurlRepo.createOrUpdate(url);
     }
 
-    public async getProfileByUrl(id: number): Promise<WebSiteUrl> {
-        return await WebsiteurlRepo.findById(id);
+    public async findProfilesByUrl(filter: any): Promise<WebSiteUrl[]> {
+        return await WebsiteurlRepo.find(filter);
     }
 
     public async deleteWebsiteurl(id: number){
