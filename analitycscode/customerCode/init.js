@@ -13,7 +13,7 @@ function gti525Analyze(){
             }
         };
         xmlHttp.setRequestHeader('x-access-token', ___analyticsToken)
-        xmlHttp.send( null );
+        xmlHttp.send();
     }
 
     // PROGRAM STARTS HERE.
@@ -50,5 +50,5 @@ function ___getAdvertisment(clientId){
         }
     };
     xmlHttp.setRequestHeader('x-access-token', ___analyticsToken)
-    xmlHttp.send( null );
+    xmlHttp.send();
 }
