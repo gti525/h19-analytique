@@ -47,6 +47,9 @@ export class AdvertiseController extends BaseController {
             if (banner){
                 res.status(200).send(banner);
             }
+            else{
+                res.status(500).send({message:"No banner found at the moment"});    
+            }
         }
         catch (error){
             res.status(500).send({message:JSON.stringify(error)});

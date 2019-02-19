@@ -22,13 +22,16 @@ export class AdvertismentService {
         const response: any = {};
         const banner = await this.findTargeterBanner(client, bannerType);
         if (!banner)
-        return undefined;
+            return undefined;
         response.url = banner.url;
         response.img = banner.image;
         response.bannerId = banner.id;
         response.bannerType = bannerType;
-
         response.size = this.getBannerSize(bannerType);
+        // TODO evaluer si la baniere est ciblee.  Si oui, ajuster la statistique
+        // TODO envoyer le ID de la statistique client.  Lors du clic, transformer la statistique view en clic.
+        // En plus ca va prevenir contre les multis clics
+        // Pour le refresh excessif, mettre un timer qui prend du temps 
         await this.addClientStatistic(client, url, banner);
         return response;
     }
@@ -40,9 +43,9 @@ export class AdvertismentService {
             stats.banner = banner;
             stats.isClick = isClick;
             stats.isView = !isClick;
-            stats.isTargeted = client.isTargettable;
+            stats.isTargeted = client.isTargeted;
             stats.client = client;
-            stats = await this.clientStatisticsService.save(stats);
+            await this.clientStatisticsService.save(stats);
         }
         else {
             throw new Error("CLIENT WAS NOT FOUND WHEN ADDING STATISTIC")
@@ -51,7 +54,6 @@ export class AdvertismentService {
     }
 
     private async findTargeterBanner(client: Client, bannerType): Promise<Banner> {
-
         const campaigns = await this.getTargetedCampaigns(client);
 
         const max = campaigns.length;
@@ -77,19 +79,16 @@ export class AdvertismentService {
     }
 
     private async getTargetedCampaigns(client: Client): Promise<Campaign[]> {
+        client.isTargeted = false;
         let targettedCampaigns = undefined;
+        
+        const campaigns = (await CampaignRepo.findAll()).filter(c => moment(new Date()).endOf('day').isSameOrBefore(c.endDate) 
+        && moment(new Date()).startOf('day').isSameOrAfter(c.startDate));
+        
         const tagettedUrls: string[] = this.getTargettedUrls(client);
-
-        const campaigns = (await CampaignRepo.findAll()).filter(c => moment(c.endDate).endOf('day').isSameOrBefore(new Date()) && 
-            moment(c.startDate).startOf('day').isSameOrAfter(new Date())
-        );
-        console.log(tagettedUrls.length)
-        const webSiteUrls = await this.webSiteUrlService.findProfilesByUrl({url: In(tagettedUrls)})
-        console.log(campaigns.length)
-        console.log(webSiteUrls.length)
-        console.log("avant la boucle",campaigns && webSiteUrls)
-        if (campaigns && webSiteUrls){
-                //finding the existing campaings that have profiles that matches the urls
+        const webSiteUrls = (await this.webSiteUrlService.findProfilesByUrl(tagettedUrls)).filter(p => !_.isEmpty(p.profile));
+        if (campaigns.length > 0  && webSiteUrls.length > 0){
+            //finding the existing campaings that have profiles that matches the urls
             targettedCampaigns = campaigns.map(c =>{
                 for(const w of webSiteUrls){
                     for (const  profile of c.profiles){
@@ -100,21 +99,21 @@ export class AdvertismentService {
                 }
             })
         }
-        client.isTargettable = !_.isEmpty(targettedCampaigns);
-        this.clientService.updateClient(client);
+        client.isTargeted =  !_.isEmpty(targettedCampaigns);
         return _.isEmpty(targettedCampaigns) ? campaigns : targettedCampaigns;
     }
 
     private getTargettedUrls(client: Client):string[] {
         const url_visits = {};
+        const minimumNumberOfVisits = 10;
         const tagettedUrls: string[] = [];
         // grouping urls and counting the number of occurences
-        client.clientStats.forEach(s => {
-            url_visits[s.url] = (url_visits[s.url] || 0) + 1;
-        });
+        for (const stat of client.clientStats){
+            url_visits[stat.url] = (url_visits[stat.url] || 0) + 1;
+        };
         // if 10 or more visits
         Object.keys(url_visits).forEach(k => {
-            if (url_visits[k] > 20) {
+            if (url_visits[k] >= minimumNumberOfVisits) {
                 tagettedUrls.push(k);
             }
         });
