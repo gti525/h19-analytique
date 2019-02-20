@@ -22,21 +22,21 @@ export class AdvertismentService {
         const response: any = {};
         const banner = await this.findTargeterBanner(client, bannerType);
         if (!banner)
-            return undefined;
+        return undefined;
+        const clientStatistic = await this.addClientStatistic(client, url, banner);
         response.url = banner.url;
         response.img = banner.image;
-        response.bannerId = banner.id;
+        response.clientStatisticId = clientStatistic.id;
         response.bannerType = bannerType;
         response.size = this.getBannerSize(bannerType);
         // TODO evaluer si la baniere est ciblee.  Si oui, ajuster la statistique
         // TODO envoyer le ID de la statistique client.  Lors du clic, transformer la statistique view en clic.
         // En plus ca va prevenir contre les multis clics
         // Pour le refresh excessif, mettre un timer qui prend du temps 
-        await this.addClientStatistic(client, url, banner);
         return response;
     }
 
-    public async addClientStatistic(client: Client, url: string, banner: Banner, isClick = false) {
+    public async addClientStatistic(client: Client, url: string, banner: Banner, isClick = false): Promise<ClientStatistic> {
         if (client) {
             let stats = new ClientStatistic();
             stats.url = url;
@@ -45,7 +45,7 @@ export class AdvertismentService {
             stats.isView = !isClick;
             stats.isTargeted = client.isTargeted;
             stats.client = client;
-            await this.clientStatisticsService.save(stats);
+            return await this.clientStatisticsService.save(stats);
         }
         else {
             throw new Error("CLIENT WAS NOT FOUND WHEN ADDING STATISTIC")
