@@ -14,6 +14,7 @@ const profileController_1 = require("../controllers/profileController");
 const statistiqueController_1 = require("../controllers/statistiqueController");
 const role_enums_1 = require("../models/enums/role-enums");
 const dashboardController_1 = require("../controllers/dashboardController");
+<<<<<<< HEAD
 const accountController_1 = require("../controllers/accountController");
 const advertiseController_1 = require("../controllers/advertiseController");
 const token_guard_1 = require("../middlewares/token.guard");
@@ -28,6 +29,15 @@ class Routes {
         this.advertiseController = new advertiseController_1.AdvertiseController();
         this.incomeController = new incomeController_1.IncomeController();
         this.campaignController = new campaignController_1.CampaignController();
+=======
+const InstructionController_1 = require("../controllers/InstructionController");
+class Routes {
+    constructor() {
+        this.userController = new apiController_1.apiController();
+        this.profileController = new ProfileController_1.ProfileController();
+        this.dashboardController = new dashboardController_1.dashboardController();
+        this.instructionController = new InstructionController_1.InstructionController_1();
+>>>>>>> Implement the instruction pages with its features
     }
     routes(app) {
         const sessionChecker = (req, res, next) => {
@@ -62,6 +72,7 @@ class Routes {
             .get((req, res) => __awaiter(this, void 0, void 0, function* () { return this.incomeController.index(req, res); }));
         //Profile
         app.route('/profile')
+<<<<<<< HEAD
             .get((req, res) => __awaiter(this, void 0, void 0, function* () { return this.profileController.index(req, res); }), [role_guard_1.roleGuard([role_enums_1.UserRoles.ADMIN])]);
         app.route('/profile/create')
             .post((req, res, next) => __awaiter(this, void 0, void 0, function* () { return this.profileController.create(req, res, next); }), [role_guard_1.roleGuard([role_enums_1.UserRoles.ADMIN])])
@@ -103,6 +114,16 @@ class Routes {
             .get((req, res) => __awaiter(this, void 0, void 0, function* () { return this.advertiseController.getBanner(req, res); }));
         app.route('/api/v1/banner/click/:bannerId/:clientId')
             .post((req, res) => __awaiter(this, void 0, void 0, function* () { return this.advertiseController.addClick(req, res); }));
+=======
+            .post((req, res, next) => __awaiter(this, void 0, void 0, function* () { return this.profileController.addProfile(req, res, next); }), [role_guard_1.roleGuard([role_enums_1.UserRoles.ADMIN])])
+            .delete((req, res) => __awaiter(this, void 0, void 0, function* () { return this.profileController.deleteProfile(req, res); }), [role_guard_1.roleGuard([role_enums_1.UserRoles.ADMIN])])
+            .put((req, res, next) => __awaiter(this, void 0, void 0, function* () { return this.profileController.update(req, res, next); }), [role_guard_1.roleGuard([role_enums_1.UserRoles.ADMIN])])
+            .get((req, res) => __awaiter(this, void 0, void 0, function* () { return this.profileController.getProfile(req, res); }), [role_guard_1.roleGuard([role_enums_1.UserRoles.ADMIN])]);
+        app.route("/instruction")
+            .get((req, res) => __awaiter(this, void 0, void 0, function* () {
+                return this.instructionController.getInstruction(req, res);
+            }), [role_guard_1.roleGuard([role_enums_1.UserRoles.ADMIN])]);
+>>>>>>> Implement the instruction pages with its features
     }
 }
 exports.Routes = Routes;
