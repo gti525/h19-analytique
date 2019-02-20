@@ -10,7 +10,6 @@ export const analyticsTokenGuard: (() => RequestHandler) = (() => (req, res, nex
         return res.status(400).send("Analytic token is missing");
     }
     if (tokenService.isTokenValid(token)){
-        //TODO valider si le token vient du bon url
         next()
     } else {
         return res.status(401).send("Invalid analytic token");

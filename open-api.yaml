@@ -1,0 +1,228 @@
+swagger: "2.0"
+info:
+  description: "Voici les routes utilisées par l'API de l'équipe analytics.  Ces routes sont utilisées pour la logique d'affichage des publicités et le suivi des clients.  Un client est un usager qui navigue sur le site."
+  version: "1.0.0"
+  title: "Analytics"
+  termsOfService: "http://swagger.io/terms/"
+  license:
+    name: "ETS"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "gti525-analitycs.herokuapp.com"
+basePath: "/api/v1"
+tags:
+- name: "Analytics"
+  description: "Suivi des clients."
+- name: "Banner"
+  description: "Gestion de la publicité et des bannières."
+schemes:
+- "https"
+paths:
+  /banners/code:
+    get:
+      tags:
+      - "Banner"
+      summary: "Permet d'acquérir le code javascript qui donne les bannières"
+      description: "Va chercher le code javascript qui permet d'acquérir les bannières.  Le code peut être mis à jour côté serveur de façon transparente sans que le client ne soit affecté par l'opération"
+      operationId: "getBannerCode"
+      consumes:
+        - application/json
+      parameters:
+      - name: "x-access-token"
+        in: "header"
+        required: true
+        type: "string"
+      produces:
+      - "application/javacsript"
+      responses:
+        200:
+          description: "Le code javascript a été trouvé et retourné avec succès"
+        401:
+          description: "Le token d'authentification n'est pas valide"
+        500:
+          description: "Erreur côté serveur"
+  /banner/{bannerType}/{clientId}:
+    get:
+      tags:
+      - "Banner"
+      summary: "Permet d'aller chercher les bannieres"
+      description: "Envoie le type de banière et le id du client ce qui perment de retourner une banière cible, ou pas, au client."
+      operationId: "getBanner"
+      consumes:
+        - application/json
+      parameters:
+      - name: bannerType
+        in: path
+        required: true
+        description: Le type de bannière désiré
+        type : string
+      - name: clientId
+        in: path
+        required: true
+        description: Le id du client qui navigue
+        type : string
+      - in: "header"
+        name: "x-access-token"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "L'identifiant unique du client a été créé"
+          schema:
+            $ref: "#/definitions/Banner"
+        400:
+          description: "Paramètre non valide"
+        401:
+          description: "Le token d'authentification n'est pas valide"
+        500:
+          description: "Erreur côté serveur"
+  /banner/click/{bannerId}/{clientStatisticId}:
+    post:
+      tags:
+      - "Banner"
+      summary: "Enregistre un clic sur une bannière"
+      description: "Permet d'envoyer la mise à jour d'une vue en clic.  Ne fonctionne qu'une seule fois."
+      operationId: "addClick"
+      consumes:
+        - application/json
+      parameters:
+      - name: clientStatisticId
+        in: path
+        required: true
+        description: L'identifiant unique de la statistique client
+        type : integer
+      - name: bannerId
+        in: path
+        required: true
+        description: L'identifiant unique de la banière
+        type : integer
+      - in: "header"
+        name: "x-access-token"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "L'opération a fonctionné"
+        400:
+          description: "Paramètre non valide"
+        401:
+          description: "Le token d'authentification n'est pas valide"
+        500:
+          description: "Erreur côté serveur"
+  /analytics/code:
+    get:
+      tags:
+      - "Analytics"
+      summary: "Permet d'acquérir le code qui va évaluer le client."
+      description: "Retourne le code javascript qui permet d'acquérir des informations sur le client et envoi ces informations au serveur afin de le suivre cia la route /analytics/client.  Les informations celles utilisées par le site amiunique.org.  Cette route est utilisée que lorsque le client n'a pas de clef unique d'enregistrée dans le localstorage.  Le code peut être mis à jour côté serveur de façon transparente sans que le client ne soit affecté par l'opération"
+      externalDocs:
+        description: "Le lien vers le site"
+        url: "https://amiunique.org/"
+      operationId: "getAnalitycsCode"
+      parameters:
+      - name: "x-access-token"
+        in: "header"
+        required: true
+        type: "string"
+      produces:
+      - "application/javacsript"
+      responses:
+        200:
+          description: "Le code javascript a été trouvé et retourné avec succès"
+        401:
+          description: "Le token d'authentification n'est pas valide"
+        500:
+          description: "Erreur côté serveur"
+  /analytics/client:          
+    post:
+      tags:
+      - "Analytics"
+      summary: "Envoie les informations sur le client"
+      description: "Envoie les informations de suivi du client afin de le suivre si son identifiant unique n'est pas disponible dans le localstorage."
+      operationId: "trackClient"
+      consumes:
+        - application/json
+      parameters:
+      - in: body
+        name: user
+        description: "Les informations du client"
+        required: true
+        schema:
+          $ref: "#/definitions/Client"
+      - in: "header"
+        name: "x-access-token"
+        required: true
+        type: "string"
+      - name: "user-agent"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "host"
+        in: "header"
+        required: false
+        type: "string"
+      responses:
+        201:
+          description: "L'identifiant unique du client a été créé"
+          schema:
+            type: "string"
+            description: "L'identifiant unique du client"
+        401:
+          description: "Le token d'authentification n'est pas valide"
+        500:
+          description: "Erreur côté serveur"
+securityDefinitions:
+  x-access-token:
+    type: "apiKey"
+    name: "'x-access-token"
+    in: "header"
+definitions:
+  Client:
+    type: "object"
+    properties:
+      webglinfo:
+        type: "string"
+        description:  "Infos de la carte graphique"
+      screen:
+        type: "string"
+        description:  "Resolution de l'écran"
+      location:
+        type: "string"
+        description:  "Localisation de l'utilisateur"
+      platform:
+        type: "string"
+        description:  "OS de l'utilisateur"
+      doNotTrack:
+        type: "string"
+        description:  "Option doNotTrack de l'utilisateur"
+      canvas:
+        type: "string"
+        description:  "id unique du canvas"
+      plugins:
+        description:  "Les différents plugins utilisés"
+        type: array
+        items:
+          type: "string"
+  Banner:
+    type: "object"
+    properties:
+      url:
+        type: "string"
+        description: "Le lien de l'image"
+      img:
+        type: "string"
+        description: "L'image en string"
+      size:
+        type: "string"
+        description: "La grandeur de la bannière"
+      bannerType:
+        description: "Le type de bannière"
+        type: "string"
+      clientStatisticId:
+        description: "L'identifiant unique de la statistique du client"
+        type: integer
+      bannerId:
+        description: "L'identifiant unique de la bannière"
+        type: integer
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

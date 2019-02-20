@@ -11,6 +11,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const user_entitiy_1 = require("../DB/entity/user.entitiy");
 const user_repo_1 = require("../DB/repo/user.repo");
 const role_enums_1 = require("../models/enums/role-enums");
+const income_entitiy_1 = require("../DB/entity/income.entitiy");
+const income_repo_1 = require("../DB/repo/income.repo");
 var sha1 = require('sha1');
 class InitService {
     static initDB() {
@@ -24,8 +26,10 @@ class InitService {
                     if (u === 'webadmin') {
                         user.analyticToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIzLCJpYXQiOjE1NDg4MTQ4MTF9.Lnx1ENTHmzfBkNsDFs-zFsAK86cgKqH0_Fw8R5VEqlk";
                         user.role = role_enums_1.UserRoles.WEBSITEADMIN;
+                        const income = yield income_repo_1.IncomeRepo.create(new income_entitiy_1.Income());
+                        user.income = income;
                     }
-                    user_repo_1.UserRepo.create(user);
+                    yield user_repo_1.UserRepo.createOrUpdate(user);
                 }
             }));
         });

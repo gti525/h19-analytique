@@ -28,6 +28,7 @@ function postClientInfos(token) {
             }
         }
     };
+    xmlHttp.setRequestHeader('Content-type', "application/json;charset=UTF-8");
     xmlHttp.setRequestHeader('x-access-token', token);
     xmlHttp.send(JSON.stringify(___infos));
 }

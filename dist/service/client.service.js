@@ -13,7 +13,12 @@ var sha1 = require('sha1');
 class ClientService {
     addClient(client) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield client_repo_1.ClientRepo.create(client);
+            return yield client_repo_1.ClientRepo.createOrUpdate(client);
+        });
+    }
+    updateClient(client) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield client_repo_1.ClientRepo.createOrUpdate(client);
         });
     }
     getClientByHashOrId(idOrHash) {

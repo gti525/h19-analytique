@@ -20,6 +20,11 @@ class CampaignService {
             return yield campaign_repo_1.CampaignRepo.findById(id);
         });
     }
+    getCampaignByUser(user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield campaign_repo_1.CampaignRepo.findByUser(user);
+        });
+    }
     addCampaign(campaign) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield campaign_repo_1.CampaignRepo.createOrUpdate(campaign);

@@ -11,6 +11,7 @@ import { analyticsTokenGuard } from "../middlewares/token.guard"
 import { IncomeController } from "../controllers/incomeController";
 import { CampaignController } from "../controllers/campaignController";
 import { raw } from "body-parser";
+import { InstructionController } from "../controllers/instructionController";
 
 export class Routes {
     private dashboardController: DashboardController;
@@ -20,6 +21,7 @@ export class Routes {
     private advertiseController: AdvertiseController;
     private incomeController: IncomeController;
     private campaignController: CampaignController;
+    private instructionController: InstructionController;
 
     constructor() {
         this.profileController = new ProfileController();
@@ -29,6 +31,7 @@ export class Routes {
         this.advertiseController = new AdvertiseController();
         this.incomeController = new IncomeController();
         this.campaignController = new CampaignController();
+        this.instructionController = new InstructionController();
     }
     public routes(app: express.Application): void {
 
@@ -82,7 +85,9 @@ export class Routes {
 
         app.route('/profile/delete/:id')
             .get(async (req, res) => this.profileController.delete(req, res), [roleGuard([UserRoles.ADMIN])]);
-
+        //Instruction
+        app.route('/instruction')
+            .get(async (req, res) => this.instructionController.index(req, res), [roleGuard([UserRoles.ADMIN])]);
         //Website Statistique
         app.route('/statistique')
             .get(async (req, res, next) => this.statistiqueController.index(req, res, next), [roleGuard([UserRoles.WEBSITEADMIN])]);
@@ -117,7 +122,8 @@ export class Routes {
             .get(async (req, res) => this.advertiseController.getBannersCode(req, res));
         app.route('/api/v1/banner/:bannerType/:clientId')
             .get(async (req, res) => this.advertiseController.getBanner(req, res));
-        app.route('/api/v1/banner/click/:bannerId/:clientId')
+        app.route('/api/v1/banner/click/:clientStatisticId')
             .post(async (req, res) => this.advertiseController.addClick(req, res));
+
     }
 }

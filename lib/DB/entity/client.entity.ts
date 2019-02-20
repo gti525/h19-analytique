@@ -21,8 +21,8 @@ export class Client{
     @Column()
     identifier: string
 
-    @Column()
-    isTargettable: boolean
+    // asti de hack cheap qui fonctionne
+    isTargeted: boolean
 
     @Column()
     public graphicCard? : string;

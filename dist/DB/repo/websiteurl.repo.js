@@ -17,6 +17,12 @@ class WebsiteurlRepo {
             return yield websiteurlRepo.findOne(id, { relations: ["profiles"] });
         });
     }
+    static find(filter) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const websiteurlRepo = typeorm_1.getRepository(websiteurl_entity_1.WebSiteUrl);
+            return yield websiteurlRepo.find({ where: filter, relations: ["profiles"] });
+        });
+    }
     static createOrUpdate(profile) {
         return __awaiter(this, void 0, void 0, function* () {
             const websiteurlRepo = typeorm_1.getRepository(websiteurl_entity_1.WebSiteUrl);
