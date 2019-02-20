@@ -1,13 +1,9 @@
-import {Instruction} from "../DB/entity/instruction.entitiy";
 import {InstructionRepo} from "../DB/repo/instruction.repo";
+import { User } from "DB/entity/user.entitiy";
 
 export class InstructionService {
-    public async getInstructions(): Promise<Instruction[]> {
-        return await InstructionRepo.findAll();
+    instructionRepo: InstructionRepo  = new InstructionRepo();
+    public getInstructions(user: User): any {
+        return this.instructionRepo.findAll(user);
     }
-
-    public async getInstructionById(id: number): Promise<Instruction> {
-        return await InstructionRepo.findById(id);
-    }
-
 }

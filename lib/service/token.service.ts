@@ -1,12 +1,11 @@
 import * as  jwt from 'jsonwebtoken';
 import { UserService } from './user.service';
-var secret =  'JFEAN9832u42348329048234FJNJKfjkjdlkf92349032'; // TODO mettre ca dans la config
+var secret =  'JFEAN9832u42348329048234FJNJKfjkjdlkf92349032';
 export class TokenService {
     private static instance: TokenService;
     private constructor() {
         
     }
-    // TODO set enum not string
     public createToken(id: number) {
         return jwt.sign({
             id

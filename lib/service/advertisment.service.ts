@@ -29,10 +29,6 @@ export class AdvertismentService {
         response.clientStatisticId = clientStatistic.id;
         response.bannerType = bannerType;
         response.size = this.getBannerSize(bannerType);
-        // TODO evaluer si la baniere est ciblee.  Si oui, ajuster la statistique
-        // TODO envoyer le ID de la statistique client.  Lors du clic, transformer la statistique view en clic.
-        // En plus ca va prevenir contre les multis clics
-        // Pour le refresh excessif, mettre un timer qui prend du temps 
         return response;
     }
 

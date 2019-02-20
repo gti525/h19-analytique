@@ -1,29 +1,21 @@
 extends ../shared/_layout.pug
 
 block content
-    link(rel='stylesheet', type='text/css', href='/styles/collapsible.css')
+    link(rel='stylesheet', type='text/css')
 
     h1 Instructions
 
-    button(class="collapsible") Analytique:
     div(class="content")
         br
         h3 Étape 1
-        include instruction-2.1.html
+        include instruction-1.pug
         br
         h3 Étape 2
-        include instruction-2.2.html
-
-    button(class="collapsible") Publicité
-    div(class="content")
-        br
-        h3 Étape 1
-        include instruction-2.1.html
-        br
-        h3 Étape 2
-        include instruction-2.2.html
-
-
+        include instruction-2.pug
+        h3 Étape 3
+        p Regarder ses profits en regardant la page  
+            a(href=`/income`) ici
+    
 block javascript
     script(src="/javascripts/instruction.js")
     script(src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js")
