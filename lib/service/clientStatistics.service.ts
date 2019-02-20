@@ -4,6 +4,13 @@ import { User } from "../DB/entity/user.entitiy";
 import { CampaignService } from "./campaign.service";
 
 export class ClientStatisticsService {
+    public async setClick(clientStatisticId: number) {
+        const clientStatistic =  await ClientStatisticRepo.findById(clientStatisticId);
+        clientStatistic.isView = false;
+        clientStatistic.isClick = true;
+        clientStatistic.date = new Date();
+        this.save(clientStatistic);
+    }
     private campaignService = new CampaignService();
     public async save(clientStatistics: ClientStatistic) : Promise<ClientStatistic> {
         return await ClientStatisticRepo.save(clientStatistics);

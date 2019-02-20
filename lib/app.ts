@@ -27,10 +27,6 @@ class App {
         createConnection().then(async connection => {
             try {
                 this.app = express();
-                //view engine setup
-                this.app.set('views', path.join(__dirname, 'views'));
-                this.app.set('view engine', 'pug');
-
                 this.config();
                 this.routePrv.routes(this.app);
                 if (process.env.NODE_ENV === 'test') {
@@ -51,6 +47,9 @@ class App {
     }
 
     private config(): void {
+        //view engine setup
+        this.app.set('views', path.join(__dirname, 'views'));
+        this.app.set('view engine', 'pug');
         //Cookie parser
         this.app.use(cookieParser());
         // support application/json type post data

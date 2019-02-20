@@ -10,6 +10,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
+const campaign_entity_1 = require("./campaign.entity");
+const income_entitiy_1 = require("./income.entitiy");
+const profile_entitiy_1 = require("./profile.entitiy");
 let User = class User {
 };
 __decorate([
@@ -32,6 +35,19 @@ __decorate([
     typeorm_1.Column({ nullable: true }),
     __metadata("design:type", String)
 ], User.prototype, "analyticToken", void 0);
+__decorate([
+    typeorm_1.OneToMany(type => campaign_entity_1.Campaign, campaign => campaign.user),
+    __metadata("design:type", Array)
+], User.prototype, "campaigns", void 0);
+__decorate([
+    typeorm_1.OneToMany(type => profile_entitiy_1.Profile, profile => profile.user),
+    __metadata("design:type", Array)
+], User.prototype, "profile", void 0);
+__decorate([
+    typeorm_1.OneToOne(type => income_entitiy_1.Income, { cascade: true }),
+    typeorm_1.JoinColumn(),
+    __metadata("design:type", income_entitiy_1.Income)
+], User.prototype, "income", void 0);
 User = __decorate([
     typeorm_1.Entity()
 ], User);

@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const campaign_entity_1 = require("./campaign.entity");
+const clientStats_1 = require("./clientStats");
 let Banner = class Banner {
 };
 __decorate([
@@ -32,7 +33,11 @@ __decorate([
 __decorate([
     typeorm_1.ManyToOne(type => campaign_entity_1.Campaign, campaign => campaign.banners),
     __metadata("design:type", campaign_entity_1.Campaign)
-], Banner.prototype, "campaign", void 0);
+], Banner.prototype, "campaigns", void 0);
+__decorate([
+    typeorm_1.OneToMany(clientStats => clientStats_1.ClientStatistic, clientStats => clientStats.banner),
+    __metadata("design:type", Array)
+], Banner.prototype, "clientStats", void 0);
 Banner = __decorate([
     typeorm_1.Entity()
 ], Banner);

@@ -10,55 +10,48 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-const clientStats_1 = require("./clientStats");
-let Client = class Client {
+const client_entity_1 = require("./client.entity");
+const banner_entity_1 = require("./banner.entity");
+let ClientStatistic = class ClientStatistic {
+    constructor() {
+        this.date = new Date();
+    }
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
-], Client.prototype, "id", void 0);
+], ClientStatistic.prototype, "id", void 0);
 __decorate([
-    typeorm_1.Column(),
-    __metadata("design:type", String)
-], Client.prototype, "os", void 0);
-__decorate([
-    typeorm_1.Column(),
-    __metadata("design:type", String)
-], Client.prototype, "resolution", void 0);
-__decorate([
-    typeorm_1.Column(),
-    __metadata("design:type", String)
-], Client.prototype, "browser", void 0);
+    typeorm_1.ManyToOne(client => client_entity_1.Client, client => client.clientStats),
+    __metadata("design:type", client_entity_1.Client)
+], ClientStatistic.prototype, "client", void 0);
 __decorate([
     typeorm_1.Column(),
     __metadata("design:type", Date)
-], Client.prototype, "date", void 0);
+], ClientStatistic.prototype, "date", void 0);
 __decorate([
-    typeorm_1.Column(),
-    __metadata("design:type", String)
-], Client.prototype, "identifier", void 0);
+    typeorm_1.ManyToOne(banner => banner_entity_1.Banner, banner => banner.clientStats),
+    __metadata("design:type", banner_entity_1.Banner)
+], ClientStatistic.prototype, "banner", void 0);
 __decorate([
     typeorm_1.Column(),
     __metadata("design:type", Boolean)
-], Client.prototype, "isTargettable", void 0);
+], ClientStatistic.prototype, "isView", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", Boolean)
+], ClientStatistic.prototype, "isClick", void 0);
 __decorate([
     typeorm_1.Column(),
     __metadata("design:type", String)
-], Client.prototype, "graphicCard", void 0);
+], ClientStatistic.prototype, "url", void 0);
 __decorate([
-    typeorm_1.Column("double"),
-    __metadata("design:type", Number)
-], Client.prototype, "latitude", void 0);
-__decorate([
-    typeorm_1.Column("double"),
-    __metadata("design:type", Number)
-], Client.prototype, "longitude", void 0);
-__decorate([
-    typeorm_1.OneToMany(clientStats => clientStats_1.ClientStatistic, clientStats => clientStats.client, { cascade: true }),
-    __metadata("design:type", Array)
-], Client.prototype, "clientStats", void 0);
-Client = __decorate([
-    typeorm_1.Entity()
-], Client);
-exports.Client = Client;
-//# sourceMappingURL=client.entity.js.map
+    typeorm_1.Column(),
+    __metadata("design:type", Boolean)
+], ClientStatistic.prototype, "isTargeted", void 0);
+ClientStatistic = __decorate([
+    typeorm_1.Entity(),
+    __metadata("design:paramtypes", [])
+], ClientStatistic);
+exports.ClientStatistic = ClientStatistic;
+//# sourceMappingURL=clientStats.js.map

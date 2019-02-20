@@ -8,32 +8,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const websiteurl_repo_1 = require("../DB/repo/websiteurl.repo");
-const _ = require("lodash");
-class WebsiteurlService {
-    addWebsiteurl(url) {
+const typeorm_1 = require("typeorm");
+const clientStats_1 = require("../entity/clientStats");
+class ClientStatisticRepo {
+    static countBannersViewed(banner, isTargeted) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield websiteurl_repo_1.WebsiteurlRepo.createOrUpdate(url);
+            const clientStatisticRepo = typeorm_1.getRepository(clientStats_1.ClientStatistic);
+            return yield clientStatisticRepo.count({ where: { banner, isView: true, isTargeted } });
         });
     }
-    updateWebsiteurl(url) {
+    static countBannersClicked(banner, isTargeted) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield websiteurl_repo_1.WebsiteurlRepo.createOrUpdate(url);
+            const clientStatisticRepo = typeorm_1.getRepository(clientStats_1.ClientStatistic);
+            return yield clientStatisticRepo.count({ where: { banner: banner, isClick: true, isTargeted } });
         });
     }
-    findProfilesByUrl(filter) {
+    static save(clientStatistic) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield websiteurl_repo_1.WebsiteurlRepo.find(filter);
+            const clientStatisticRepo = typeorm_1.getRepository(clientStats_1.ClientStatistic);
+            return yield clientStatisticRepo.save(clientStatistic);
         });
-    }
-    deleteWebsiteurl(id) {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield websiteurl_repo_1.WebsiteurlRepo.delete(id);
-        });
-    }
-    isWebsiteurlValid(websiteurl) {
-        return !_.isEmpty(websiteurl.url);
     }
 }
-exports.WebsiteurlService = WebsiteurlService;
-//# sourceMappingURL=websiteurl.service.js.map
+exports.ClientStatisticRepo = ClientStatisticRepo;
+//# sourceMappingURL=stats.repo.js.map

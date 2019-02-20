@@ -8,7 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const apiController_1 = require("../controllers/apiController");
 const cors = require('cors');
 const role_guard_1 = require("../middlewares/role.guard");
 const profileController_1 = require("../controllers/profileController");
@@ -22,7 +21,6 @@ const incomeController_1 = require("../controllers/incomeController");
 const campaignController_1 = require("../controllers/campaignController");
 class Routes {
     constructor() {
-        this.userController = new apiController_1.apiController();
         this.profileController = new profileController_1.ProfileController();
         this.statistiqueController = new statistiqueController_1.StatistiqueController();
         this.dashboardController = new dashboardController_1.DashboardController();
@@ -32,27 +30,26 @@ class Routes {
         this.campaignController = new campaignController_1.CampaignController();
     }
     routes(app) {
-        app.use((req, res, next) => {
-            if (req.cookies.user_sid) {
-                res.clearCookie('user_sid');
-            }
-            next();
-        });
         const sessionChecker = (req, res, next) => {
-            if (req.session.user && req.cookies.user_sid) {
+            if (req.session.user) {
                 res.redirect('/');
             }
             else {
                 next();
             }
         };
-        app.get('/', sessionChecker, (req, res) => {
-            res.redirect('/login');
-        });
+        //Dashboard
+        app.route('/')
+            .get((req, res) => __awaiter(this, void 0, void 0, function* () { return this.dashboardController.index(req, res); }));
         //Account
         app.route('/login')
             .get(sessionChecker, (req, res, next) => {
             this.accountController.getLoginPage(req, res, next);
+        })
+            .post((req, res, next) => __awaiter(this, void 0, void 0, function* () { return this.accountController.login(req, res, next); }));
+        app.route('/logout')
+            .get((req, res, next) => {
+            req.session.destroy((err) => res.redirect('/login'));
         })
             .post((req, res, next) => __awaiter(this, void 0, void 0, function* () { return this.accountController.login(req, res, next); }));
         app.route('/register')
@@ -60,9 +57,6 @@ class Routes {
             this.accountController.getRegisterPage(req, res, next);
         })
             .post((req, res, next) => __awaiter(this, void 0, void 0, function* () { return this.accountController.register(req, res, next); }));
-        //Dashboard
-        app.route('/')
-            .get((req, res) => __awaiter(this, void 0, void 0, function* () { return this.dashboardController.index(req, res); }));
         //Income
         app.route('/income')
             .get((req, res) => __awaiter(this, void 0, void 0, function* () { return this.incomeController.index(req, res); }));
@@ -78,8 +72,6 @@ class Routes {
             .get((req, res, next) => __awaiter(this, void 0, void 0, function* () { return this.profileController.edit(req, res, next); }), [role_guard_1.roleGuard([role_enums_1.UserRoles.ADMIN])]);
         app.route('/profile/delete/:id')
             .get((req, res) => __awaiter(this, void 0, void 0, function* () { return this.profileController.delete(req, res); }), [role_guard_1.roleGuard([role_enums_1.UserRoles.ADMIN])]);
-        app.route('/user')
-            .post((req, res) => __awaiter(this, void 0, void 0, function* () { return this.userController.addUser(req, res); }));
         //Website Statistique
         app.route('/statistique')
             .get((req, res, next) => __awaiter(this, void 0, void 0, function* () { return this.statistiqueController.index(req, res, next); }), [role_guard_1.roleGuard([role_enums_1.UserRoles.WEBSITEADMIN])]);
@@ -100,14 +92,16 @@ class Routes {
         // *** WARNING           CORS ENABLED ***
         // **************************************
         app.use(cors());
-        app.use(token_guard_1.analyticsTokenGuard());
-        app.route('/api/analytics/code')
+        app.use('/api/v1', token_guard_1.analyticsTokenGuard());
+        app.route('/api/v1/analytics/code')
             .get((req, res) => __awaiter(this, void 0, void 0, function* () { return this.advertiseController.getAnalitycsCode(req, res); }));
-        app.route('/api/analytics/client')
+        app.route('/api/v1/analytics/client')
             .post((req, res) => __awaiter(this, void 0, void 0, function* () { return this.advertiseController.trackClient(req, res); }));
-        app.route('/api/analytics/banner')
-            .post((req, res) => __awaiter(this, void 0, void 0, function* () { return this.advertiseController.getBanner(req, res); }));
-        app.route('/api/analytics/banner/click')
+        app.route('/api/v1/banners/code')
+            .get((req, res) => __awaiter(this, void 0, void 0, function* () { return this.advertiseController.getBannersCode(req, res); }));
+        app.route('/api/v1/banner/:bannerType/:clientId')
+            .get((req, res) => __awaiter(this, void 0, void 0, function* () { return this.advertiseController.getBanner(req, res); }));
+        app.route('/api/v1/banner/click/:bannerId/:clientId')
             .post((req, res) => __awaiter(this, void 0, void 0, function* () { return this.advertiseController.addClick(req, res); }));
     }
 }

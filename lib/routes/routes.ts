@@ -117,7 +117,7 @@ export class Routes {
             .get(async (req, res) => this.advertiseController.getBannersCode(req, res));
         app.route('/api/v1/banner/:bannerType/:clientId')
             .get(async (req, res) => this.advertiseController.getBanner(req, res));
-        app.route('/api/v1/banner/click/:bannerId/:clientId')
+        app.route('/api/v1/banner/click/:clientStatisticId')
             .post(async (req, res) => this.advertiseController.addClick(req, res));
     }
 }

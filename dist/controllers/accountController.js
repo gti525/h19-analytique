@@ -12,6 +12,7 @@ const user_service_1 = require("../service/user.service");
 const typeorm_1 = require("typeorm");
 const user_entitiy_1 = require("../DB/entity/user.entitiy");
 const role_enums_1 = require("../models/enums/role-enums");
+const income_entitiy_1 = require("../DB/entity/income.entitiy");
 class AccountController {
     constructor() {
         this.userService = new user_service_1.UserService();
@@ -21,11 +22,20 @@ class AccountController {
             try {
                 const username = req.body.username;
                 const password = req.body.password;
-                const token = yield this.userService.authenticate(username, password);
-                res.render("index");
+                const user = yield this.userService.authenticate(username, password);
+                this.userService.findByToken;
+                this.createUserSession(req, user, res);
             }
             catch (_a) {
                 res.status(401).send('Invalid credentials');
+            }
+        });
+    }
+    createUserSession(req, user, res) {
+        req.session.user = user.id;
+        req.session.save((err) => {
+            if (!err) {
+                res.redirect('/');
             }
         });
     }
@@ -49,8 +59,9 @@ class AccountController {
                 user.username = req.body.username;
                 user.role = req.body.role;
                 user.password = req.body.password;
-                const result = yield this.userService.adduser(user);
-                res.render("index");
+                user.income = new income_entitiy_1.Income();
+                yield this.userService.adduser(user);
+                this.createUserSession(req, user, res);
             }
             catch (error) {
                 if (error instanceof typeorm_1.QueryFailedError && error.code === 'ER_DUP_ENTRY') {
