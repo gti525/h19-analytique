@@ -6,7 +6,6 @@ import { Client } from "../DB/entity/client.entity";
 import { ClientStatistic } from "../DB/entity/clientStats";
 import { ClientStatisticsService } from "./clientStatistics.service";
 import * as moment from 'moment';
-import { In } from "typeorm";
 import { WebsiteurlService } from "./websiteurl.service";
 import { ClientService } from "./client.service";
 import * as _ from 'lodash'
@@ -15,8 +14,9 @@ export class AdvertismentService {
     private webSiteUrlService = new WebsiteurlService();
     private clientService = new ClientService()
     private clientStatisticsService = new ClientStatisticsService()
+    
     /**
-     * Va permettre de donner les infos de la baniere et aussi d'empêcher de se faire hacker
+     * Retourne les bannieres ciblees
      */
     public async getBanner(client: Client, bannerType, url): Promise<any> {
         const response: any = {};
