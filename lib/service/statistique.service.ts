@@ -19,7 +19,6 @@ export class StatistiqueService {
                 }
             })
         )
-        console.log(validClients.filter(vc => vc))
-        return validClients;
+        return validClients.filter(vc => vc);
     }
 }
