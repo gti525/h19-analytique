@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
 import { StatistiqueService } from '../service/statistique.service';
 import { WebsiteurlService } from '../service/websiteurl.service';
+import { BaseController } from './baseController';
 
-export class StatistiqueController {
+export class StatistiqueController  extends BaseController{
     private statistiqueService: StatistiqueService = new StatistiqueService();
     private websiteurlService: WebsiteurlService = new WebsiteurlService();
 
@@ -15,8 +16,7 @@ export class StatistiqueController {
                 resolutions = await this.statistiqueService.getResolutionBySiteWebId(req.params.id);
                 pays = await this.statistiqueService.getPaysBySiteWebId(req.params.id);
             }
-
-            res.render('statistique', { os: os, resolutions: resolutions, pays: pays });
+            await this.sendResponse(req,res,'statistique',{ os: os, resolutions: resolutions, pays: pays })
         }
         catch (error) {
             return res.json(error).status(500);

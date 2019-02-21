@@ -3,7 +3,6 @@ import { ClientInfo } from '../models/interfaces/client-infos'
 import * as _ from 'lodash'
 import { ClientService } from '../service/client.service';
 import { AdvertismentService } from '../service/advertisment.service';
-import { BannerService } from '../service/bannerService';
 import { BaseController } from './baseController';
 import { ClientStatisticsService } from '../service/clientStatistics.service';
 const fs = require('fs');
@@ -12,7 +11,6 @@ export class AdvertiseController extends BaseController {
     private bannerCode;
     private clientService: ClientService;
     private advertismentService: AdvertismentService
-    private bannerService: BannerService;
     private clientStatisticsService : ClientStatisticsService
     constructor(){
         super ();
@@ -22,7 +20,6 @@ export class AdvertiseController extends BaseController {
         this.bannerCode = fs.readFileSync(bannerCodePath, 'utf8');
         this.clientService = new ClientService();
         this.advertismentService = new AdvertismentService();
-        this.bannerService = new BannerService();
         this.clientStatisticsService = new ClientStatisticsService();
     }
     

@@ -24,7 +24,7 @@ function postClientInfos(token) {
         if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
             if(xmlHttp.responseText){
                 setclientId(xmlHttp.responseText);
-                getAdvertisment(xmlHttp.responseText);
+                ___getAdvertisment(xmlHttp.responseText);
             }
         }
     };

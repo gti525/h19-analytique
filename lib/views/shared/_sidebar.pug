@@ -1,32 +1,37 @@
 block sidebar
     nav(id="sidebar")
         div.sidebar-header
-            h3 NAME
+            h3 #{name}
             strong :O
         ul.list-unstyled.components
             li.active
                 a(href="/")
                     i.fa.fa-tachometer &nbsp;
                     span.sidevar-item Tableau de bord
-            li
-                a(href="/profile")
-                    i.fa.fa-users &nbsp;
-                    span.sidevar-item Profiles
-            li
-                a(href="/statistique")
-                    i.fa.fa-pie-chart &nbsp;
-                    span.sidevar-item Statistique
-            li
-                a(href="/campaign")
-                    i.fa.fa-picture-o &nbsp;
-                    span.sidevar-item Campagnes
-            li
-                a(href="/income")
-                   i.fa.fa-money &nbsp;
-                   span.sidevar-item Revenus
-            li
-                a(href="/instruction")
-                    i.fa.fa-book &nbsp;
-                    span.sidevar-item Instructions
+            if role != "Gestionnaire de site web"
+                li
+                    a(href="/profile")
+                        i.fa.fa-users &nbsp;
+                        span.sidevar-item Profiles
+            if role != "Gestionnaire de site web"
+                li
+                    a(href="/campaign")
+                        i.fa.fa-picture-o &nbsp;
+                        span.sidevar-item Campagnes
+            if role != "Gestionnaire de site web"
+                li
+                    a(href="/statistique")
+                        i.fa.fa-pie-chart &nbsp;
+                        span.sidevar-item Statistique
+            if role != "Administrateur de campagne"
+                li
+                    a(href="/income")
+                        i.fa.fa-money &nbsp;
+                        span.sidevar-item Revenus
+            if role != "Administrateur de campagne"
+                li
+                    a(href="/instruction")
+                        i.fa.fa-book &nbsp;
+                        span.sidevar-item Instructions
         div#vertical-analytic-banner vertical
 

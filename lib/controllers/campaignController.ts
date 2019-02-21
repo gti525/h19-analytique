@@ -14,7 +14,7 @@ export class CampaignController extends BaseController{
     private enumsToArray: EnumsToArray = new EnumsToArray();
     public async index(req: Request, res: Response) {
         const campaigns = await this.campaignService.getCampaignByUser(await this.getUser(req));
-        res.render('campaign/index', { campaigns, moment: require("moment") });
+        await this.sendResponse(req,res,'campaign/index',{ campaigns, moment: require("moment") })
     }
 
     public async create(req: Request, res: Response, next){
@@ -24,7 +24,7 @@ export class CampaignController extends BaseController{
         if (req.method == 'GET'){
             let campaignTypes = await this.enumsToArray.translateEnumToSelectArray(BannerType);
             let profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
-            res.render('campaign/create', { campaignTypes, profiles: profiles });
+            await this.sendResponse(req,res,'campaign/create',{ campaignTypes, profiles: profiles })
         }else{
             try {
                 const banners = [];
@@ -48,7 +48,6 @@ export class CampaignController extends BaseController{
                 campaign.profiles = profiles;
                 campaign.user = await this.getUser(req);
                 await this.campaignService.addCampaign(campaign);
-
                 res.redirect("/campaign")
             }
             catch (error) {
@@ -70,7 +69,7 @@ export class CampaignController extends BaseController{
                 profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
                 campaign = await this.campaignService.getCampaignById(req.params.id);
             }
-            res.render('campaign/edit', { campaign: campaign, profiles: profiles, campaignTypes: campaignTypes, moment: require("moment") });
+            await this.sendResponse(req,res,'campaign/edit',{ campaign: campaign, profiles: profiles, campaignTypes: campaignTypes, moment: require("moment") })
         }else{
             try {
                 const campaign = await this.campaignService.getCampaignById(req.body.id);
