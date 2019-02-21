@@ -1,18 +1,25 @@
-import { Statistique } from "../DB/entity/statistique.entitiy";
-import { StatistiqueRepo } from "../DB/repo/statistique.repo";
+import { ClientRepo } from "../DB/repo/client.repo";
+import { Client } from "../DB/entity/client.entity";
+import { CampaignRepo } from "../DB/repo/campaign.repo";
+import { User } from "../DB/entity/user.entitiy";
+import { ClientStatisticRepo } from "../DB/repo/stats.repo";
 
 export class StatistiqueService {
-
-
-    public async getOSBySiteWebId(id: number): Promise<Statistique[]> {
-        return await StatistiqueRepo.findOSBySiteWebId(id);
-    }
-
-    public async getResolutionBySiteWebId(id: number): Promise<Statistique[]> {
-        return await StatistiqueRepo.findResolutionBySiteWebId(id);
-    }
-
-    public async getPaysBySiteWebId(id: number): Promise<Statistique[]> {
-        return await StatistiqueRepo.findPaysBySiteWebId(id);
+    public async getClients(user: User): Promise<Client[]> {
+        const clients = await ClientRepo.findAll();
+        let banners = [];
+        (await CampaignRepo.findByUser(user)).map((c) => {
+            banners = banners.concat(c.banners);
+        })
+        const validClients: Client[] = await Promise.all(
+            clients.map(async (client): Promise<Client>  => {
+                for (const banner of banners) {
+                    if (await ClientStatisticRepo.clientSawBanner(banner, client))
+                        return client;
+                }
+            })
+        )
+        console.log(validClients.filter(vc => vc))
+        return validClients;
     }
 }

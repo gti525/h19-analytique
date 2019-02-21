@@ -12,6 +12,11 @@ export class ClientRepo {
         return await userRepository.findOne(id,{relations:["clientStats"]});
     }
 
+    public static async findAll(): Promise<Client[]>{
+        const userRepository = getRepository(Client);
+        return await userRepository.find({relations:["clientStats"]});
+    }
+
     public static async createOrUpdate(user: Client): Promise<Client>{
         const userRepository = getRepository(Client);
         return await userRepository.save(user);
