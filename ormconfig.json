@@ -1,11 +1,10 @@
-
 {
   "type": "mariadb",
-  "host": "localhost",
+  "host": "am1shyeyqbxzy8gc.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
   "port": 3306,
-  "username": "root",
-  "password": "gti525h2019analytics",
-  "database": "analytics",
+  "username": "xockne52cd09d9im",
+  "password": "t2bu6ncg2i9rtdrm",
+  "database": "h4hqzs3onggdslcg",
   "synchronize": true,
   "logging": false,
   "entities": [
