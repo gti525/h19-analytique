@@ -9,7 +9,7 @@ export class IncomeController extends BaseController{
     public async index(req: Request, res: Response) {
         const user = await this.getUser(req);
         const income = await this.incomeService.getIncome(user);
-        res.render('income/index', {income,incomeChart : IncomeChart});
+        this.sendResponse(req,res,'income/index',{income,incomeChart : IncomeChart})
     }
 
 

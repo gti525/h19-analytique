@@ -7,7 +7,7 @@ export class InstructionController extends BaseController{
 
     public async index(req: Request, res: Response) {
         const instructions = this.instructionService.getInstructions(await this.getUser(req));
-        res.render('instruction/index', {instructions});
+        await this.sendResponse(req,res,'instruction/index', {instructions})
     }
 }
 

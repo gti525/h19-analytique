@@ -1,5 +1,5 @@
 export enum UserRoles {
-    WEBSITEADMIN = "WebSiteAdmin",
-    CAMPAIGNMANAGER = "CampaignManager",
+    WEBSITEADMIN = "Gestionnaire de site web",
+    CAMPAIGNMANAGER = "Administrateur de campagne",
     ADMIN = "Admin"
 }
