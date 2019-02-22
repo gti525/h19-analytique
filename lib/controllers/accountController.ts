@@ -37,9 +37,9 @@ export class AccountController {
 
     public async getRegisterPage(req: Request, res: Response, next) {
         const roles = {};
-        roles[UserRoles.CAMPAIGNMANAGER] = roles[UserRoles.CAMPAIGNMANAGER];
-        roles[UserRoles.WEBSITEADMIN] = roles[UserRoles.CAMPAIGNMANAGER];
-        res.render('account/register', { roles : UserRoles });
+        roles[UserRoles.CAMPAIGNMANAGER] = UserRoles.CAMPAIGNMANAGER;
+        roles[UserRoles.WEBSITEADMIN] = UserRoles.WEBSITEADMIN;
+        res.render('account/register', { roles });
     }
 
     public async register(req: Request, res: Response, next) {
