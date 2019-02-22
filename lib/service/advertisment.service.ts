@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import { WebsiteurlService } from "./websiteurl.service";
 import { ClientService } from "./client.service";
 import * as _ from 'lodash'
+import { User } from "../DB/entity/user.entitiy";
 
 export class AdvertismentService {
     private webSiteUrlService = new WebsiteurlService();
@@ -18,12 +19,12 @@ export class AdvertismentService {
     /**
      * Retourne les bannieres ciblees
      */
-    public async getBanner(client: Client, bannerType, url): Promise<any> {
+    public async getBanner(client: Client, user:User, bannerType, url): Promise<any> {
         const response: any = {};
         const banner = await this.findTargeterBanner(client, bannerType);
         if (!banner)
         return undefined;
-        const clientStatistic = await this.addClientStatistic(client, url, banner);
+        const clientStatistic = await this.addClientStatistic(client,user, url, banner);
         response.url = banner.url;
         response.img = banner.image;
         response.clientStatisticId = clientStatistic.id;
@@ -32,7 +33,7 @@ export class AdvertismentService {
         return response;
     }
 
-    public async addClientStatistic(client: Client, url: string, banner: Banner, isClick = false): Promise<ClientStatistic> {
+    public async addClientStatistic(client: Client,user: User, url: string, banner: Banner, isClick = false): Promise<ClientStatistic> {
         if (client) {
             let stats = new ClientStatistic();
             stats.url = url;
@@ -41,6 +42,7 @@ export class AdvertismentService {
             stats.isView = !isClick;
             stats.isTargeted = client.isTargeted;
             stats.client = client;
+            stats.user = user;
             return await this.clientStatisticsService.save(stats);
         }
         else {
