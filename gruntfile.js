@@ -30,7 +30,8 @@ module.exports = function (grunt) {
     uglify: {
       my_target: {
         files: [
-          {'analitycscode/code/analytics.min.js': 'analitycscode/code/analytics.js'},
+          {'analitycscode/clientCode/client.min.js': 'analitycscode/clientCode/client.js'},
+          {'analitycscode/bannerCode/banner.min.js': 'analitycscode/bannerCode/banner.js'},
           {'analitycscode/customerCode/init.min.js': 'analitycscode/customerCode/init.js'}
         ]
       }
@@ -46,7 +47,8 @@ module.exports = function (grunt) {
           ]
         },
         files: [
-          {'analitycscode/code/analytics.prod.js': 'analitycscode/code/analytics.min.js'},
+          {'analitycscode/clientCode/client.prod.js': 'analitycscode/clientCode/client.min.js'},
+          {'analitycscode/bannerCode/banner.prod.js': 'analitycscode/bannerCode/banner.min.js'},
           {'analitycscode/customerCode/init.prod.js': 'analitycscode/customerCode/init.min.js'}
         ]
       }

@@ -18,6 +18,12 @@ class CampaignRepo {
             return yield campaignRepo.findOne(id, { relations: ["banners", "profiles"] });
         });
     }
+    static findByUser(user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const campaignRepo = typeorm_1.getRepository(campaign_entity_1.Campaign);
+            return yield campaignRepo.find({ where: { user }, relations: ["banners", "profiles"] });
+        });
+    }
     static findAll() {
         return __awaiter(this, void 0, void 0, function* () {
             const campaignRepo = typeorm_1.getRepository(campaign_entity_1.Campaign);

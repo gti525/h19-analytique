@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var BannerId;
-(function (BannerId) {
-    BannerId["horizontal"] = "horizontal-analytic-banner";
-    BannerId["mobile"] = "mobile-analityc-banner";
-    BannerId["vertical"] = "vertical-analytic-banner";
-})(BannerId = exports.BannerId || (exports.BannerId = {}));
+var BannerOrientation;
+(function (BannerOrientation) {
+    BannerOrientation["horizontal"] = "horizontal-analytic-banner";
+    BannerOrientation["mobile"] = "mobile-analityc-banner";
+    BannerOrientation["vertical"] = "vertical-analytic-banner";
+})(BannerOrientation = exports.BannerOrientation || (exports.BannerOrientation = {}));
 var BannerSize;
 (function (BannerSize) {
     BannerSize[BannerSize["horizontalHeight"] = 200] = "horizontalHeight";

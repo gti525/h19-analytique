@@ -2,38 +2,33 @@ import { Request, Response } from 'express';
 import { ClientInfo } from '../models/interfaces/client-infos'
 import * as _ from 'lodash'
 import { ClientService } from '../service/client.service';
-import { TokenService } from '../service/token.service';
 import { AdvertismentService } from '../service/advertisment.service';
-import { UserService } from '../service/user.service';
-import { User } from '../DB/entity/user.entitiy';
-import { ClientStatistic } from '../DB/entity/clientStats';
-import { BannerService } from '../service/bannerService';
-import { Client } from '../DB/entity/client.entity';
-import { Banner } from '../DB/entity/banner.entity';
 import { BaseController } from './baseController';
+import { ClientStatisticsService } from '../service/clientStatistics.service';
 const fs = require('fs');
 export class AdvertiseController extends BaseController {
-    private code;
+    private analyticCode;
+    private bannerCode;
     private clientService: ClientService;
-    private tokenService: TokenService;
     private advertismentService: AdvertismentService
-    private userService: UserService;
-    private bannerService: BannerService;
+    private clientStatisticsService : ClientStatisticsService
     constructor(){
         super ();
-        const codePath = process.env.NODE_ENV === 'production' ? 'analitycscode/code/analytics.prod.js': 'analitycscode/code/analytics.min.js';
-            this.code = fs.readFileSync(codePath, 'utf8');
+        const analyticCodePath = process.env.NODE_ENV === 'production' ? 'analitycscode/clientCode/client.prod.js': 'analitycscode/clientCode/client.min.js';
+        this.analyticCode = fs.readFileSync(analyticCodePath, 'utf8');
+        const bannerCodePath = process.env.NODE_ENV === 'production' ? 'analitycscode/bannerCode/banner.prod.js': 'analitycscode/bannerCode/banner.min.js';
+        this.bannerCode = fs.readFileSync(bannerCodePath, 'utf8');
         this.clientService = new ClientService();
-        this.tokenService = TokenService.getInstance();
         this.advertismentService = new AdvertismentService();
-        this.userService =  new UserService();
-        this.bannerService = new BannerService();
+        this.clientStatisticsService = new ClientStatisticsService();
     }
     
     public async getAnalitycsCode(req: Request, res: Response) {
-        res.status(200).send(this.code);
+        res.status(200).send(this.analyticCode);
     }
-
+    public async getBannersCode(req: Request, res: Response) {
+        res.status(200).send(this.bannerCode);
+    }
     public async trackClient(req: Request, res: Response) {
         const clientInfos = this.generateClientInfos(req.body);
         let client = await this.clientService.getClientByHashOrId(clientInfos.hash);
@@ -46,15 +41,18 @@ export class AdvertiseController extends BaseController {
     
     public async getBanner(req: Request, res: Response) {
         try{
-            const [clientId,bannerStyle] = this.validateBannerInfo(req);
+            const [clientId,bannerType] = this.validateBannerInfo(req);
             const client = await this.getClient(clientId);
-            const banner = await this.advertismentService.getBanner(client,bannerStyle,req.headers.host)
+            const user = await this.getUser(req);
+            const banner = await this.advertismentService.getBanner(client, user,bannerType,req.headers.host)
             if (banner){
                 res.status(200).send(banner);
             }
+            else{
+                res.status(500).send({message:"No banner found at the moment"});    
+            }
         }
         catch (error){
-            console.log(error);
             res.status(500).send({message:JSON.stringify(error)});
         }
     }
@@ -64,20 +62,24 @@ export class AdvertiseController extends BaseController {
     }
 
     public async addClick(req: Request, res: Response) {
-        const client = await this.getClient(req.body.clientId);
-        const banner = await this.bannerService.findById(req.query.bannerId);
-        await this.advertismentService.addClientStatistic(client, req.headers.host,banner,true);
+        try{
+            await this.clientStatisticsService.setClick(req.params.clientStatisticId);
+            res.sendStatus(204);
+        }
+        catch (error){
+            res.status(500).send({message:JSON.stringify(error)});
+        }
     }
 
     private validateBannerInfo(req: Request) {
-        const clientId = req.body.clientId;
+        const clientId = req.params.clientId;
         // le id de la baniere
-        const bannerStyle = req.body.bannerId;
+        const bannerType = req.params.bannerType;
         // le token de ladmin si site web
-        if (_.isEmpty(clientId) || _.isEmpty(bannerStyle)){
-            throw new Error("clientId or bannerId missing");
+        if (_.isEmpty(clientId) || _.isEmpty(bannerType)){
+            throw new Error("clientId or bannerType missing");
         }
-        return [clientId,bannerStyle];
+        return [clientId,bannerType];
     }
 
     private generateClientInfos(body: any): ClientInfo {

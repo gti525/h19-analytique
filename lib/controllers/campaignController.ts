@@ -26,7 +26,7 @@ export class CampaignController extends BaseController{
         if (req.method == 'GET'){
             let campaignTypes = await this.enumsToArray.translateEnumToSelectArray(BannerType);
             let profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
-            result = res.render('campaign/create', { campaignTypes, profiles: profiles });
+            result = await this.sendResponse(req,res,'campaign/create',{ campaignTypes, profiles: profiles })
         }else{
             const errors = validationResult(req);
             if(errors.isEmpty()){

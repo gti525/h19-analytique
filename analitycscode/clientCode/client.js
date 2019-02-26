@@ -17,19 +17,19 @@ function ___startAnalytics() {
 }
 
 function postClientInfos(token) {
-    const url = "http://localhost:3000/api/analytics/client"
+    const url = "http://localhost:3000/api/v1/analytics/client"
     let xmlHttp = new XMLHttpRequest();
     xmlHttp.open("POST", url, true); // false for synchronous request
     xmlHttp.onload = function(e){
         if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
             if(xmlHttp.responseText){
                 setclientId(xmlHttp.responseText);
-                getAdvertisment(xmlHttp.responseText);
+                ___getAdvertisment(xmlHttp.responseText);
             }
         }
     };
-    xmlHttp.setRequestHeader('x-access-token', token);
     xmlHttp.setRequestHeader('Content-type', "application/json;charset=UTF-8");
+    xmlHttp.setRequestHeader('x-access-token', token);
     xmlHttp.send(JSON.stringify(___infos));
 }
 
