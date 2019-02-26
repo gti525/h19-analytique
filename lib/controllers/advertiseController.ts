@@ -44,7 +44,7 @@ export class AdvertiseController extends BaseController {
             const [clientId,bannerType] = this.validateBannerInfo(req);
             const client = await this.getClient(clientId);
             const user = await this.getUser(req);
-            const banner = await this.advertismentService.getBanner(client, user,bannerType,req.headers.host)
+            const banner = await this.advertismentService.getBanner(client, user,bannerType,req.headers.referer);
             if (banner){
                 res.status(200).send(banner);
             }

@@ -48,7 +48,7 @@ class App {
     }
 
     private setDbConfig(){
-        if (process.env.NODE_ENV === 'production') {
+        if (process.env.NODE_ENV !== 'production') {
             console.log("setting up db configs")
             process.env.TYPEORM_CONNECTION = "mariadb",
             process.env.TYPEORM_HOST = "am1shyeyqbxzy8gc.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
