@@ -14,6 +14,7 @@ const MongoStore = require('connect-mongo')(session);
 const PORT = 3000;
 const HOST = "localhost";
 const cookieParser = require('cookie-parser');
+const expressValidator = require('express-validator');
 
 const httpsOptions = {
     key: fs.readFileSync('./config/key.pem'),
@@ -57,6 +58,8 @@ class App {
         this.app.use(bodyParser.json());
         //support application/x-www-form-urlencoded post data
         this.app.use(bodyParser.urlencoded({ extended: true , limit:'50mb' }));
+        //express validator
+        this.app.use(expressValidator());
         //sass middleware support
         this.app.use(nodeSassMiddleware({
             src: __dirname + '/public/styles/sass',
