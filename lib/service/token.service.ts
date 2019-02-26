@@ -33,7 +33,7 @@ export class TokenService {
         const decoded = this.decodeToken(token);
         if (decoded !== undefined){
             const userService = new UserService();
-            return userService.userExists(decoded.id);
+            return await userService.userExists(decoded.id);
         }
         return false;
     }
