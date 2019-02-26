@@ -6,6 +6,7 @@ import {Banner} from "../DB/entity/banner.entity";
 import {ProfileService} from "../service/profile.service";
 import {In} from "typeorm";
 import { BaseController } from './baseController';
+import {validationResult} from "express-validator/check";
 
 export class CampaignController extends BaseController{
 
@@ -14,46 +15,54 @@ export class CampaignController extends BaseController{
     private enumsToArray: EnumsToArray = new EnumsToArray();
     public async index(req: Request, res: Response) {
         const campaigns = await this.campaignService.getCampaignByUser(await this.getUser(req));
-        await this.sendResponse(req,res,'campaign/index',{ campaigns, moment: require("moment") })
+        res.render('campaign/index', { campaigns, moment: require("moment") });
     }
 
     public async create(req: Request, res: Response, next){
+        let result;
         if (req.method !== 'GET' && req.method !== 'POST') {
-            return next()
+            result = next()
         }
         if (req.method == 'GET'){
             let campaignTypes = await this.enumsToArray.translateEnumToSelectArray(BannerType);
             let profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
-            await this.sendResponse(req,res,'campaign/create',{ campaignTypes, profiles: profiles })
+            result = await this.sendResponse(req,res,'campaign/create',{ campaignTypes, profiles: profiles })
         }else{
-            try {
-                const banners = [];
-                req.body.banners.forEach(function(e){
-                    const banner = new Banner();
-                    banner.url = e.url;
-                    banner.image = e.image;
-                    banner.type = e.type;
-                    banners.push(banner);
-                });
+            const errors = validationResult(req);
+            if(errors.isEmpty()){
+                try {
+                    const banners = [];
+                    req.body.banners.forEach(function(e){
+                        const banner = new Banner();
+                        banner.url = e.url;
+                        banner.image = e.image;
+                        banner.type = e.type;
+                        banners.push(banner);
+                    });
 
-                const profileIds = req.body.profileIds.map(function(value) {
-                    return parseInt(value, 10);
-                });
-                const profiles = await this.profileService.getProfiles({id: In(profileIds)});
+                    const profileIds = req.body.profileIds.map(function(value) {
+                        return parseInt(value, 10);
+                    });
+                    const profiles = await this.profileService.getProfiles({id: In(profileIds)});
 
-                const campaign = new Campaign();
-                campaign.startDate = req.body.startDate;
-                campaign.endDate = req.body.endDate;
-                campaign.banners = banners;
-                campaign.profiles = profiles;
-                campaign.user = await this.getUser(req);
-                await this.campaignService.addCampaign(campaign);
-                res.redirect("/campaign")
-            }
-            catch (error) {
-                return res.json(error).status(500);
+                    const campaign = new Campaign();
+                    campaign.startDate = req.body.startDate;
+                    campaign.endDate = req.body.endDate;
+                    campaign.banners = banners;
+                    campaign.profiles = profiles;
+                    campaign.user = await this.getUser(req);
+                    await this.campaignService.addCampaign(campaign);
+
+                    result = res.redirect("/campaign");
+                }
+                catch (error) {
+                    result = res.json(error).status(500);
+                }
+            }else{
+                result = res.status(401).json({ errors: errors.array() });
             }
         }
+        return result;
     }
 
     public async edit(req: Request, res: Response, next){
@@ -69,7 +78,7 @@ export class CampaignController extends BaseController{
                 profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
                 campaign = await this.campaignService.getCampaignById(req.params.id);
             }
-            await this.sendResponse(req,res,'campaign/edit',{ campaign: campaign, profiles: profiles, campaignTypes: campaignTypes, moment: require("moment") })
+            res.render('campaign/edit', { campaign: campaign, profiles: profiles, campaignTypes: campaignTypes, moment: require("moment") });
         }else{
             try {
                 const campaign = await this.campaignService.getCampaignById(req.body.id);
