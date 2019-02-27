@@ -33,6 +33,9 @@ export class Client{
     @Column("double")
     public longitude? : number;
 
+    @Column()
+    public country : string;
+
     @OneToMany(clientStats => ClientStatistic, clientStats => clientStats.client,{cascade:true})
     clientStats: ClientStatistic[];
 }

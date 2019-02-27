@@ -16,7 +16,7 @@ export class StatistiqueRepo {
     public static async findPaysBySiteWebId(SiteWebId): Promise<Client[]>{
         const statistiqueRepo = getRepository(Client);
         return await statistiqueRepo.find({
-            select: ['latitude'],
+            select: ['country'],
             where: {
                 userId: SiteWebId
             },

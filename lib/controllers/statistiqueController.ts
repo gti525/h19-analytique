@@ -10,7 +10,6 @@ export class StatistiqueController  extends BaseController{
     public async index(req: Request, res: Response, next) {
         try {
             const clients = await this.statistiqueService.getClients(await this.getUser(req));
-            console.log(clients)
             await this.sendResponse(req,res,'statistique',{ clients })
         }
         catch (error) {

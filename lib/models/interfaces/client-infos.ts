@@ -7,6 +7,7 @@ export class ClientInfo {
     public url? : string;
     public completeUrl? : string;
     public uniqueHash? : string;
+    public country?: string;
 
     // Used for hash
     public screenWidth? : number;
