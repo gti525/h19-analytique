@@ -34,7 +34,7 @@ export class Client{
     public longitude? : number;
 
     @Column()
-    public country : string;
+    public country? : string;
 
     @OneToMany(clientStats => ClientStatistic, clientStats => clientStats.client,{cascade:true})
     clientStats: ClientStatistic[];
