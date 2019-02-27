@@ -8,7 +8,7 @@ block content
         div.row
             div.col-md-6.form-group
                 label Identifiant
-                input.form-control(name="identifier", type="text")
+                input.form-control(name="identifier", type="text" required="required" pattern=".{2,}" data-rule-minlength="2" )
             div.col-md-6.form-group
                 label Type de profile
                 input.form-control(name="type", type="text")
