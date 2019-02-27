@@ -13,6 +13,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const PORT = 3000;
 const HOST = "localhost";
+const { check } = require('express-validator/check')
 const cookieParser = require('cookie-parser');
 
 const httpsOptions = {

@@ -1,8 +1,11 @@
 import { Request, Response } from 'express';
+
+import { check, body, query, param, validationResult } from 'express-validator/check';
 import { ProfileService } from '../service/profile.service';
 import { Profile } from '../DB/entity/profile.entitiy';
 import { WebSiteUrl } from '../DB/entity/websiteurl.entity';
 import { BaseController } from './baseController';
+import { Check } from 'typeorm';
 
 export class ProfileController extends BaseController {
     private profileService: ProfileService = new ProfileService();
@@ -41,6 +44,21 @@ export class ProfileController extends BaseController {
             }
         }
     }
+
+    public async validateChamps(req: Request, res: Response, next) {
+        if (req.method !== 'GET' && req.method !== 'POST') {
+            return next()
+        }
+        if (req.method == 'POST'){
+
+            const identifier = req.body.identifier;
+            const type       = req.body.type;
+            const urls       = req.body.urls; 
+            
+            req.checkBody('name').notEmpty().withMessage('Name field is required');
+            
+    }
+}
 
     public async edit(req: Request, res: Response, next) {
         if (req.method !== 'GET' && req.method !== 'POST') {
