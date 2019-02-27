@@ -1,12 +1,19 @@
 import {getRepository} from "typeorm";
 import {Campaign} from "../entity/campaign.entity";
 import {Banner} from "../entity/banner.entity";
+import { User } from "../entity/user.entitiy";
 export class CampaignRepo {
 
     public static async findById(id:number): Promise<Campaign>{
         const campaignRepo = getRepository(Campaign);
         return await campaignRepo.findOne(id, { relations: ["banners", "profiles"] });
     }
+
+    public static async findByUser(user:User): Promise<Campaign[]>{
+        const campaignRepo = getRepository(Campaign);
+        return await campaignRepo.find({where: {user}, relations: ["banners", "profiles"] });
+    }
+
 
     public static async findAll(): Promise<Campaign[]>{
         const campaignRepo = getRepository(Campaign);

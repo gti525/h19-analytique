@@ -1,4 +1,4 @@
-export enum BannerId {
+export enum BannerOrientation {
     horizontal = "horizontal-analytic-banner",
     mobile = "mobile-analityc-banner",
     vertical = "vertical-analytic-banner"

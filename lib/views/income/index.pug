@@ -12,10 +12,10 @@ block content
                 th Clique ciblé
         tbody
             tr
-                td #{incomeChart.regularView*100}¢
-                td #{incomeChart.targetedView*100}¢
-                td #{incomeChart.regularClick*100}¢
-                td #{incomeChart.targetedClick*100}¢
+                td #{incomeChart.regularView.toPrecision(1)}$
+                td #{incomeChart.targetedView.toPrecision(1)}$
+                td #{incomeChart.regularClick.toPrecision(1)}$
+                td #{incomeChart.targetedClick.toPrecision(2)}$
     hr
     h2  Profits à encaisser
     table.table.table-striped.table-bordered
@@ -34,8 +34,8 @@ block content
                     b #{((income.regularViews - income.cashedRegularViews) * incomeChart.regularView + (income.regularClicks - income.cashedRegularClicks) * incomeChart.regularClick).toFixed(2)}$
             tr
                 td client ciblé
-                td #{income.targetedClicks - income.cashedTargetedClicks}
                 td #{income.targetedViews - income.cashedTargetedViews}
+                td #{income.targetedClicks - income.cashedTargetedClicks}
                 td 
                     b #{((income.targetedClicks - income.cashedTargetedClicks) * incomeChart.targetedClick + (income.targetedViews - income.cashedTargetedViews) * incomeChart.targetedView).toFixed(2)}$
     hr
@@ -56,8 +56,8 @@ block content
                     b #{(income.regularViews * incomeChart.regularView + income.regularClicks * incomeChart.regularClick).toFixed(2)}$
             tr
                 td client ciblé
-                td #{income.targetedClicks}
                 td #{income.targetedViews}
+                td #{income.targetedClicks}
                 td 
                  b #{(income.targetedClicks * incomeChart.targetedClick + income.targetedViews * incomeChart.targetedView).toFixed(2)}$
     hr
@@ -78,8 +78,8 @@ block content
                     b #{(income.cashedRegularViews * incomeChart.regularView + income.cashedRegularClicks * incomeChart.regularClick).toFixed(2)}$
             tr
                 td client ciblé
-                td #{income.cashedTargetedClicks}
                 td #{income.cashedTargetedViews}
+                td #{income.cashedTargetedClicks}
                 td 
                     b #{(income.cashedTargetedClicks * incomeChart.targetedClick + income.cashedTargetedViews * incomeChart.targetedView).toFixed(2)}$
     hr

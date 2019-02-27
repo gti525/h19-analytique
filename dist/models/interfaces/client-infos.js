@@ -16,6 +16,7 @@ class ClientInfo {
         client.date = new Date();
         client.identifier = this.hash;
         client.os = this.getOs();
+        client.isTargettable = false;
         return client;
     }
     getOs() {

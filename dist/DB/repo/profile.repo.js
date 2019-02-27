@@ -11,6 +11,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const profile_entitiy_1 = require("../entity/profile.entitiy");
 class ProfileRepo {
+    static findUserProfile(user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const profileRepo = typeorm_1.getRepository(profile_entitiy_1.Profile);
+            return yield profileRepo.find({ where: { user }, relations: ["urls"] });
+        });
+    }
     static findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const profileRepo = typeorm_1.getRepository(profile_entitiy_1.Profile);

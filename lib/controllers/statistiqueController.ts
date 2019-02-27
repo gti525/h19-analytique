@@ -1,28 +1,20 @@
 import { Request, Response } from 'express';
 import { StatistiqueService } from '../service/statistique.service';
-import { Statistique } from '../DB/entity/statistique.entitiy';
 import { WebsiteurlService } from '../service/websiteurl.service';
-import { WebSiteUrl } from '../DB/entity/websiteurl.entity';
-import { AdvancedConsoleLogger } from 'typeorm';
+import { BaseController } from './baseController';
 
-export class StatistiqueController {
+export class StatistiqueController  extends BaseController{
     private statistiqueService: StatistiqueService = new StatistiqueService();
     private websiteurlService: WebsiteurlService = new WebsiteurlService();
 
     public async index(req: Request, res: Response, next) {
-        req.params.id = 1; // à changé une fois les liens BDD ok
         try {
-            let os, resolutions, pays: any;
-            if (req.params.id) {
-                os = await this.statistiqueService.getOSBySiteWebId(req.params.id);
-                resolutions = await this.statistiqueService.getResolutionBySiteWebId(req.params.id);
-                pays = await this.statistiqueService.getPaysBySiteWebId(req.params.id);
-            }
-
-            res.render('statistique', { os: os, resolutions: resolutions, pays: pays });
+            const clients = await this.statistiqueService.getClients(await this.getUser(req));
+            await this.sendResponse(req,res,'statistique',{ clients })
         }
         catch (error) {
-            return res.json(error).status(500);
+            console.log(error)
+            return res.send(error).status(500);
         }
     }
 

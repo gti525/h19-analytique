@@ -14,15 +14,17 @@ const enumsToArray_1 = require("../helpers/enumsToArray");
 const banner_entity_1 = require("../DB/entity/banner.entity");
 const profile_service_1 = require("../service/profile.service");
 const typeorm_1 = require("typeorm");
-class CampaignController {
+const baseController_1 = require("./baseController");
+class CampaignController extends baseController_1.BaseController {
     constructor() {
+        super(...arguments);
         this.campaignService = new campaign_service_1.CampaignService();
         this.profileService = new profile_service_1.ProfileService();
         this.enumsToArray = new enumsToArray_1.EnumsToArray();
     }
     index(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const campaigns = yield this.campaignService.getCampaigns();
+            const campaigns = yield this.campaignService.getCampaignByUser(yield this.getUser(req));
             res.render('campaign/index', { campaigns, moment: require("moment") });
         });
     }
@@ -33,7 +35,7 @@ class CampaignController {
             }
             if (req.method == 'GET') {
                 let campaignTypes = yield this.enumsToArray.translateEnumToSelectArray(campaign_entity_1.BannerType);
-                let profiles = yield this.profileService.getProfiles();
+                let profiles = yield this.profileService.getProfilesByUser(yield this.getUser(req));
                 res.render('campaign/create', { campaignTypes, profiles: profiles });
             }
             else {
@@ -55,6 +57,7 @@ class CampaignController {
                     campaign.endDate = req.body.endDate;
                     campaign.banners = banners;
                     campaign.profiles = profiles;
+                    campaign.user = yield this.getUser(req);
                     yield this.campaignService.addCampaign(campaign);
                     res.redirect("/campaign");
                 }
@@ -75,7 +78,7 @@ class CampaignController {
                 let campaignTypes;
                 if (req.params.id) {
                     campaignTypes = yield this.enumsToArray.translateEnumToSelectArray(campaign_entity_1.BannerType);
-                    profiles = yield this.profileService.getProfiles();
+                    profiles = yield this.profileService.getProfilesByUser(yield this.getUser(req));
                     campaign = yield this.campaignService.getCampaignById(req.params.id);
                 }
                 res.render('campaign/edit', { campaign: campaign, profiles: profiles, campaignTypes: campaignTypes, moment: require("moment") });

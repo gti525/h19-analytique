@@ -4,16 +4,20 @@ export class ClientRepo {
 
     public static async findByHash(hash:string): Promise<Client>{
         const userRepository = getRepository(Client);
-        console.log(await userRepository.findOne({ where: { identifier:hash }}));
-        return await userRepository.findOne({ where: { identifier:hash }})
+        return await userRepository.findOne({ where: { identifier:hash },relations:["clientStats"]})
     }
 
     public static async findById(id:number): Promise<Client>{
         const userRepository = getRepository(Client);
-        return await userRepository.findOne(id);
+        return await userRepository.findOne(id,{relations:["clientStats"]});
     }
 
-    public static async create(user: Client): Promise<Client>{
+    public static async findAll(): Promise<Client[]>{
+        const userRepository = getRepository(Client);
+        return await userRepository.find({relations:["clientStats"]});
+    }
+
+    public static async createOrUpdate(user: Client): Promise<Client>{
         const userRepository = getRepository(Client);
         return await userRepository.save(user);
     }

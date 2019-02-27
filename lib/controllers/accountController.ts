@@ -3,6 +3,7 @@ import {UserService} from "../service/user.service";
 import {QueryFailedError} from "typeorm";
 import {User} from "../DB/entity/user.entitiy";
 import {UserRoles} from "../models/enums/role-enums";
+import { Income } from '../DB/entity/income.entitiy';
 
 export class AccountController {
 
@@ -12,13 +13,22 @@ export class AccountController {
         try{
             const username = req.body.username;
             const password =  req.body.password;
-            const token = await this.userService.authenticate(username, password);
-
-            res.render("index");
+            const user = await this.userService.authenticate(username, password);
+            this.userService.findByToken
+            this.createUserSession(req, user, res);
         }
         catch{
             res.status(401).send('Invalid credentials');
         }
+    }
+
+    private createUserSession(req: Request, user: User, res: Response) {
+        req.session.user = user.id;
+        req.session.save((err) => {
+            if (!err) {
+                res.redirect('/');
+            }
+        });
     }
 
     public async getLoginPage(req: Request, res: Response, next) {
@@ -27,8 +37,8 @@ export class AccountController {
 
     public async getRegisterPage(req: Request, res: Response, next) {
         const roles = {};
-        roles[UserRoles.CAMPAIGNMANAGER] = "Campaign administrator";
-        roles[UserRoles.WEBSITEADMIN] = "Website administrator";
+        roles[UserRoles.CAMPAIGNMANAGER] = UserRoles.CAMPAIGNMANAGER;
+        roles[UserRoles.WEBSITEADMIN] = UserRoles.WEBSITEADMIN;
         res.render('account/register', { roles });
     }
 
@@ -39,10 +49,11 @@ export class AccountController {
             user.role = req.body.role;
             user.password = req.body.password;
             user.accountNumber = req.body.accountNumber;
+            user.income = new Income();
 
-            const result = await this.userService.adduser(user);
+            await this.userService.adduser(user);
 
-            res.render("index")
+            this.createUserSession(req, user, res);
         }
         catch(error){
             if (error instanceof QueryFailedError && (error as any).code === 'ER_DUP_ENTRY'){

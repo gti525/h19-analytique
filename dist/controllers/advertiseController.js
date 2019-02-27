@@ -11,20 +11,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const client_infos_1 = require("../models/interfaces/client-infos");
 const _ = require("lodash");
 const client_service_1 = require("../service/client.service");
-const token_service_1 = require("../service/token.service");
 const advertisment_service_1 = require("../service/advertisment.service");
+const bannerService_1 = require("../service/bannerService");
+const baseController_1 = require("./baseController");
 const fs = require('fs');
-class AdvertiseController {
+class AdvertiseController extends baseController_1.BaseController {
     constructor() {
-        const codePath = process.env.NODE_ENV === 'production' ? 'analitycscode/code/analytics.prod.js' : 'analitycscode/code/analytics.min.js';
-        this.code = fs.readFileSync(codePath, 'utf8');
+        super();
+        const analyticCodePath = process.env.NODE_ENV === 'production' ? 'analitycscode/clientCode/client.prod.js' : 'analitycscode/clientCode/client.min.js';
+        this.analyticCode = fs.readFileSync(analyticCodePath, 'utf8');
+        const bannerCodePath = process.env.NODE_ENV === 'production' ? 'analitycscode/bannerCode/banner.prod.js' : 'analitycscode/bannerCode/banner.min.js';
+        this.bannerCode = fs.readFileSync(bannerCodePath, 'utf8');
         this.clientService = new client_service_1.ClientService();
-        this.tokenService = token_service_1.TokenService.getInstance();
         this.advertismentService = new advertisment_service_1.AdvertismentService();
+        this.bannerService = new bannerService_1.BannerService();
     }
     getAnalitycsCode(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            res.status(200).send(this.code);
+            res.status(200).send(this.analyticCode);
+        });
+    }
+    getBannersCode(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            res.status(200).send(this.bannerCode);
         });
     }
     trackClient(req, res) {
@@ -40,32 +49,46 @@ class AdvertiseController {
     }
     getBanner(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            let error = "";
-            // le id du client traqued
-            const [clientId, bannerId, userId] = this.validateBannerInfo(req, error);
-            // TODO utiliser le token dans le header
-            const banner = yield this.advertismentService.getBanner(clientId, bannerId, userId);
-            if (banner && _.isEmpty(error))
-                res.status(200).send(banner);
-            else
-                res.status(400).send(error);
+            try {
+                const [clientId, bannerType] = this.validateBannerInfo(req);
+                const client = yield this.getClient(clientId);
+                const banner = yield this.advertismentService.getBanner(client, bannerType, req.headers.host);
+                if (banner) {
+                    res.status(200).send(banner);
+                }
+            }
+            catch (error) {
+                res.status(500).send({ message: JSON.stringify(error) });
+            }
+        });
+    }
+    getClient(clientId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.clientService.getClientByHashOrId(clientId);
         });
     }
     addClick(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("CLICK");
+            try {
+                const client = yield this.getClient(req.params.clientId);
+                const banner = yield this.bannerService.findById(req.params.bannerId);
+                yield this.advertismentService.addClientStatistic(client, req.headers.host, banner, true);
+                res.sendStatus(204);
+            }
+            catch (error) {
+                res.status(500).send({ message: JSON.stringify(error) });
+            }
         });
     }
-    validateBannerInfo(req, error) {
-        const clientId = req.body.userId;
+    validateBannerInfo(req) {
+        const clientId = req.params.clientId;
         // le id de la baniere
-        const bannerId = req.body.bannerId;
+        const bannerType = req.params.bannerType;
         // le token de ladmin si site web
-        const userId = this.tokenService.decodeToken(req.headers['x-access-token']).id;
-        if (_.isEmpty(clientId) || _.isEmpty(bannerId)) {
-            error = "clientId or bannerId missing";
+        if (_.isEmpty(clientId) || _.isEmpty(bannerType)) {
+            throw new Error("clientId or bannerType missing");
         }
-        return [clientId, bannerId, userId];
+        return [clientId, bannerType];
     }
     generateClientInfos(body) {
         const clientInfo = new client_infos_1.ClientInfo();

@@ -1,18 +1,15 @@
 import { Request, Response } from 'express';
 import { ProfileService } from '../service/profile.service';
 import { Profile } from '../DB/entity/profile.entitiy';
-import { WebsiteurlService } from '../service/websiteurl.service';
 import { WebSiteUrl } from '../DB/entity/websiteurl.entity';
-import { AdvancedConsoleLogger } from 'typeorm';
-import {Banner} from "../DB/entity/banner.entity";
-import {BannerType} from "../DB/entity/campaign.entity";
+import { BaseController } from './baseController';
 
-export class ProfileController {
+export class ProfileController extends BaseController {
     private profileService: ProfileService = new ProfileService();
 
     public async index(req: Request, res: Response) {
-        const profiles = await this.profileService.getProfiles();
-        res.render('profile/index', { profiles });
+        const profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
+        await this.sendResponse(req,res,'profile/index',{ profiles })
     }
 
     public async create(req: Request, res: Response, next) {
@@ -20,7 +17,7 @@ export class ProfileController {
             return next()
         }
         if (req.method == 'GET'){
-            res.render('profile/create');
+            await this.sendResponse(req,res,'profile/create')
         }else {
             try {
                 const urls = [];
@@ -34,6 +31,7 @@ export class ProfileController {
                 profile.identifier = req.body.identifier;
                 profile.type = req.body.type;
                 profile.urls = urls;
+                profile.user = await this.getUser(req);
 
                 await this.profileService.addProfile(profile);
                 res.redirect("/profile")
@@ -54,7 +52,7 @@ export class ProfileController {
                 if (req.params.id) {
                     profile = await this.profileService.getProfileById(req.params.id);
                 }
-                res.render('profile/edit', { profile: profile });
+                await this.sendResponse(req,res,'profile/edit',{ profile: profile })
             }
             catch (error) {
                 return res.json(error).status(500);
@@ -76,7 +74,7 @@ export class ProfileController {
                     profile.urls = urls;
 
                     await this.profileService.updateProfile(profile);
-                    res.render("profile/edit", { profile: profile });
+                    await this.sendResponse(req,res,'profile/edit', { profile: profile })
                 }
             }
             catch (error) {

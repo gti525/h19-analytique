@@ -1,28 +1,34 @@
 import { Request, Response } from 'express';
 import { ClientInfo } from '../models/interfaces/client-infos'
-import { BannerId, BannerSize } from '../models/enums/banner-id-enum'
 import * as _ from 'lodash'
 import { ClientService } from '../service/client.service';
-import { TokenService } from '../service/token.service';
 import { AdvertismentService } from '../service/advertisment.service';
+import { BaseController } from './baseController';
+import { ClientStatisticsService } from '../service/clientStatistics.service';
 const fs = require('fs');
-export class AdvertiseController {
-    private code;
+export class AdvertiseController extends BaseController {
+    private analyticCode;
+    private bannerCode;
     private clientService: ClientService;
-    private tokenService: TokenService;
     private advertismentService: AdvertismentService
+    private clientStatisticsService : ClientStatisticsService
     constructor(){
-        const codePath = process.env.NODE_ENV === 'production' ? 'analitycscode/code/analytics.prod.js': 'analitycscode/code/analytics.min.js';
-            this.code = fs.readFileSync(codePath, 'utf8');
+        super ();
+        const analyticCodePath = process.env.NODE_ENV === 'production' ? 'analitycscode/clientCode/client.prod.js': 'analitycscode/clientCode/client.min.js';
+        this.analyticCode = fs.readFileSync(analyticCodePath, 'utf8');
+        const bannerCodePath = process.env.NODE_ENV === 'production' ? 'analitycscode/bannerCode/banner.prod.js': 'analitycscode/bannerCode/banner.min.js';
+        this.bannerCode = fs.readFileSync(bannerCodePath, 'utf8');
         this.clientService = new ClientService();
-        this.tokenService = TokenService.getInstance();
         this.advertismentService = new AdvertismentService();
+        this.clientStatisticsService = new ClientStatisticsService();
     }
     
     public async getAnalitycsCode(req: Request, res: Response) {
-        res.status(200).send(this.code);
+        res.status(200).send(this.analyticCode);
     }
-
+    public async getBannersCode(req: Request, res: Response) {
+        res.status(200).send(this.bannerCode);
+    }
     public async trackClient(req: Request, res: Response) {
         const clientInfos = this.generateClientInfos(req.body);
         let client = await this.clientService.getClientByHashOrId(clientInfos.hash);
@@ -34,30 +40,46 @@ export class AdvertiseController {
     }
     
     public async getBanner(req: Request, res: Response) {
-        let error:string = "";
-        // le id du client traqued
-        const [clientId,bannerId,userId] = this.validateBannerInfo(req,error);
-        // TODO utiliser le token dans le header
-        const banner = await this.advertismentService.getBanner(clientId,bannerId,userId)
-        if (banner && _.isEmpty(error))
-            res.status(200).send(banner);
-        else
-            res.status(400).send(error);
-    }
-    public async addClick(req: Request, res: Response) {
-        console.log("CLICK");
+        try{
+            const [clientId,bannerType] = this.validateBannerInfo(req);
+            const client = await this.getClient(clientId);
+            const user = await this.getUser(req);
+            const banner = await this.advertismentService.getBanner(client, user,bannerType,req.headers.referer);
+            if (banner){
+                res.status(200).send(banner);
+            }
+            else{
+                res.status(500).send({message:"No banner found at the moment"});    
+            }
+        }
+        catch (error){
+            res.status(500).send({message:JSON.stringify(error)});
+        }
     }
 
-    private validateBannerInfo(req: Request,error:string) {
-        const clientId = req.body.userId;
-        // le id de la baniere
-        const bannerId = req.body.bannerId;
-        // le token de ladmin si site web
-        const userId = this.tokenService.decodeToken(req.headers['x-access-token'] as any).id;
-        if (_.isEmpty(clientId) || _.isEmpty(bannerId)){
-            error = "clientId or bannerId missing"
+    private async getClient(clientId) {
+        return await this.clientService.getClientByHashOrId(clientId);
+    }
+
+    public async addClick(req: Request, res: Response) {
+        try{
+            await this.clientStatisticsService.setClick(req.params.clientStatisticId);
+            res.sendStatus(204);
         }
-        return [clientId,bannerId,userId];
+        catch (error){
+            res.status(500).send({message:JSON.stringify(error)});
+        }
+    }
+
+    private validateBannerInfo(req: Request) {
+        const clientId = req.params.clientId;
+        // le id de la baniere
+        const bannerType = req.params.bannerType;
+        // le token de ladmin si site web
+        if (_.isEmpty(clientId) || _.isEmpty(bannerType)){
+            throw new Error("clientId or bannerType missing");
+        }
+        return [clientId,bannerType];
     }
 
     private generateClientInfos(body: any): ClientInfo {
