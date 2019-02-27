@@ -25,7 +25,7 @@ class CampaignController extends baseController_1.BaseController {
     index(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const campaigns = yield this.campaignService.getCampaignByUser(yield this.getUser(req));
-            res.render('campaign/index', { campaigns, moment: require("moment") });
+            yield this.sendResponse(req, res, 'campaign/index', { campaigns, moment: require("moment") });
         });
     }
     create(req, res, next) {
@@ -36,7 +36,7 @@ class CampaignController extends baseController_1.BaseController {
             if (req.method == 'GET') {
                 let campaignTypes = yield this.enumsToArray.translateEnumToSelectArray(campaign_entity_1.BannerType);
                 let profiles = yield this.profileService.getProfilesByUser(yield this.getUser(req));
-                res.render('campaign/create', { campaignTypes, profiles: profiles });
+                yield this.sendResponse(req, res, 'campaign/create', { campaignTypes, profiles: profiles });
             }
             else {
                 try {
@@ -81,7 +81,7 @@ class CampaignController extends baseController_1.BaseController {
                     profiles = yield this.profileService.getProfilesByUser(yield this.getUser(req));
                     campaign = yield this.campaignService.getCampaignById(req.params.id);
                 }
-                res.render('campaign/edit', { campaign: campaign, profiles: profiles, campaignTypes: campaignTypes, moment: require("moment") });
+                yield this.sendResponse(req, res, 'campaign/edit', { campaign: campaign, profiles: profiles, campaignTypes: campaignTypes, moment: require("moment") });
             }
             else {
                 try {

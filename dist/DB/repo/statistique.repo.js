@@ -9,11 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-const statistique_entitiy_1 = require("../entity/statistique.entitiy");
+const client_entity_1 = require("../entity/client.entity");
 class StatistiqueRepo {
     static findOSBySiteWebId(SiteWebId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const statistiqueRepo = typeorm_1.getRepository(statistique_entitiy_1.Statistique);
+            const statistiqueRepo = typeorm_1.getRepository(client_entity_1.Client);
             return yield statistiqueRepo.find({
                 select: ['os'],
                 where: {
@@ -24,9 +24,9 @@ class StatistiqueRepo {
     }
     static findPaysBySiteWebId(SiteWebId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const statistiqueRepo = typeorm_1.getRepository(statistique_entitiy_1.Statistique);
+            const statistiqueRepo = typeorm_1.getRepository(client_entity_1.Client);
             return yield statistiqueRepo.find({
-                select: ['pays'],
+                select: ['latitude'],
                 where: {
                     userId: SiteWebId
                 },
@@ -35,9 +35,20 @@ class StatistiqueRepo {
     }
     static findResolutionBySiteWebId(SiteWebId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const statistiqueRepo = typeorm_1.getRepository(statistique_entitiy_1.Statistique);
+            const statistiqueRepo = typeorm_1.getRepository(client_entity_1.Client);
             return yield statistiqueRepo.find({
                 select: ['resolution'],
+                where: {
+                    userId: SiteWebId
+                },
+            });
+        });
+    }
+    static findBrowserBySiteWebId(SiteWebId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const statistiqueRepo = typeorm_1.getRepository(client_entity_1.Client);
+            return yield statistiqueRepo.find({
+                select: ['browser'],
                 where: {
                     userId: SiteWebId
                 },

@@ -34,9 +34,6 @@ class App {
         typeorm_1.createConnection().then((connection) => __awaiter(this, void 0, void 0, function* () {
             try {
                 this.app = express();
-                //view engine setup
-                this.app.set('views', path.join(__dirname, 'views'));
-                this.app.set('view engine', 'pug');
                 this.config();
                 this.routePrv.routes(this.app);
                 if (process.env.NODE_ENV === 'test') {
@@ -58,6 +55,9 @@ class App {
         })).catch(error => console.log("TypeORM connection error: ", error));
     }
     config() {
+        //view engine setup
+        this.app.set('views', path.join(__dirname, 'views'));
+        this.app.set('view engine', 'pug');
         //Cookie parser
         this.app.use(cookieParser());
         // support application/json type post data

@@ -12,8 +12,8 @@ const client_infos_1 = require("../models/interfaces/client-infos");
 const _ = require("lodash");
 const client_service_1 = require("../service/client.service");
 const advertisment_service_1 = require("../service/advertisment.service");
-const bannerService_1 = require("../service/bannerService");
 const baseController_1 = require("./baseController");
+const clientStatistics_service_1 = require("../service/clientStatistics.service");
 const fs = require('fs');
 class AdvertiseController extends baseController_1.BaseController {
     constructor() {
@@ -24,7 +24,7 @@ class AdvertiseController extends baseController_1.BaseController {
         this.bannerCode = fs.readFileSync(bannerCodePath, 'utf8');
         this.clientService = new client_service_1.ClientService();
         this.advertismentService = new advertisment_service_1.AdvertismentService();
-        this.bannerService = new bannerService_1.BannerService();
+        this.clientStatisticsService = new clientStatistics_service_1.ClientStatisticsService();
     }
     getAnalitycsCode(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -52,9 +52,13 @@ class AdvertiseController extends baseController_1.BaseController {
             try {
                 const [clientId, bannerType] = this.validateBannerInfo(req);
                 const client = yield this.getClient(clientId);
-                const banner = yield this.advertismentService.getBanner(client, bannerType, req.headers.host);
+                const user = yield this.getUser(req);
+                const banner = yield this.advertismentService.getBanner(client, user, bannerType, req.headers.host);
                 if (banner) {
                     res.status(200).send(banner);
+                }
+                else {
+                    res.status(500).send({ message: "No banner found at the moment" });
                 }
             }
             catch (error) {
@@ -70,9 +74,7 @@ class AdvertiseController extends baseController_1.BaseController {
     addClick(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const client = yield this.getClient(req.params.clientId);
-                const banner = yield this.bannerService.findById(req.params.bannerId);
-                yield this.advertismentService.addClientStatistic(client, req.headers.host, banner, true);
+                yield this.clientStatisticsService.setClick(req.params.clientStatisticId);
                 res.sendStatus(204);
             }
             catch (error) {

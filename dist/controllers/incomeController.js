@@ -18,10 +18,9 @@ class IncomeController extends baseController_1.BaseController {
     }
     index(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            // TODO si income n'existe pas, retourner la page 404
             const user = yield this.getUser(req);
             const income = yield this.incomeService.getIncome(user);
-            res.render('income/index', { income, incomeChart: incomechart_enum_1.IncomeChart });
+            this.sendResponse(req, res, 'income/index', { income, incomeChart: incomechart_enum_1.IncomeChart });
         });
     }
 }
