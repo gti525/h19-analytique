@@ -38,6 +38,7 @@ export class AccountController {
             user.username = req.body.username;
             user.role = req.body.role;
             user.password = req.body.password;
+            user.accountNumber = req.body.accountNumber;
 
             const result = await this.userService.adduser(user);
 

@@ -12,4 +12,6 @@ export class User{
     role: string;
     @Column({nullable:true})
     analyticToken: string;
+    @Column({nullable:true, unique:true })
+    accountNumber: string;
 }
