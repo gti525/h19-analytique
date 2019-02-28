@@ -63,8 +63,12 @@ export class Routes {
             
             //Income
         app.route('/income')
-            .get(webAdminGuard,async (req, res) => this.incomeController.index(req, res));
-            
+            .get(webAdminGuard,async (req, res, next) => this.incomeController.index(req, res, next));
+
+        app.route('/income/transfer')
+            .get(webAdminGuard,async (req, res, next) => this.incomeController.transfer(req, res, next))
+            //.get(webAdminGuard,async (req, res, next) => this.incomeController.index(req, res, next));
+
             //Profile
         app.route('/profile')
             .get(campaingManagerGuard,async (req, res) => this.profileController.index(req, res));
