@@ -66,7 +66,8 @@ export class IncomeController extends BaseController{
                             exp: "10/22"
                             },
                             merchant: {
-                            id: user.accountNumber,
+                                name: "Simons",
+                                id: user.accountNumber,
                             }
                         
                     }}, function(error, request, body){
