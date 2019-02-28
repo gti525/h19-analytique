@@ -27,6 +27,7 @@
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
+    "express-validation": "^1.0.2",
     "express-validator": "^5.3.1",
     "grunt-contrib-uglify-es": "^3.3.0",
     "grunt-replace": "^1.0.1",

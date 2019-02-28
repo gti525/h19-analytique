@@ -8,10 +8,11 @@ block content
         div.row
             div.col-md-6.form-group
                 label Identifiant
-                input.form-control(name="identifier", type="text" required="required" pattern=".{2,}" data-rule-minlength="2" )
+                input.form-control(name="identifier",  type="text" required="required" pattern=".{2,}" data-rule-minlength="2" )
+
             div.col-md-6.form-group
                 label Type de profile
-                input.form-control(name="type", type="text")
+                input.form-control(name="type", type="text" required="required" pattern=".{2,}" data-rule-minlength="2")
         div.row
             div.url-list.col-md-6
                 label Liste des URL
@@ -21,12 +22,14 @@ block content
                     tbody
                         tr
                             td(colspan=2)
-                                input.form-control(name="urls[0]", type="text")
+                                input.form-control(name="urls[0]" required="required" type="url")
                     tfoot
                         tr
                             td(colspan=2)
                                 input.btn.btn-lg.btn-block.add-url(type="button" value="Ajouter un url")
         button.btn.btn-primary(type="submit") Enregistrer
+
+
 
 block javascript
     script(src="/javascripts/profile.js")
