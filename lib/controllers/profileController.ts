@@ -3,7 +3,7 @@ import { ProfileService } from '../service/profile.service';
 import { Profile } from '../DB/entity/profile.entitiy';
 import { WebSiteUrl } from '../DB/entity/websiteurl.entity';
 import { BaseController } from './baseController';
-import { Check } from "typeorm";
+
 
 export class ProfileController extends BaseController {
     private profileService: ProfileService = new ProfileService();
@@ -54,7 +54,7 @@ export class ProfileController extends BaseController {
             const urls       = req.body.urls; 
 
 
-            req.checkBody('name').notEmpty().withMessage('Name field is required');
+            //req.checkBody('name').notEmpty().withMessage('Name field is required');
             
     }
 }

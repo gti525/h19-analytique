@@ -28,12 +28,9 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "express-validator": "^5.3.1",
-<<<<<<< HEAD
     "grunt-contrib-uglify-es": "^3.3.0",
     "grunt-replace": "^1.0.1",
     "grunt-shell": "^3.0.1",
-=======
->>>>>>> fca321301f4ea1047d7bface504c9fc4afb02303
     "jsonwebtoken": "^8.4.0",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
