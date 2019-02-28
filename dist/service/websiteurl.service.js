@@ -21,9 +21,9 @@ class WebsiteurlService {
             return yield websiteurl_repo_1.WebsiteurlRepo.createOrUpdate(url);
         });
     }
-    getProfileByUrl(id) {
+    findProfilesByUrl(filter) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield websiteurl_repo_1.WebsiteurlRepo.findById(id);
+            return yield websiteurl_repo_1.WebsiteurlRepo.find(filter);
         });
     }
     deleteWebsiteurl(id) {

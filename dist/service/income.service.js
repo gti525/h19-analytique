@@ -9,20 +9,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const income_entitiy_1 = require("../DB/entity/income.entitiy");
+const _ = require("lodash");
+const clientStatistics_service_1 = require("./clientStatistics.service");
 class IncomeService {
-    getIncomeByUserId(userId) {
+    constructor() {
+        this.clientStatisticService = new clientStatistics_service_1.ClientStatisticsService();
+    }
+    getIncome(user) {
         return __awaiter(this, void 0, void 0, function* () {
-            // NOT IMPLEMENTED YET
-            console.log("NOT IMPLEMENTED YET");
             const income = new income_entitiy_1.Income();
-            income.regularClicks = Math.floor(Math.random() * 100) + 20;
-            income.regularViews = Math.floor(Math.random() * 100) + 20;
-            income.targetedClicks = Math.floor(Math.random() * 100) + 20;
-            income.targetedViews = Math.floor(Math.random() * 100) + 20;
-            income.cashedRegularClicks = Math.floor(Math.random() * 20);
-            income.cashedRegularViews = Math.floor(Math.random() * 20);
-            income.cashedTargetedClicks = Math.floor(Math.random() * 20);
-            income.cashedTargetedViews = Math.floor(Math.random() * 20);
+            _.merge(income, user.income);
+            income.regularClicks = yield this.clientStatisticService.countBannersClicked(user, false);
+            income.regularViews = yield this.clientStatisticService.countBannersViewed(user, false);
+            income.targetedClicks = yield this.clientStatisticService.countBannersClicked(user, true);
+            income.targetedViews = yield this.clientStatisticService.countBannersViewed(user, true);
             return income;
         });
     }

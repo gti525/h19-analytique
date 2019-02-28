@@ -3,15 +3,15 @@ import { ClientInfo } from '../models/interfaces/client-infos'
 import * as _ from 'lodash'
 import { ClientService } from '../service/client.service';
 import { AdvertismentService } from '../service/advertisment.service';
-import { BannerService } from '../service/bannerService';
 import { BaseController } from './baseController';
+import { ClientStatisticsService } from '../service/clientStatistics.service';
 const fs = require('fs');
 export class AdvertiseController extends BaseController {
     private analyticCode;
     private bannerCode;
     private clientService: ClientService;
     private advertismentService: AdvertismentService
-    private bannerService: BannerService;
+    private clientStatisticsService : ClientStatisticsService
     constructor(){
         super ();
         const analyticCodePath = process.env.NODE_ENV === 'production' ? 'analitycscode/clientCode/client.prod.js': 'analitycscode/clientCode/client.min.js';
@@ -20,7 +20,7 @@ export class AdvertiseController extends BaseController {
         this.bannerCode = fs.readFileSync(bannerCodePath, 'utf8');
         this.clientService = new ClientService();
         this.advertismentService = new AdvertismentService();
-        this.bannerService = new BannerService();
+        this.clientStatisticsService = new ClientStatisticsService();
     }
     
     public async getAnalitycsCode(req: Request, res: Response) {
@@ -43,9 +43,13 @@ export class AdvertiseController extends BaseController {
         try{
             const [clientId,bannerType] = this.validateBannerInfo(req);
             const client = await this.getClient(clientId);
-            const banner = await this.advertismentService.getBanner(client,bannerType,req.headers.host)
+            const user = await this.getUser(req);
+            const banner = await this.advertismentService.getBanner(client, user,bannerType,req.headers.referer);
             if (banner){
                 res.status(200).send(banner);
+            }
+            else{
+                res.status(500).send({message:"No banner found at the moment"});    
             }
         }
         catch (error){
@@ -59,9 +63,7 @@ export class AdvertiseController extends BaseController {
 
     public async addClick(req: Request, res: Response) {
         try{
-            const client = await this.getClient(req.params.clientId);
-            const banner = await this.bannerService.findById(req.params.bannerId);
-            await this.advertismentService.addClientStatistic(client, req.headers.host,banner,true);
+            await this.clientStatisticsService.setClick(req.params.clientStatisticId);
             res.sendStatus(204);
         }
         catch (error){

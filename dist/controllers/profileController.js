@@ -11,13 +11,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const profile_service_1 = require("../service/profile.service");
 const profile_entitiy_1 = require("../DB/entity/profile.entitiy");
 const websiteurl_entity_1 = require("../DB/entity/websiteurl.entity");
-class ProfileController {
+const baseController_1 = require("./baseController");
+class ProfileController extends baseController_1.BaseController {
     constructor() {
+        super(...arguments);
         this.profileService = new profile_service_1.ProfileService();
     }
     index(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const profiles = yield this.profileService.getProfiles();
+            const profiles = yield this.profileService.getProfilesByUser(yield this.getUser(req));
             res.render('profile/index', { profiles });
         });
     }
@@ -41,6 +43,7 @@ class ProfileController {
                     profile.identifier = req.body.identifier;
                     profile.type = req.body.type;
                     profile.urls = urls;
+                    profile.user = yield this.getUser(req);
                     yield this.profileService.addProfile(profile);
                     res.redirect("/profile");
                 }

@@ -15,6 +15,11 @@ class ProfileService {
             return yield profile_repo_1.ProfileRepo.findAll(filter);
         });
     }
+    getProfilesByUser(user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield profile_repo_1.ProfileRepo.findUserProfile(user);
+        });
+    }
     getProfileById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield profile_repo_1.ProfileRepo.findById(id);

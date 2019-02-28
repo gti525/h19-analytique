@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
+const clientStats_1 = require("./clientStats");
 let Client = class Client {
 };
 __decorate([
@@ -38,6 +39,10 @@ __decorate([
 ], Client.prototype, "identifier", void 0);
 __decorate([
     typeorm_1.Column(),
+    __metadata("design:type", Boolean)
+], Client.prototype, "isTargettable", void 0);
+__decorate([
+    typeorm_1.Column(),
     __metadata("design:type", String)
 ], Client.prototype, "graphicCard", void 0);
 __decorate([
@@ -48,6 +53,10 @@ __decorate([
     typeorm_1.Column("double"),
     __metadata("design:type", Number)
 ], Client.prototype, "longitude", void 0);
+__decorate([
+    typeorm_1.OneToMany(clientStats => clientStats_1.ClientStatistic, clientStats => clientStats.client, { cascade: true }),
+    __metadata("design:type", Array)
+], Client.prototype, "clientStats", void 0);
 Client = __decorate([
     typeorm_1.Entity()
 ], Client);
