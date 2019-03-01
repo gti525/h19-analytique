@@ -12,9 +12,7 @@ import { AdvertiseController } from "../controllers/advertiseController";
 import { analyticsTokenGuard } from "../middlewares/token.guard"
 import { IncomeController } from "../controllers/incomeController";
 import { CampaignController } from "../controllers/campaignController";
-import { raw } from "body-parser";
 import { InstructionController } from "../controllers/instructionController";
-import { User } from "DB/entity/user.entitiy";
 
 export class Routes {
     private dashboardController: DashboardController;
