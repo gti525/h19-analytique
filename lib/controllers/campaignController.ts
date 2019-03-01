@@ -13,9 +13,10 @@ export class CampaignController extends BaseController{
     private campaignService: CampaignService = new CampaignService();
     private profileService: ProfileService = new ProfileService();
     private enumsToArray: EnumsToArray = new EnumsToArray();
+
     public async index(req: Request, res: Response) {
         const campaigns = await this.campaignService.getCampaignByUser(await this.getUser(req));
-        res.render('campaign/index', { campaigns, moment: require("moment") });
+        await this.sendResponse(req, res,'campaign/index', { campaigns, moment: require("moment") });
     }
 
     public async create(req: Request, res: Response, next){
@@ -24,14 +25,13 @@ export class CampaignController extends BaseController{
             result = next()
         }
 
-        let campaignTypes = await this.enumsToArray.translateEnumToSelectArray(BannerType);
-        let profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
+        let content: {[k: string]: any} = {};
+        content.campaignTypes = await this.enumsToArray.translateEnumToSelectArray(BannerType);
+        content.profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
 
-        if (req.method == 'GET'){
-            result = await this.sendResponse(req,res,'campaign/create',{ campaignTypes, profiles: profiles })
-        }else{
-            const errors = validationResult(req);
-            if(errors.isEmpty()){
+        if (req.method == 'POST'){
+            const vResult = validationResult(req);
+            if(vResult.isEmpty()){
                 try {
                     const banners = [];
                     req.body.banners.forEach(function(e){
@@ -58,13 +58,13 @@ export class CampaignController extends BaseController{
                     result = res.redirect("/campaign");
                 }
                 catch (error) {
-                    this.errors = [error];
+                    content.errors = [error];
                 }
             }else{
-                this.addErrors(errors.array());
+                content.errors = this.formatErrors(vResult.array());
             }
         }
-        return result || await this.sendResponse(req,res,'campaign/create', { campaignTypes, profiles: profiles });
+        return result || await this.sendResponse(req,res,'campaign/create', content);
     }
 
     public async edit(req: Request, res: Response, next){
@@ -73,15 +73,15 @@ export class CampaignController extends BaseController{
             result = next()
         }
 
-        let campaignTypes = await this.enumsToArray.translateEnumToSelectArray(BannerType);
-        let profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
-        let campaign = await this.campaignService.getCampaignById(req.params.id);
+        let content: {[k: string]: any} = {};
+        content.campaignTypes = await this.enumsToArray.translateEnumToSelectArray(BannerType);
+        content.profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
+        content.campaign = await this.campaignService.getCampaignById(req.params.id);
+        content.moment = require("moment");
 
-        if (req.method == 'GET'){
-            result = await this.sendResponse(req, res,'campaign/edit', { campaign: campaign, profiles: profiles, campaignTypes: campaignTypes, moment: require("moment") });
-        }else{
-            const errors = validationResult(req);
-            if(errors.isEmpty()) {
+        if (req.method == 'POST'){
+            const vResult = validationResult(req);
+            if(vResult.isEmpty()) {
                 try {
                     const campaign = await this.campaignService.getCampaignById(req.body.id);
                     campaign.startDate = req.body.startDate;
@@ -105,28 +105,27 @@ export class CampaignController extends BaseController{
                     result = res.redirect("/campaign");
                 }
                 catch (error) {
-                    this.addErrors([error]);
+                    content.errors = [error];
                 }
             }else{
-                this.addErrors(errors.array());
+                content.errors = this.formatErrors(vResult.array());
             }
         }
-        return result || await this.sendResponse(req,res,'campaign/edit', { campaign: campaign, profiles: profiles, campaignTypes: campaignTypes, moment: require("moment") });
+        return result || await this.sendResponse(req, res,'campaign/edit', content);
     }
 
     public async delete(req: Request, res: Response){
+        let result;
         try {
             if (req.params.id) {
                 await this.campaignService.deleteCampaign(req.params.id);
-                res.redirect("/campaign");
-            }
-            else {
-                res.status(400).json(`no id was provided`);
+                result = res.redirect("/campaign");
             }
         }
         catch (error) {
-            return res.json(error).status(500);
+            result = await this.sendResponse(req, res,'/campaign', { errors: [error] });
         }
+        return result;
     }
 
     validate = () => {

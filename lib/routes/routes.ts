@@ -111,7 +111,7 @@ export class Routes {
         // **************************************
 
         app.use(cors());
-        app.use('/api/v1',analyticsTokenGuard())
+        app.use('/api/v1',analyticsTokenGuard());
         app.route('/api/v1/analytics/code')
             .get(async (req, res) => this.advertiseController.getAnalitycsCode(req, res));
         app.route('/api/v1/analytics/client')
