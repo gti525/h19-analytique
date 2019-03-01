@@ -51,12 +51,12 @@ class App {
 
     private setDbConfig(){
         console.log("setting up db configs")
-        if (process.env.NODE_ENV !== 'production') {
+        if (process.env.NODE_ENV === 'production') {
             process.env.TYPEORM_CONNECTION = "mariadb",
             process.env.TYPEORM_HOST = "am1shyeyqbxzy8gc.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
             process.env.TYPEORM_PORT = "3306",
             process.env.TYPEORM_USERNAME = "xockne52cd09d9im",
-            process.env.TYPEORM_PASSWORD = "a43yhi4mw6n4ekt5",
+            process.env.TYPEORM_PASSWORD = "fd13twc56v4sld3m",
             process.env.TYPEORM_DATABASE  =  "h4hqzs3onggdslcg",
             process.env.TYPEORM_SYNCHRONIZE  = "true",
             process.env.TYPEORM_LOGGING  = "false",
