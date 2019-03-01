@@ -15,7 +15,7 @@ export class Campaign{
     @ManyToOne(type => User, user => user.campaigns)
     user: User;
     
-    @ManyToMany(profiles => Profile,profile => profile.campaigns,{onDelete:"CASCADE"})
+    @ManyToMany(profiles => Profile)
     @JoinTable()
     profiles: Profile[];
 }

@@ -29,7 +29,6 @@ export class CampaignRepo {
         const campaignRepo = getRepository(Campaign);
         const campaignToDelete  = await CampaignRepo.findById(id);
         if (campaignToDelete)
-            await CampaignRepo.deleteBanners(campaignToDelete.banners);
             return await campaignRepo.remove(campaignToDelete);
     }
 

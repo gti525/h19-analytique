@@ -7,6 +7,7 @@ import {ProfileService} from "../service/profile.service";
 import {In} from "typeorm";
 import { BaseController } from './baseController';
 import {check, validationResult} from "express-validator/check";
+import { error } from 'util';
 
 export class CampaignController extends BaseController{
 
@@ -115,17 +116,19 @@ export class CampaignController extends BaseController{
     }
 
     public async delete(req: Request, res: Response){
-        let result;
         try {
             if (req.params.id) {
                 await this.campaignService.deleteCampaign(req.params.id);
-                result = res.redirect("/campaign");
+                res.redirect("/campaign");
             }
         }
         catch (error) {
-            result = await this.sendResponse(req, res,'/campaign', { errors: [error] });
-        }
-        return result;
+            if (error.message.includes("FOREIGN KEY (`campaignsId`) REFERENCES `campaign` (`id`)")){
+                error = "Il est impossible de supprimer une campagne qui a déjà été vue."
+            }
+            const campaigns = await this.campaignService.getCampaignByUser(await this.getUser(req));
+            await this.sendResponse(req, res,'campaign/index', { errors: [error],campaigns, moment: require("moment") });
+        };
     }
 
     validate = () => {

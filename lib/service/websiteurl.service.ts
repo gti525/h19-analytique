@@ -17,7 +17,7 @@ export class WebsiteurlService {
         }
         return await WebsiteurlRepo.find(tagettedUrls);
     }
-
+    
     public isWebsiteurlValid(websiteurl: any): boolean{
         return !_.isEmpty(websiteurl.url);
     }
