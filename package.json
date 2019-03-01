@@ -27,11 +27,8 @@
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
-<<<<<<< HEAD
     "geo-core": "^1.1.4",
-=======
     "express-validator": "^5.3.1",
->>>>>>> dev
     "jsonwebtoken": "^8.4.0",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
