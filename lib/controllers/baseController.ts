@@ -8,7 +8,7 @@ export class BaseController{
         if(req.headers && req.headers['x-access-token'])
             return await userService.findByToken(req.headers['x-access-token']);
         if(req.session && req.session.user)
-            return await userService.findById(req.session.user)
+            return await userService.findById(req.session.user);
         return undefined
     }
 
@@ -17,5 +17,9 @@ export class BaseController{
         content['name'] = user.username;
         content['role'] = user.role;
         res.render(path,content);
+    }
+
+    protected formatErrors(errors: any): string[]{
+        return errors.map(e => e.msg).filter((e, i, a) => i === a.indexOf(e));
     }
 }

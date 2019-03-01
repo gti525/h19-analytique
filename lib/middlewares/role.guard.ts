@@ -6,7 +6,7 @@ import { UserService } from "../service/user.service";
 // https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens#toc-route-middleware-to-protect-api-routes
 export const roleGuard: ((roles: UserRoles[]) => RequestHandler) = ((roles: UserRoles[]) => async (req, res, next) => {
     const userService = new UserService();
-    let user = await userService.findById(req.session.user)
+    let user = await userService.findById(req.session.user);
     if (user && roles.find(r => r === user.role)){
         next()
     } else {

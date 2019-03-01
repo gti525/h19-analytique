@@ -6,16 +6,17 @@ import {Banner} from "../DB/entity/banner.entity";
 import {ProfileService} from "../service/profile.service";
 import {In} from "typeorm";
 import { BaseController } from './baseController';
-import {validationResult} from "express-validator/check";
+import {check, validationResult} from "express-validator/check";
 
 export class CampaignController extends BaseController{
 
     private campaignService: CampaignService = new CampaignService();
     private profileService: ProfileService = new ProfileService();
     private enumsToArray: EnumsToArray = new EnumsToArray();
+
     public async index(req: Request, res: Response) {
         const campaigns = await this.campaignService.getCampaignByUser(await this.getUser(req));
-        this.sendResponse(req,res,'campaign/index', { campaigns, moment: require("moment") })
+        await this.sendResponse(req, res,'campaign/index', { campaigns, moment: require("moment") });
     }
 
     public async create(req: Request, res: Response, next){
@@ -23,13 +24,14 @@ export class CampaignController extends BaseController{
         if (req.method !== 'GET' && req.method !== 'POST') {
             result = next()
         }
-        if (req.method == 'GET'){
-            let campaignTypes = await this.enumsToArray.translateEnumToSelectArray(BannerType);
-            let profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
-            result = await this.sendResponse(req,res,'campaign/create',{ campaignTypes, profiles: profiles })
-        }else{
-            const errors = validationResult(req);
-            if(errors.isEmpty()){
+
+        let content: {[k: string]: any} = {};
+        content.campaignTypes = await this.enumsToArray.translateEnumToSelectArray(BannerType);
+        content.profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
+
+        if (req.method == 'POST'){
+            const vResult = validationResult(req);
+            if(vResult.isEmpty()){
                 try {
                     const banners = [];
                     req.body.banners.forEach(function(e){
@@ -56,68 +58,82 @@ export class CampaignController extends BaseController{
                     result = res.redirect("/campaign");
                 }
                 catch (error) {
-                    result = res.json(error).status(500);
+                    content.errors = [error];
                 }
             }else{
-                result = res.status(401).json({ errors: errors.array() });
+                content.errors = this.formatErrors(vResult.array());
             }
+        }
+        return result || await this.sendResponse(req,res,'campaign/create', content);
+    }
+
+    public async edit(req: Request, res: Response, next){
+        let result;
+        if (req.method !== 'GET' && req.method !== 'POST') {
+            result = next()
+        }
+
+        let content: {[k: string]: any} = {};
+        content.campaignTypes = await this.enumsToArray.translateEnumToSelectArray(BannerType);
+        content.profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
+        content.campaign = await this.campaignService.getCampaignById(req.params.id);
+        content.moment = require("moment");
+
+        if (req.method == 'POST'){
+            const vResult = validationResult(req);
+            if(vResult.isEmpty()) {
+                try {
+                    const campaign = await this.campaignService.getCampaignById(req.body.id);
+                    campaign.startDate = req.body.startDate;
+                    campaign.endDate = req.body.endDate;
+
+                    campaign.banners.forEach(function (banner) {
+                        const newBanner = req.body.banners.filter(function (b) {
+                            return b.id == banner.id
+                        })[0];
+                        banner.url = newBanner.url;
+                        banner.image = newBanner.image;
+                    });
+
+                    const profileIds = req.body.profileIds.map(function (value) {
+                        return parseInt(value, 10);
+                    });
+                    campaign.profiles = await this.profileService.getProfiles({id: In(profileIds)});
+
+                    await this.campaignService.updateCampaign(campaign);
+
+                    result = res.redirect("/campaign");
+                }
+                catch (error) {
+                    content.errors = [error];
+                }
+            }else{
+                content.errors = this.formatErrors(vResult.array());
+            }
+        }
+        return result || await this.sendResponse(req, res,'campaign/edit', content);
+    }
+
+    public async delete(req: Request, res: Response){
+        let result;
+        try {
+            if (req.params.id) {
+                await this.campaignService.deleteCampaign(req.params.id);
+                result = res.redirect("/campaign");
+            }
+        }
+        catch (error) {
+            result = await this.sendResponse(req, res,'/campaign', { errors: [error] });
         }
         return result;
     }
 
-    public async edit(req: Request, res: Response, next){
-        if (req.method !== 'GET' && req.method !== 'POST') {
-            return next()
-        }
-        if (req.method == 'GET'){
-            let campaign: any;
-            let profiles: any;
-            let campaignTypes: any;
-            if (req.params.id) {
-                campaignTypes = await this.enumsToArray.translateEnumToSelectArray(BannerType);
-                profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
-                campaign = await this.campaignService.getCampaignById(req.params.id);
-            }
-            this.sendResponse(req,res,'campaign/edit', { campaign: campaign, profiles: profiles, campaignTypes: campaignTypes, moment: require("moment") })
-        }else{
-            try {
-                const campaign = await this.campaignService.getCampaignById(req.body.id);
-                campaign.startDate = req.body.startDate;
-                campaign.endDate = req.body.endDate;
-
-                campaign.banners.forEach(function(banner) {
-                    const newBanner = req.body.banners.filter(function(b){ return b.id == banner.id })[0];
-                    banner.url = newBanner.url;
-                    banner.image = newBanner.image;
-                });
-
-                const profileIds = req.body.profileIds.map(function(value) {
-                    return parseInt(value, 10);
-                });
-                campaign.profiles = await this.profileService.getProfiles({id: In(profileIds)});
-
-                await this.campaignService.updateCampaign(campaign);
-
-                res.redirect("/campaign");
-            }
-            catch (error) {
-                return res.json(error).status(500);
-            }
-        }
-    }
-
-    public async delete(req: Request, res: Response){
-        try {
-            if (req.params.id) {
-                await this.campaignService.deleteCampaign(req.params.id);
-                res.redirect("/campaign");
-            }
-            else {
-                res.status(400).json(`no id was provided`);
-            }
-        }
-        catch (error) {
-            return res.json(error).status(500);
-        }
+    validate = () => {
+        return [
+            check("startDate", "La date de début est requise.").not().isEmpty(),
+            check("endDate", "La date de fin est requise.").not().isEmpty(),
+            check('banners.*.url', "Le url est requis.").not().isEmpty(),
+            check('banners.*.image', "L'image publicitaire est requise.").not().isEmpty()
+        ]
     }
 }
