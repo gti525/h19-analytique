@@ -45,7 +45,7 @@ export class ProfileController extends BaseController {
         }
     }
 
-    public async validateChamps(req: Request, res: Response, next) {
+    public async validationProfil(req: Request, res: Response, next) {
 
         if (req.method == 'POST'){
 

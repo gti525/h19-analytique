@@ -8,11 +8,11 @@ block content
         div.row
             div.col-md-6.form-group
                 label Identifiant
-                input.form-control(name="identifier",  type="text" required="required" pattern=".{2,}" data-rule-minlength="2" )
+                input.form-control(name="identifier",  type='text' required="required" placeholder = "veuillez saisir un Identifiant minimun 5 caracteres" pattern="[a-z]{5,15}")
 
             div.col-md-6.form-group
                 label Type de profile
-                input.form-control(name="type", type="text" required="required" pattern=".{2,}" data-rule-minlength="2")
+                input.form-control(name="type", type="text" required="required" pattern="[a-z]{5,15}" placeholder = "veuillez saisir un type de profile minimun 5 caracteres")
         div.row
             div.url-list.col-md-6
                 label Liste des URL
@@ -22,12 +22,12 @@ block content
                     tbody
                         tr
                             td(colspan=2)
-                                input.form-control(name="urls[0]" required="required" type="url")
+                                input.form-control(name="urls[0]" required="required" type="url" pattern="https?://.+" title="Include http://" placeholder = "veuillez saisir un url https://www.exemple.com ")
                     tfoot
                         tr
                             td(colspan=2)
-                                input.btn.btn-lg.btn-block.add-url(type="button" value="Ajouter un url")
-        button.btn.btn-primary(type="submit") Enregistrer
+                                input.btn.btn-lg.btn-block.add-url(type="button" value="Ajouter un url" )
+        button.btn.btn-primary(type="submit" ) Enregistrer
 
 
 
