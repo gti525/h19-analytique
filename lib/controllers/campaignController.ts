@@ -6,7 +6,7 @@ import {Banner} from "../DB/entity/banner.entity";
 import {ProfileService} from "../service/profile.service";
 import {In} from "typeorm";
 import { BaseController } from './baseController';
-import {validationResult} from "express-validator/check";
+import {check, validationResult} from "express-validator/check";
 
 export class CampaignController extends BaseController{
 
@@ -23,9 +23,11 @@ export class CampaignController extends BaseController{
         if (req.method !== 'GET' && req.method !== 'POST') {
             result = next()
         }
+
+        let campaignTypes = await this.enumsToArray.translateEnumToSelectArray(BannerType);
+        let profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
+
         if (req.method == 'GET'){
-            let campaignTypes = await this.enumsToArray.translateEnumToSelectArray(BannerType);
-            let profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
             result = await this.sendResponse(req,res,'campaign/create',{ campaignTypes, profiles: profiles })
         }else{
             const errors = validationResult(req);
@@ -56,54 +58,60 @@ export class CampaignController extends BaseController{
                     result = res.redirect("/campaign");
                 }
                 catch (error) {
-                    result = res.json(error).status(500);
+                    this.errors = [error];
                 }
             }else{
-                result = res.status(401).json({ errors: errors.array() });
+                this.addErrors(errors.array());
             }
         }
-        return result;
+        return result || await this.sendResponse(req,res,'campaign/create', { campaignTypes, profiles: profiles });
     }
 
     public async edit(req: Request, res: Response, next){
+        let result;
         if (req.method !== 'GET' && req.method !== 'POST') {
-            return next()
+            result = next()
         }
+
+        let campaignTypes = await this.enumsToArray.translateEnumToSelectArray(BannerType);
+        let profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
+        let campaign = await this.campaignService.getCampaignById(req.params.id);
+
         if (req.method == 'GET'){
-            let campaign: any;
-            let profiles: any;
-            let campaignTypes: any;
-            if (req.params.id) {
-                campaignTypes = await this.enumsToArray.translateEnumToSelectArray(BannerType);
-                profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
-                campaign = await this.campaignService.getCampaignById(req.params.id);
-            }
-            res.render('campaign/edit', { campaign: campaign, profiles: profiles, campaignTypes: campaignTypes, moment: require("moment") });
+            result = await this.sendResponse(req, res,'campaign/edit', { campaign: campaign, profiles: profiles, campaignTypes: campaignTypes, moment: require("moment") });
         }else{
-            try {
-                const campaign = await this.campaignService.getCampaignById(req.body.id);
-                campaign.startDate = req.body.startDate;
-                campaign.endDate = req.body.endDate;
+            const errors = validationResult(req);
+            if(errors.isEmpty()) {
+                try {
+                    const campaign = await this.campaignService.getCampaignById(req.body.id);
+                    campaign.startDate = req.body.startDate;
+                    campaign.endDate = req.body.endDate;
 
-                campaign.banners.forEach(function(banner) {
-                    const newBanner = req.body.banners.filter(function(b){ return b.id == banner.id })[0];
-                    banner.url = newBanner.url;
-                    banner.image = newBanner.image;
-                });
+                    campaign.banners.forEach(function (banner) {
+                        const newBanner = req.body.banners.filter(function (b) {
+                            return b.id == banner.id
+                        })[0];
+                        banner.url = newBanner.url;
+                        banner.image = newBanner.image;
+                    });
 
-                const profileIds = req.body.profileIds.map(function(value) {
-                    return parseInt(value, 10);
-                });
-                campaign.profiles = await this.profileService.getProfiles({id: In(profileIds)});
+                    const profileIds = req.body.profileIds.map(function (value) {
+                        return parseInt(value, 10);
+                    });
+                    campaign.profiles = await this.profileService.getProfiles({id: In(profileIds)});
 
-                await this.campaignService.updateCampaign(campaign);
+                    await this.campaignService.updateCampaign(campaign);
 
-                res.redirect("/campaign");
-            }
-            catch (error) {
-                return res.json(error).status(500);
+                    result = res.redirect("/campaign");
+                }
+                catch (error) {
+                    this.addErrors([error]);
+                }
+            }else{
+                this.addErrors(errors.array());
             }
         }
+        return result || await this.sendResponse(req,res,'campaign/edit', { campaign: campaign, profiles: profiles, campaignTypes: campaignTypes, moment: require("moment") });
     }
 
     public async delete(req: Request, res: Response){
@@ -119,5 +127,14 @@ export class CampaignController extends BaseController{
         catch (error) {
             return res.json(error).status(500);
         }
+    }
+
+    validate = () => {
+        return [
+            check("startDate", "La date de début est requise.").not().isEmpty(),
+            check("endDate", "La date de fin est requise.").not().isEmpty(),
+            check('banners.*.url', "Le url est requis.").not().isEmpty(),
+            check('banners.*.image', "L'image publicitaire est requise.").not().isEmpty()
+        ]
     }
 }

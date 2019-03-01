@@ -10,9 +10,12 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
                         i.fa.fa-sign-out
                         | &nbsp;Déconnecter
 
+if errors && errors.length > 0
+    div.errors
+        div.alert.alert-danger(role="alert")
+            ul.error-list
+                each error in errors
+                    li= error
+            button.close(type="button", data-dismiss="alert", aria-label="Fermer")
+                span(aria-hidden="true") &times;
 
-//- div.errors
-//-     div.alert.alert-danger(role="alert")
-//-         ul
-//-             each error in errors
-//-                 li= error
