@@ -56,7 +56,7 @@ class App {
             process.env.TYPEORM_HOST = "am1shyeyqbxzy8gc.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
             process.env.TYPEORM_PORT = "3306",
             process.env.TYPEORM_USERNAME = "xockne52cd09d9im",
-            process.env.TYPEORM_PASSWORD = "pcvckz00n0p5slna",
+            process.env.TYPEORM_PASSWORD = "a43yhi4mw6n4ekt5",
             process.env.TYPEORM_DATABASE  =  "h4hqzs3onggdslcg",
             process.env.TYPEORM_SYNCHRONIZE  = "true",
             process.env.TYPEORM_LOGGING  = "false",
