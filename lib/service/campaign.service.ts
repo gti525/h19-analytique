@@ -24,6 +24,7 @@ export class CampaignService {
     }
 
     public async deleteCampaign(id: number): Promise<Campaign>{
-        return await CampaignRepo.deleteById(id);
+        const campaignToDelete  = await CampaignRepo.findById(id);
+        return await CampaignRepo.deleteById(campaignToDelete);
     }
 }

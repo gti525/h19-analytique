@@ -25,9 +25,8 @@ export class CampaignRepo {
         return await campaignRepo.save(campaign);
     }
 
-    public static async deleteById(id: number){
+    public static async deleteById(campaignToDelete: Campaign){
         const campaignRepo = getRepository(Campaign);
-        const campaignToDelete  = await CampaignRepo.findById(id);
         if (campaignToDelete)
             return await campaignRepo.remove(campaignToDelete);
     }

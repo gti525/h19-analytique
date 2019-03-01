@@ -123,6 +123,7 @@ export class CampaignController extends BaseController{
             }
         }
         catch (error) {
+            console.log(error);
             if (error.message.includes("FOREIGN KEY (`campaignsId`) REFERENCES `campaign` (`id`)")){
                 error = "Il est impossible de supprimer une campagne qui a déjà été vue."
             }

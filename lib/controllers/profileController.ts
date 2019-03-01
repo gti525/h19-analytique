@@ -120,7 +120,8 @@ export class ProfileController extends BaseController {
             }
         }
         catch (error) {
-            return res.json(error).status(500);
+            const profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
+            await this.sendResponse(req,res,'profile/index',{ profiles,errors:[error] })
         }
     }
 }

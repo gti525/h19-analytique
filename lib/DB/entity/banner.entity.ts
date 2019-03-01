@@ -9,7 +9,7 @@ export class Banner{
     @Column({type: "longtext"}) image: string;
     @Column() type: number;
 
-    @ManyToOne(type => Campaign, campaign => campaign.banners)
+    @ManyToOne(type => Campaign, campaign => campaign.banners,{onDelete:"CASCADE"})
     campaigns: Campaign;
 
     @OneToMany(clientStats => ClientStatistic, clientStats => clientStats.banner)
