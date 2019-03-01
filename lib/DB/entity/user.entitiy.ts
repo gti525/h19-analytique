@@ -21,7 +21,7 @@ export class User{
     @Column({nullable:true})
     analyticToken: string;
 
-    @Column({nullable:true, unique:true })
+    @Column({nullable:true })
     accountNumber: string;
 
     @OneToMany(type => Campaign, campaign => campaign.user)
