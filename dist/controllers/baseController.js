@@ -20,6 +20,14 @@ class BaseController {
             return undefined;
         });
     }
+    sendResponse(req, res, path, content = {}) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = yield this.getUser(req);
+            content['name'] = user.username;
+            content['role'] = user.role;
+            res.render(path, content);
+        });
+    }
 }
 exports.BaseController = BaseController;
 //# sourceMappingURL=baseController.js.map

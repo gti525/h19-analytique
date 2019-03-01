@@ -6,6 +6,7 @@ import { AdvertismentService } from '../service/advertisment.service';
 import { BaseController } from './baseController';
 import { ClientStatisticsService } from '../service/clientStatistics.service';
 const fs = require('fs');
+var Geolocation = require('geo-core')
 export class AdvertiseController extends BaseController {
     private analyticCode;
     private bannerCode;
@@ -84,6 +85,7 @@ export class AdvertiseController extends BaseController {
 
     private generateClientInfos(body: any): ClientInfo {
         const clientInfo = new ClientInfo();
+        var GeoManager = new Geolocation({radius: 100});
         clientInfo.graphicCard = body.webglinfo;
         clientInfo.languages = body.languages;
         clientInfo.os = body.platform;
@@ -93,6 +95,12 @@ export class AdvertiseController extends BaseController {
             [clientInfo.screenWidth,clientInfo.screenHeight,clientInfo.screenColorDepth] = body.screen.split('.');
         if (body.location && body.location.split('X').length === 2)
             [clientInfo.latitude,clientInfo.longitude] = body.location.split('X');
+            GeoManager.findNearbyLocations({
+            lat: clientInfo.latitude,
+            lon: clientInfo.longitude
+          }, function(locations) {
+            clientInfo.country = locations[0].country;
+          });
         clientInfo.url = body.host;
         clientInfo.completeUrl = body.href;
         clientInfo.doNotTrack = body.doNotTrack;

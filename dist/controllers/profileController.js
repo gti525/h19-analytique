@@ -20,7 +20,7 @@ class ProfileController extends baseController_1.BaseController {
     index(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const profiles = yield this.profileService.getProfilesByUser(yield this.getUser(req));
-            res.render('profile/index', { profiles });
+            yield this.sendResponse(req, res, 'profile/index', { profiles });
         });
     }
     create(req, res, next) {
@@ -29,7 +29,7 @@ class ProfileController extends baseController_1.BaseController {
                 return next();
             }
             if (req.method == 'GET') {
-                res.render('profile/create');
+                yield this.sendResponse(req, res, 'profile/create');
             }
             else {
                 try {
@@ -64,7 +64,7 @@ class ProfileController extends baseController_1.BaseController {
                     if (req.params.id) {
                         profile = yield this.profileService.getProfileById(req.params.id);
                     }
-                    res.render('profile/edit', { profile: profile });
+                    yield this.sendResponse(req, res, 'profile/edit', { profile: profile });
                 }
                 catch (error) {
                     return res.json(error).status(500);
@@ -84,7 +84,7 @@ class ProfileController extends baseController_1.BaseController {
                         profile.type = req.body.type;
                         profile.urls = urls;
                         yield this.profileService.updateProfile(profile);
-                        res.render("profile/edit", { profile: profile });
+                        yield this.sendResponse(req, res, 'profile/edit', { profile: profile });
                     }
                 }
                 catch (error) {

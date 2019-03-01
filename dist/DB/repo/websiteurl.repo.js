@@ -14,13 +14,13 @@ class WebsiteurlRepo {
     static findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const websiteurlRepo = typeorm_1.getRepository(websiteurl_entity_1.WebSiteUrl);
-            return yield websiteurlRepo.findOne(id, { relations: ["profiles"] });
+            return yield websiteurlRepo.findOne(id, { relations: ["profile"] });
         });
     }
-    static find(filter) {
+    static find(tagettedUrls) {
         return __awaiter(this, void 0, void 0, function* () {
             const websiteurlRepo = typeorm_1.getRepository(websiteurl_entity_1.WebSiteUrl);
-            return yield websiteurlRepo.find({ where: filter, relations: ["profiles"] });
+            return yield websiteurlRepo.find({ where: { url: typeorm_1.In(tagettedUrls) }, relations: ["profile"] });
         });
     }
     static createOrUpdate(profile) {

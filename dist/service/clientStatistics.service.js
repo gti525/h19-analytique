@@ -9,10 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const stats_repo_1 = require("../DB/repo/stats.repo");
-const campaign_service_1 = require("./campaign.service");
 class ClientStatisticsService {
-    constructor() {
-        this.campaignService = new campaign_service_1.CampaignService();
+    setClick(clientStatisticId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const clientStatistic = yield stats_repo_1.ClientStatisticRepo.findById(clientStatisticId);
+            clientStatistic.isView = false;
+            clientStatistic.isClick = true;
+            clientStatistic.date = new Date();
+            this.save(clientStatistic);
+        });
     }
     save(clientStatistics) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -21,26 +26,12 @@ class ClientStatisticsService {
     }
     countBannersClicked(user, targeted) {
         return __awaiter(this, void 0, void 0, function* () {
-            let total = 0;
-            for (const c of user.campaigns) {
-                const campaign = yield this.campaignService.getCampaignById(c.id);
-                for (const b of campaign.banners) {
-                    total += yield stats_repo_1.ClientStatisticRepo.countBannersClicked(b, targeted);
-                }
-            }
-            return total;
+            return yield stats_repo_1.ClientStatisticRepo.countBannersClicked(user, targeted);
         });
     }
     countBannersViewed(user, targeted) {
         return __awaiter(this, void 0, void 0, function* () {
-            let total = 0;
-            for (const c of user.campaigns) {
-                const campaign = yield this.campaignService.getCampaignById(c.id);
-                for (const b of campaign.banners) {
-                    total += yield stats_repo_1.ClientStatisticRepo.countBannersViewed(b, targeted);
-                }
-            }
-            return total;
+            return yield stats_repo_1.ClientStatisticRepo.countBannersViewed(user, targeted);
         });
     }
 }

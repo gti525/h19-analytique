@@ -47,8 +47,8 @@ class AccountController {
     getRegisterPage(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             const roles = {};
-            roles[role_enums_1.UserRoles.CAMPAIGNMANAGER] = "Campaign administrator";
-            roles[role_enums_1.UserRoles.WEBSITEADMIN] = "Website administrator";
+            roles[role_enums_1.UserRoles.CAMPAIGNMANAGER] = role_enums_1.UserRoles.CAMPAIGNMANAGER;
+            roles[role_enums_1.UserRoles.WEBSITEADMIN] = role_enums_1.UserRoles.WEBSITEADMIN;
             res.render('account/register', { roles });
         });
     }
