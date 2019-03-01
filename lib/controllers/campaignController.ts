@@ -123,9 +123,9 @@ export class CampaignController extends BaseController{
             }
         }
         catch (error) {
-            const error = 'Impossible de supprimer une campagne ayant généré des revenus.';
+            const message = 'Impossible de supprimer une campagne ayant généré des revenus.';
             const campaigns = await this.campaignService.getCampaignByUser(await this.getUser(req));
-            await this.sendResponse(req, res,'campaign/index', { errors: [error],campaigns, moment: require("moment") });
+            await this.sendResponse(req, res,'campaign/index', { errors: [message],campaigns, moment: require("moment") });
         };
     }
 
