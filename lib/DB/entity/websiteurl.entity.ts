@@ -9,6 +9,6 @@ export class WebSiteUrl{
     @Column()
     url: string;
 
-    @ManyToOne(type => Profile, profile => profile.urls)
+    @ManyToOne(type => Profile, profile => profile.urls,{onDelete:'CASCADE'})
     profile: Profile;
 }

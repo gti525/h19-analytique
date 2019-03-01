@@ -14,10 +14,4 @@ export class WebsiteurlRepo {
         const websiteurlRepo = getRepository(WebSiteUrl);
         return await websiteurlRepo.save(profile);
     }
-    public static async delete(id: number){
-        const websiteurlRepo = getRepository(getRepository);
-        const urlToDelete  = await WebsiteurlRepo.findById(id);
-        if (urlToDelete)
-            await websiteurlRepo.delete(urlToDelete);
-    }
 }

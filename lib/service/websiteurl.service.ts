@@ -18,8 +18,8 @@ export class WebsiteurlService {
         return await WebsiteurlRepo.find(tagettedUrls);
     }
 
-    public async deleteWebsiteurl(id: number){
-        await WebsiteurlRepo.delete(id);
+    public async deleteWebsiteurl(websiteurl: WebSiteUrl){
+        await WebsiteurlRepo.delete(websiteurl);
     }
     public isWebsiteurlValid(websiteurl: any): boolean{
         return !_.isEmpty(websiteurl.url);

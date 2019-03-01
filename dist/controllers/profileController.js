@@ -53,6 +53,20 @@ class ProfileController extends baseController_1.BaseController {
             }
         });
     }
+
+    validateProfile(req, res, next){
+
+        var profile = new profile_entitiy_1.Profile();
+        profile.identifier = req.body.identifier;
+        profile.type = req.body.type;
+        profile.urls = urls;
+
+        req.checkBody('identifier', 'Name is required').notEmpty();
+        req.checkBody('type', 'type is required').notEmpty();
+
+    }
+
+
     edit(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             if (req.method !== 'GET' && req.method !== 'POST') {
