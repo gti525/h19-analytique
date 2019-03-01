@@ -17,6 +17,7 @@ export class InitService {
                 user.role = UserRoles.ADMIN;
                 user.username = u;
                 if (u === 'webadmin'){
+                    user.id = 123;
                     user.analyticToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIzLCJpYXQiOjE1NDg4MTQ4MTF9.Lnx1ENTHmzfBkNsDFs-zFsAK86cgKqH0_Fw8R5VEqlk";
                     user.role = UserRoles.WEBSITEADMIN;
                     const income = await IncomeRepo.create(new Income());

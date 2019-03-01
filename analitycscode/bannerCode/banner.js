@@ -1,5 +1,18 @@
 
-function ___getBanners(clientId){
+function ___getBanners(clientId,___analyticsToken){
+    history.pushState = function () {
+        console.log('dans pushstate')
+        if (document.getElementById("mobile-analityc-banner")){
+            getBanner("mobile-analityc-banner")
+            return;
+        }
+        if (document.getElementById("horizontal-analytic-banner")){
+            getBanner("horizontal-analytic-banner")
+        }
+        if (document.getElementById("vertical-analytic-banner")){
+            getBanner("vertical-analytic-banner")
+        }
+    };
     function setImageToBanner(bannerType,url,img,size,clientStatisticId){
         document.getElementById(`${bannerType}`).innerHTML = `<a href="${url}"><img id=${bannerType+clientStatisticId} src="${img}" width="${size.width}" height="${size.height}"></a>`
         document.getElementById(`${bannerType+clientStatisticId}`).addEventListener("mouseup", function(){
@@ -8,6 +21,7 @@ function ___getBanners(clientId){
     }
     // Pour les banners
     function getBanner(bannerType){
+        console.log('dans get babber',bannerType);
         let xmlHttp = new XMLHttpRequest();
         const url =`http://localhost:3000/api/v1/banner/${bannerType}/${clientId}`
         xmlHttp.open( "GET", url, true );

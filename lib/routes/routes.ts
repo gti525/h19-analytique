@@ -12,7 +12,9 @@ import { AdvertiseController } from "../controllers/advertiseController";
 import { analyticsTokenGuard } from "../middlewares/token.guard"
 import { IncomeController } from "../controllers/incomeController";
 import { CampaignController } from "../controllers/campaignController";
+import { raw } from "body-parser";
 import { InstructionController } from "../controllers/instructionController";
+import { User } from "DB/entity/user.entitiy";
 
 export class Routes {
     private dashboardController: DashboardController;
@@ -61,8 +63,12 @@ export class Routes {
             
             //Income
         app.route('/income')
-            .get(webAdminGuard, async (req, res) => this.incomeController.index(req, res));
-            
+            .get(webAdminGuard,async (req, res, next) => this.incomeController.index(req, res, next));
+
+        app.route('/income/transfer')
+            .get(webAdminGuard,async (req, res, next) => this.incomeController.transfer(req, res, next))
+            //.get(webAdminGuard,async (req, res, next) => this.incomeController.index(req, res, next));
+
             //Profile
         app.route('/profile')
             .get(campaingManagerGuard, async (req, res) => this.profileController.index(req, res));

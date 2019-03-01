@@ -17,6 +17,7 @@ class IncomeService {
     }
     getIncome(user) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log(user);
             const income = new income_entitiy_1.Income();
             _.merge(income, user.income);
             income.regularClicks = yield this.clientStatisticService.countBannersClicked(user, false);

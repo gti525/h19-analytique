@@ -39,10 +39,6 @@ __decorate([
 ], Client.prototype, "identifier", void 0);
 __decorate([
     typeorm_1.Column(),
-    __metadata("design:type", Boolean)
-], Client.prototype, "isTargettable", void 0);
-__decorate([
-    typeorm_1.Column(),
     __metadata("design:type", String)
 ], Client.prototype, "graphicCard", void 0);
 __decorate([

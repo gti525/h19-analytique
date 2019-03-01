@@ -14,7 +14,11 @@ const profile_entitiy_1 = require("./profile.entitiy");
 let WebSiteUrl = class WebSiteUrl {
 };
 __decorate([
-    typeorm_1.PrimaryColumn(),
+    typeorm_1.PrimaryGeneratedColumn(),
+    __metadata("design:type", Number)
+], WebSiteUrl.prototype, "id", void 0);
+__decorate([
+    typeorm_1.Column(),
     __metadata("design:type", String)
 ], WebSiteUrl.prototype, "url", void 0);
 __decorate([

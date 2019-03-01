@@ -1,6 +1,8 @@
 extends ../shared/_layout.pug
 
 block content
+    div.page-actions
+        a.btn.btn-info(href="/income/transfer", role="button") Récupérer ses revenus
     h1  Profits
     h2 Légende
     table.table.table-striped.table-bordered(id="chartGrid")
@@ -22,7 +24,7 @@ block content
         thead
             tr
                 th Type de client
-                th Nombre de Vue
+                th Nombre de vue
                 th Nombre de clique
                 th Montant du
         tbody
@@ -44,9 +46,9 @@ block content
         thead
             tr
                 th Type de client
-                th Nombre de Vue
+                th Nombre de vue
                 th Nombre de clique
-                th Montant du
+                th Montant total
         tbody
             tr
                 td client regulier
@@ -61,14 +63,14 @@ block content
                 td 
                  b #{(income.targetedClicks * incomeChart.targetedClick + income.targetedViews * incomeChart.targetedView).toFixed(2)}$
     hr
-    h2  Profits Montant déjà encaissé
+    h2  Montant déjà encaissé
     table.table.table-striped.table-bordered
         thead
             tr
                 th Type de client
-                th Nombre de Vue
+                th Nombre de vue
                 th Nombre de clique
-                th Montant du
+                th Montant récupéré
         tbody
             tr
                 td client regulier

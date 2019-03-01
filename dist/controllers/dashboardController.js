@@ -8,10 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-class DashboardController {
+const baseController_1 = require("./baseController");
+class DashboardController extends baseController_1.BaseController {
     index(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            res.render('index');
+            yield this.sendResponse(req, res, 'index', {});
         });
     }
 }

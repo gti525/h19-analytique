@@ -14,10 +14,15 @@ block content
                         div.input-group-prepend
                             span.input-group-text
                                 i.fa.fa-users
-                        select.form-control(name="role")
+                        select.form-control(name="role", id="role_dropdown")
                             option(selected="") Select a role
                             each role in roles
                                 option= role
+                    div.form-group.input-group(style = "display:none", id="accountNumber")
+                        div.input-group-prepend
+                            span.input-group-text
+                                i.fa.fa-cc-visa
+                        input.form-control(name="accountNumber" placeholder="Num. compte bancaire" type="text", id="accountId")
                     div.form-group.input-group
                         div.input-group-prepend
                             span.input-group-text
@@ -32,6 +37,7 @@ block content
                         button.brn.btn-primary.btn-block(type="submit") Create Account
                     p.text-center Have an account? &nbsp;
                         a(href="/login") Log In
-
+block javascript
+    script(src="/javascripts/register.js")
 
 

@@ -10,7 +10,6 @@ exports.analyticsTokenGuard = (() => (req, res, next) => {
         return res.status(400).send("Analytic token is missing");
     }
     if (tokenService.isTokenValid(token)) {
-        //TODO valider si le token vient du bon url
         next();
     }
     else {

@@ -10,14 +10,15 @@ block content
         div(class="chart-container")
             p Résolution d'écran des utilisateurs
             canvas(id="ResolutionChart")
+        div(class="chart-container")
+            p Navigateur internet des utilisateurs
+            canvas(id="BrowserChart")
         block javascript
             script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js")
 
             script(type="text/javascript").
-                var dataOS = JSON.parse('!{JSON.stringify(clients)}');
-                var dataResolution = JSON.parse('!{JSON.stringify(clients)}');
-                var dataPays = JSON.parse('!{JSON.stringify(clients)}');
-
+                var data = JSON.parse('!{JSON.stringify(clients)}');
             script(src="/javascripts/statistique.js")
+            
     else 
         h2 Aucune donnée disponible pour l'instant

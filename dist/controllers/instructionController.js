@@ -8,29 +8,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const statistique_service_1 = require("../service/statistique.service");
-const websiteurl_service_1 = require("../service/websiteurl.service");
+const instruction_service_1 = require("../service/instruction.service");
 const baseController_1 = require("./baseController");
-class StatistiqueController extends baseController_1.BaseController {
+class InstructionController extends baseController_1.BaseController {
     constructor() {
         super(...arguments);
-        this.statistiqueService = new statistique_service_1.StatistiqueService();
-        this.websiteurlService = new websiteurl_service_1.WebsiteurlService();
+        this.instructionService = new instruction_service_1.InstructionService();
     }
-    index(req, res, next) {
+    index(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const clients = yield this.statistiqueService.getClients(yield this.getUser(req));
-                console.log(clients);
-                yield this.sendResponse(req, res, 'statistique', { clients });
-            }
-            catch (error) {
-                console.log(error);
-                return res.send(error).status(500);
-            }
+            const instructions = this.instructionService.getInstructions(yield this.getUser(req));
+            yield this.sendResponse(req, res, 'instruction/index', { instructions });
         });
     }
 }
-exports.StatistiqueController = StatistiqueController;
+exports.InstructionController = InstructionController;
 //ACM 499 token required, c'est le code a renvoyer si on a pas de token.
-//# sourceMappingURL=statistiqueController.js.map
+//# sourceMappingURL=instructionController.js.map

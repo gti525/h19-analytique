@@ -23,6 +23,12 @@ class ClientRepo {
             return yield userRepository.findOne(id, { relations: ["clientStats"] });
         });
     }
+    static findAll() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const userRepository = typeorm_1.getRepository(client_entity_1.Client);
+            return yield userRepository.find({ relations: ["clientStats"] });
+        });
+    }
     static createOrUpdate(user) {
         return __awaiter(this, void 0, void 0, function* () {
             const userRepository = typeorm_1.getRepository(client_entity_1.Client);

@@ -12,9 +12,9 @@ export class UserService {
     public async adduser(user: User): Promise<User> {
         user.password = sha1(user.password);
         if (user.role === UserRoles.WEBSITEADMIN){
+            const savedUser = await UserRepo.createOrUpdate(user);
+            user.analyticToken = this.tokenService.createToken(savedUser.id)
         }
-        const savedUser = await UserRepo.createOrUpdate(user);
-        user.analyticToken = this.tokenService.createToken(savedUser.id)
         return await UserRepo.createOrUpdate(user);
     }
 
