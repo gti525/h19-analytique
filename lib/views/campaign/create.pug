@@ -39,13 +39,13 @@ block content
                                     div.upload-wrapper
                                         div.banner-container(data-type=index)
                             div.col-md-12.text-center
-                                a.btn.btn-info.upload-button
-                                    span Upload
-                                    input.upload-image(type="file", accept="image/*")
+                                input.file-upload.displaynone(type="file")
+                                button.btn.btn-primary.upload-image(type="button") Téléverser
+                                button.btn.btn-primary.crop-image(type="button") Recadrer
             +banner(0)
             +banner(1)
             +banner(2)
-        button.btn.btn-primary(type="submit") Enregistrer
+        button.btn.btn-success(type="submit") Enregistrer
 
 block stylesheets
     link(rel='stylesheet', type='text/css', href='/styles/croppie.css')

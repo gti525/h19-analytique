@@ -14,6 +14,7 @@ const MongoStore = require('connect-mongo')(session);
 const PORT = 3000;
 const HOST = "localhost";
 const cookieParser = require('cookie-parser');
+const expressValidator = require('express-validator');
 
 const httpsOptions = {
     key: fs.readFileSync('./config/key.pem'),
@@ -24,6 +25,7 @@ class App {
     public app: express.Application;
     public routePrv: Routes = new Routes();
     constructor() {
+        this.setDbConfig()
         createConnection().then(async connection => {
             try {
                 this.app = express();
@@ -46,6 +48,32 @@ class App {
         }).catch(error => console.log("TypeORM connection error: ", error));
     }
 
+    private setDbConfig(){
+        console.log("setting up db configs")
+        if (process.env.NODE_ENV === 'production') {
+            process.env.TYPEORM_CONNECTION = "mariadb",
+            process.env.TYPEORM_HOST = "am1shyeyqbxzy8gc.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+            process.env.TYPEORM_PORT = "3306",
+            process.env.TYPEORM_USERNAME = "xockne52cd09d9im",
+            process.env.TYPEORM_PASSWORD = "pcvckz00n0p5slna",
+            process.env.TYPEORM_DATABASE  =  "h4hqzs3onggdslcg",
+            process.env.TYPEORM_SYNCHRONIZE  = "true",
+            process.env.TYPEORM_LOGGING  = "false",
+            process.env.TYPEORM_ENTITIES = "lib/DB/entity/*.ts"
+        }
+        else {
+            process.env.TYPEORM_CONNECTION = "mariadb",
+            process.env.TYPEORM_HOST = "localhost",
+            process.env.TYPEORM_PORT = "3306",
+            process.env.TYPEORM_USERNAME = "root",
+            process.env.TYPEORM_PASSWORD = "gti525h2019analytics",
+            process.env.TYPEORM_DATABASE  =  "analytics",
+            process.env.TYPEORM_SYNCHRONIZE  = "true",
+            process.env.TYPEORM_LOGGING  = "false",
+            process.env.TYPEORM_ENTITIES = "lib/DB/entity/*.ts"
+        }
+    }
+
     private config(): void {
         //view engine setup
         this.app.set('views', path.join(__dirname, 'views'));
@@ -56,6 +84,8 @@ class App {
         this.app.use(bodyParser.json());
         //support application/x-www-form-urlencoded post data
         this.app.use(bodyParser.urlencoded({ extended: true , limit:'50mb' }));
+        //express validator
+        this.app.use(expressValidator());
         //sass middleware support
         this.app.use(nodeSassMiddleware({
             src: __dirname + '/public/styles/sass',

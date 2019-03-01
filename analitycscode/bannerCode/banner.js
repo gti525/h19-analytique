@@ -1,5 +1,6 @@
 
-function ___getBanners(clientId){
+function ___getBanners(clientId,___analyticsToken){
+    console.log(___analyticsToken)
     function setImageToBanner(bannerType,url,img,size,clientStatisticId){
         document.getElementById(`${bannerType}`).innerHTML = `<a href="${url}"><img id=${bannerType+clientStatisticId} src="${img}" width="${size.width}" height="${size.height}"></a>`
         document.getElementById(`${bannerType+clientStatisticId}`).addEventListener("mouseup", function(){

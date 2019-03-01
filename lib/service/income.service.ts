@@ -8,7 +8,6 @@ export class IncomeService {
     private clientStatisticService: ClientStatisticsService = new ClientStatisticsService();
 
     public async getIncome(user: User): Promise<Income> {
-        console.log(user);
         const income = new Income();
         _.merge(income,user.income);
         income.regularClicks = await this.clientStatisticService.countBannersClicked(user,false);
