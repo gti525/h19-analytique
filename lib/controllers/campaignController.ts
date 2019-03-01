@@ -123,10 +123,7 @@ export class CampaignController extends BaseController{
             }
         }
         catch (error) {
-            console.log(error);
-            if (error.message.includes("FOREIGN KEY (`campaignsId`) REFERENCES `campaign` (`id`)")){
-                error = "Il est impossible de supprimer une campagne qui a déjà été vue."
-            }
+            const error = 'Impossible de supprimer une campagne ayant généré des revenus.';
             const campaigns = await this.campaignService.getCampaignByUser(await this.getUser(req));
             await this.sendResponse(req, res,'campaign/index', { errors: [error],campaigns, moment: require("moment") });
         };
