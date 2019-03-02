@@ -11,8 +11,7 @@ export class ProfileController extends BaseController {
 
 
     public async index(req: Request, res: Response) {
-        const profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
-        await this.sendResponse(req,res,'profile/index',{ profiles })
+        this.generateIndexPage(req,res)
     }
 
     public async create(req: Request, res: Response, next) {
@@ -81,9 +80,9 @@ export class ProfileController extends BaseController {
                 await this.sendResponse(req,res,'profile/edit',{ profile: profile })
             }
             catch (error) {
-                return res.json(error).status(500);
+                await this.generateIndexPage(req, res, error);
             }
-        }else {
+        } else {
             try {
                 const profile = await this.profileService.getProfileById(req.body.id);
                 if (profile) {
@@ -120,8 +119,12 @@ export class ProfileController extends BaseController {
             }
         }
         catch (error) {
-            const profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
-            await this.sendResponse(req,res,'profile/index',{ profiles,errors:[error] })
+            await this.generateIndexPage(req, res, error);
         }
+    }
+
+    private async generateIndexPage(req: Request, res: Response, errors: any = {}) {
+        const profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
+        await this.sendResponse(req, res, 'profile/index', { profiles, errors });
     }
 }

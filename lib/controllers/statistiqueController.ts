@@ -13,7 +13,6 @@ export class StatistiqueController  extends BaseController{
             await this.sendResponse(req,res,'statistique',{ clients })
         }
         catch (error) {
-            console.log(error)
             return res.send(error).status(500);
         }
     }
@@ -21,5 +20,3 @@ export class StatistiqueController  extends BaseController{
 
 
 }
-
-//ACM 499 token required, c'est le code a renvoyer si on a pas de token.

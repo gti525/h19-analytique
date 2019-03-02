@@ -14,10 +14,10 @@ export class Profile{
     @Column()
     type: string;
 
-    @OneToMany(type => WebSiteUrl, url => url.profile,{cascade:true})
+    @OneToMany(type => WebSiteUrl, url => url.profile,{onDelete:'CASCADE',cascade:true})
     urls: WebSiteUrl[];
 
-    @ManyToOne(type => User, user => user.profile, { cascade: true})
+    @ManyToOne(type => User, user => user.profile,{cascade:['insert']})
     user: User;
 
     @ManyToMany(campaigns => Campaign,campaign => campaign.profiles)

@@ -12,9 +12,9 @@ export class ProfileRepo {
     public static async findById(id:number): Promise<Profile>{
         const profileRepo = getRepository(Profile);
         return await profileRepo.createQueryBuilder("profile")
-            .leftJoinAndSelect("profile.campaigns", "campaign")
-            .leftJoinAndSelect("profile.urls", "urls")
             .whereInIds([id])
+            .leftJoinAndSelect("profile.campaigns", "campaigns")
+            .leftJoinAndSelect("profile.urls", "urls")
             .getOne();
     }
 
@@ -29,7 +29,6 @@ export class ProfileRepo {
     }
 
     public static async delete(profileToDelete: Profile): Promise<Profile>{
-        console.log('delete')
         const profileRepo = getRepository(Profile);
         if (profileToDelete)
             return await profileRepo.remove(profileToDelete);

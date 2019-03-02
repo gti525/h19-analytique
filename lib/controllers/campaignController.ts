@@ -78,8 +78,8 @@ export class CampaignController extends BaseController{
         content.campaignTypes = await this.enumsToArray.translateEnumToSelectArray(BannerType);
         content.profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
         content.campaign = await this.campaignService.getCampaignById(req.params.id);
-        content.moment = require("moment");
 
+        content.moment = require("moment");
         if (req.method == 'POST'){
             const vResult = validationResult(req);
             if(vResult.isEmpty()) {
@@ -99,11 +99,12 @@ export class CampaignController extends BaseController{
                     const profileIds = req.body.profileIds.map(function (value) {
                         return parseInt(value, 10);
                     });
+
                     campaign.profiles = await this.profileService.getProfiles({id: In(profileIds)});
 
                     await this.campaignService.updateCampaign(campaign);
 
-                    result = res.redirect("/campaign");
+                    res.redirect("/campaign");
                 }
                 catch (error) {
                     content.errors = [error];
@@ -112,7 +113,7 @@ export class CampaignController extends BaseController{
                 content.errors = this.formatErrors(vResult.array());
             }
         }
-        return result || await this.sendResponse(req, res,'campaign/edit', content);
+        await this.sendResponse(req, res,'campaign/edit', content);
     }
 
     public async delete(req: Request, res: Response){
