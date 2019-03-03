@@ -1,16 +1,8 @@
 
-function ___getBanners(clientId,___analyticsToken){
+function getBanners(clientId,___analyticsToken){
+    findHtml();
     history.pushState = function () {
-        if (document.getElementById("mobile-analityc-banner")){
-            getBanner("mobile-analityc-banner")
-            return;
-        }
-        if (document.getElementById("horizontal-analytic-banner")){
-            getBanner("horizontal-analytic-banner")
-        }
-        if (document.getElementById("vertical-analytic-banner")){
-            getBanner("vertical-analytic-banner")
-        }
+        findHtml();
     };
     function setImageToBanner(bannerType,url,img,size,clientStatisticId){
         document.getElementById(`${bannerType}`).innerHTML = `<a href="${url}"><img id=${bannerType+clientStatisticId} src="${img}" width="${size.width}" height="${size.height}"></a>`
@@ -42,14 +34,14 @@ function ___getBanners(clientId,___analyticsToken){
         xmlHttp.setRequestHeader('Content-type', "application/json;charset=UTF-8");
         xmlHttp.send();
     }
-    if (document.getElementById("mobile-analityc-banner")){
-        getBanner("mobile-analityc-banner")
-        return;
-    }
-    if (document.getElementById("horizontal-analytic-banner")){
-        getBanner("horizontal-analytic-banner")
-    }
-    if (document.getElementById("vertical-analytic-banner")){
-        getBanner("vertical-analytic-banner")
+    function findHtml(){
+        for (const bid of ["mobile-analityc-banner","horizontal-analytic-banner","vertical-analytic-banner"]){
+            if (document.getElementById(bid)){
+                getBanner(bid)
+                if (bid === "mobile-analityc-banner"){
+                    return;
+                }
+            }
+        }
     }
 }

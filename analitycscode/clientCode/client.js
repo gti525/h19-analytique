@@ -1,18 +1,18 @@
-function ___startAnalytics(___analyticsToken) {
-    let ___infos = {};
+function startAnalytics(analyticsToken) {
+    let clinetInfos = {};
     if (navigator.geolocation){
         navigator.geolocation.getCurrentPosition(getPosition,function(e){
-            postClientInfos(___analyticsToken);
+            postClientInfos(analyticsToken);
         });
     }
     else  {
-        postClientInfos(___analyticsToken);
+        postClientInfos(analyticsToken);
     }
 
     // In the callback function, it does all the logic
     function getPosition(position) {
-        ___infos.location = position.coords.latitude + 'X' + position.coords.longitude;
-        postClientInfos(___analyticsToken);
+        clinetInfos.location = position.coords.latitude + 'X' + position.coords.longitude;
+        postClientInfos(analyticsToken);
     }
     function postClientInfos(token) {
         const url = "http://localhost:3000/api/v1/analytics/client"
@@ -22,13 +22,13 @@ function ___startAnalytics(___analyticsToken) {
             if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
                 if(xmlHttp.responseText){
                     setclientId(xmlHttp.responseText);                
-                    ___getAdvertisment(xmlHttp.responseText,___analyticsToken);
+                    getAdvertisment(xmlHttp.responseText,analyticsToken);
                 }
             }
         };
         xmlHttp.setRequestHeader('Content-type', "application/json;charset=UTF-8");
         xmlHttp.setRequestHeader('x-access-token', token);
-        xmlHttp.send(JSON.stringify(___infos));
+        xmlHttp.send(JSON.stringify(clinetInfos));
     }
 
     function setclientId(clientId) {
@@ -37,7 +37,7 @@ function ___startAnalytics(___analyticsToken) {
         localStorage.setItem(storageKey, JSON.stringify({clientId,expiration}))
     }
 
-    function ___getAdvertisment(clientId,___analyticsToken) {
+    function getAdvertisment(clientId,___analyticsToken) {
         const url = `http://localhost:3000/api/v1/banners/code`
         let xmlHttp = new XMLHttpRequest();
         xmlHttp.open("GET", url, true); // false for synchronous request
@@ -50,20 +50,20 @@ function ___startAnalytics(___analyticsToken) {
         xmlHttp.send();
     }
     
-    ___infos.plugins = ___arrayToString(navigator.plugins, ".", 'name');
+    clinetInfos.plugins = arrayToString(navigator.plugins, ".", 'name');
     
-    ___infos.languages = ___arrayToString(window.navigator.languages, ".");
+    clinetInfos.languages = arrayToString(window.navigator.languages, ".");
     
-    ___infos.href = window.location.href;
+    clinetInfos.href = window.location.href;
     
-    ___infos.host = window.location.host;
+    clinetInfos.host = window.location.host;
     
-    ___infos.doNotTrack = typeof (Storage) !== "undefined";
+    clinetInfos.doNotTrack = typeof (Storage) !== "undefined";
     
-    ___infos.platform = window.navigator.userAgent;
+    clinetInfos.platform = window.navigator.userAgent;
     
     //https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser/9851769
-    ___infos.browser = (function getBrowserName() {
+    clinetInfos.browser = (function getBrowserName() {
         // Opera 8.0+
         if ((!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0)
             return "Opera";
@@ -92,7 +92,7 @@ function ___startAnalytics(___analyticsToken) {
     })();
     
     // https://stackoverflow.com/questions/49267764/how-to-get-the-video-card-driver-name-using-javascript-browser-side
-    ___infos.webglinfo = (function getVideoCardInfo() {
+    clinetInfos.webglinfo = (function getVideoCardInfo() {
         let gl = document.createElement('canvas').getContext('webgl');
         if (!gl) {
             return {
@@ -103,14 +103,14 @@ function ___startAnalytics(___analyticsToken) {
         return debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : "no_webgl";
     })()
     
-    ___infos.screen = (function () {
+    clinetInfos.screen = (function () {
         return (screen.height ? screen.height : -1) + '.' +
             (screen.width ? screen.width : -1) + '.' +
             (screen.colorDepth ? screen.colorDepth : -1);
     })();
     
     // https://jsfiddle.net/pitasato/dppqhtg3/1/
-    ___infos.canvas = (function fingerprint() {
+    clinetInfos.canvas = (function fingerprint() {
         let canvas = document.createElement('canvas');
         let ctx = canvas.getContext('2d');
         let txt = 'i9asdm..$#po((^@KbXrww!~cz';
@@ -141,7 +141,7 @@ function ___startAnalytics(___analyticsToken) {
     })();
     
     /*UTILS */
-    function ___arrayToString(array, separator, subValue) {
+    function arrayToString(array, separator, subValue) {
         let res = ""; // store the total no of plugin stored 
         for (let item of array) {
             res += (subValue ? item[subValue] : item) + separator;
