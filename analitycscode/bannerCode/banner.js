@@ -1,7 +1,6 @@
 
 function ___getBanners(clientId,___analyticsToken){
     history.pushState = function () {
-        console.log('dans pushstate')
         if (document.getElementById("mobile-analityc-banner")){
             getBanner("mobile-analityc-banner")
             return;
@@ -21,7 +20,6 @@ function ___getBanners(clientId,___analyticsToken){
     }
     // Pour les banners
     function getBanner(bannerType){
-        console.log('dans get babber',bannerType);
         let xmlHttp = new XMLHttpRequest();
         const url =`http://localhost:3000/api/v1/banner/${bannerType}/${clientId}`
         xmlHttp.open( "GET", url, true );

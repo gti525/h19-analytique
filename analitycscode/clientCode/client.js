@@ -1,6 +1,4 @@
 function ___startAnalytics(___analyticsToken) {
-    const storageKeyClient = "gti525clientId";
-    const storageKeyDate = "gti525date";
     let ___infos = {};
     if (navigator.geolocation){
         navigator.geolocation.getCurrentPosition(getPosition,function(e){
@@ -34,9 +32,9 @@ function ___startAnalytics(___analyticsToken) {
     }
 
     function setclientId(clientId) {
-        localStorage.setItem(storageKeyClient, clientId)
-        const tommorow = new Date();
-        localStorage.setItem(storageKeyDate, tommorow.setHours(0, 0, 0, 0))
+        const storageKey = "gti525analytic";
+        const expiration = new Date().getTime()+86400000;
+        localStorage.setItem(storageKey, JSON.stringify({clientId,expiration}))
     }
 
     function ___getAdvertisment(clientId,___analyticsToken) {
