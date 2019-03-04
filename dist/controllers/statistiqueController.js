@@ -21,16 +21,13 @@ class StatistiqueController extends baseController_1.BaseController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const clients = yield this.statistiqueService.getClients(yield this.getUser(req));
-                console.log(clients);
                 yield this.sendResponse(req, res, 'statistique', { clients });
             }
             catch (error) {
-                console.log(error);
                 return res.send(error).status(500);
             }
         });
     }
 }
 exports.StatistiqueController = StatistiqueController;
-//ACM 499 token required, c'est le code a renvoyer si on a pas de token.
 //# sourceMappingURL=statistiqueController.js.map

@@ -15,6 +15,7 @@ const advertisment_service_1 = require("../service/advertisment.service");
 const baseController_1 = require("./baseController");
 const clientStatistics_service_1 = require("../service/clientStatistics.service");
 const fs = require('fs');
+var Geolocation = require('geo-core');
 class AdvertiseController extends baseController_1.BaseController {
     constructor() {
         super();
@@ -53,7 +54,7 @@ class AdvertiseController extends baseController_1.BaseController {
                 const [clientId, bannerType] = this.validateBannerInfo(req);
                 const client = yield this.getClient(clientId);
                 const user = yield this.getUser(req);
-                const banner = yield this.advertismentService.getBanner(client, user, bannerType, req.headers.host);
+                const banner = yield this.advertismentService.getBanner(client, user, bannerType, req.headers.referer);
                 if (banner) {
                     res.status(200).send(banner);
                 }
@@ -94,6 +95,7 @@ class AdvertiseController extends baseController_1.BaseController {
     }
     generateClientInfos(body) {
         const clientInfo = new client_infos_1.ClientInfo();
+        var GeoManager = new Geolocation({ radius: 100 });
         clientInfo.graphicCard = body.webglinfo;
         clientInfo.languages = body.languages;
         clientInfo.os = body.platform;
@@ -103,6 +105,12 @@ class AdvertiseController extends baseController_1.BaseController {
             [clientInfo.screenWidth, clientInfo.screenHeight, clientInfo.screenColorDepth] = body.screen.split('.');
         if (body.location && body.location.split('X').length === 2)
             [clientInfo.latitude, clientInfo.longitude] = body.location.split('X');
+        GeoManager.findNearbyLocations({
+            lat: clientInfo.latitude,
+            lon: clientInfo.longitude
+        }, function (locations) {
+            clientInfo.country = locations[0].country;
+        });
         clientInfo.url = body.host;
         clientInfo.completeUrl = body.href;
         clientInfo.doNotTrack = body.doNotTrack;

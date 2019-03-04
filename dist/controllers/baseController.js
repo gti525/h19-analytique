@@ -28,6 +28,9 @@ class BaseController {
             res.render(path, content);
         });
     }
+    formatErrors(errors) {
+        return errors.map(e => e.msg).filter((e, i, a) => i === a.indexOf(e));
+    }
 }
 exports.BaseController = BaseController;
 //# sourceMappingURL=baseController.js.map

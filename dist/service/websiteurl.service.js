@@ -29,11 +29,6 @@ class WebsiteurlService {
             return yield websiteurl_repo_1.WebsiteurlRepo.find(tagettedUrls);
         });
     }
-    deleteWebsiteurl(id) {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield websiteurl_repo_1.WebsiteurlRepo.delete(id);
-        });
-    }
     isWebsiteurlValid(websiteurl) {
         return !_.isEmpty(websiteurl.url);
     }

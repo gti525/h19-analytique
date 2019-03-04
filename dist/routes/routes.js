@@ -57,7 +57,10 @@ class Routes {
             .post((req, res, next) => __awaiter(this, void 0, void 0, function* () { return this.accountController.register(req, res, next); }));
         //Income
         app.route('/income')
-            .get(webAdminGuard, (req, res) => __awaiter(this, void 0, void 0, function* () { return this.incomeController.index(req, res); }));
+            .get(webAdminGuard, (req, res, next) => __awaiter(this, void 0, void 0, function* () { return this.incomeController.index(req, res, next); }));
+        app.route('/income/transfer')
+            .get(webAdminGuard, (req, res, next) => __awaiter(this, void 0, void 0, function* () { return this.incomeController.transfer(req, res, next); }));
+        //.get(webAdminGuard,async (req, res, next) => this.incomeController.index(req, res, next));
         //Profile
         app.route('/profile')
             .get(campaingManagerGuard, (req, res) => __awaiter(this, void 0, void 0, function* () { return this.profileController.index(req, res); }));
@@ -80,10 +83,10 @@ class Routes {
         app.route("/campaign")
             .get(campaingManagerGuard, (req, res) => __awaiter(this, void 0, void 0, function* () { return this.campaignController.index(req, res); }));
         app.route("/campaign/create")
-            .post((req, res, next) => __awaiter(this, void 0, void 0, function* () { return this.campaignController.create(req, res, next); }))
+            .post(this.campaignController.validate(), (req, res, next) => __awaiter(this, void 0, void 0, function* () { return this.campaignController.create(req, res, next); }))
             .get(campaingManagerGuard, (req, res, next) => __awaiter(this, void 0, void 0, function* () { return this.campaignController.create(req, res, next); }));
         app.route("/campaign/edit")
-            .post((req, res, next) => __awaiter(this, void 0, void 0, function* () { return this.campaignController.edit(req, res, next); }));
+            .post(this.campaignController.validate(), (req, res, next) => __awaiter(this, void 0, void 0, function* () { return this.campaignController.edit(req, res, next); }));
         app.route("/campaign/edit/:id")
             .get(campaingManagerGuard, (req, res, next) => __awaiter(this, void 0, void 0, function* () { return this.campaignController.edit(req, res, next); }));
         app.route("/campaign/delete/:id")

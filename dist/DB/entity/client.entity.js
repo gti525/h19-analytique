@@ -50,6 +50,10 @@ __decorate([
     __metadata("design:type", Number)
 ], Client.prototype, "longitude", void 0);
 __decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", String)
+], Client.prototype, "country", void 0);
+__decorate([
     typeorm_1.OneToMany(clientStats => clientStats_1.ClientStatistic, clientStats => clientStats.client, { cascade: true }),
     __metadata("design:type", Array)
 ], Client.prototype, "clientStats", void 0);

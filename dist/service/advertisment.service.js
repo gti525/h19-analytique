@@ -17,6 +17,7 @@ const moment = require("moment");
 const websiteurl_service_1 = require("./websiteurl.service");
 const client_service_1 = require("./client.service");
 const _ = require("lodash");
+const banner_repo_1 = require("../DB/repo/banner.repo");
 class AdvertismentService {
     constructor() {
         this.webSiteUrlService = new websiteurl_service_1.WebsiteurlService();
@@ -87,6 +88,13 @@ class AdvertismentService {
     getTargetedCampaigns(client) {
         return __awaiter(this, void 0, void 0, function* () {
             client.isTargeted = false;
+            try {
+                const banners = yield banner_repo_1.BannerRepo.getTargettedBanners(client.id);
+                console.log(banners);
+            }
+            catch (e) {
+                console.log(e);
+            }
             let targettedCampaigns = undefined;
             const campaigns = (yield campaign_repo_1.CampaignRepo.findAll()).filter(c => moment(new Date()).endOf('day').isSameOrBefore(c.endDate)
                 && moment(new Date()).startOf('day').isSameOrAfter(c.startDate));

@@ -28,17 +28,17 @@ __decorate([
     __metadata("design:type", String)
 ], Profile.prototype, "type", void 0);
 __decorate([
-    typeorm_1.OneToMany(type => websiteurl_entity_1.WebSiteUrl, url => url.profile, { cascade: true }),
+    typeorm_1.OneToMany(type => websiteurl_entity_1.WebSiteUrl, url => url.profile, { onDelete: 'CASCADE', cascade: true }),
     __metadata("design:type", Array)
 ], Profile.prototype, "urls", void 0);
 __decorate([
-    typeorm_1.ManyToOne(type => user_entitiy_1.User, user => user.profile, { cascade: true }),
+    typeorm_1.ManyToOne(type => user_entitiy_1.User, user => user.profile, { cascade: ['insert'] }),
     __metadata("design:type", user_entitiy_1.User)
 ], Profile.prototype, "user", void 0);
 __decorate([
-    typeorm_1.ManyToMany(type => campaign_entity_1.Campaign),
-    __metadata("design:type", campaign_entity_1.Campaign)
-], Profile.prototype, "campaign", void 0);
+    typeorm_1.ManyToMany(campaigns => campaign_entity_1.Campaign, campaign => campaign.profiles),
+    __metadata("design:type", Array)
+], Profile.prototype, "campaigns", void 0);
 Profile = __decorate([
     typeorm_1.Entity()
 ], Profile);

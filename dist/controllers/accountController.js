@@ -59,6 +59,7 @@ class AccountController {
                 user.username = req.body.username;
                 user.role = req.body.role;
                 user.password = req.body.password;
+                user.accountNumber = req.body.accountNumber;
                 user.income = new income_entitiy_1.Income();
                 yield this.userService.adduser(user);
                 this.createUserSession(req, user, res);

@@ -29,14 +29,6 @@ class WebsiteurlRepo {
             return yield websiteurlRepo.save(profile);
         });
     }
-    static delete(id) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const websiteurlRepo = typeorm_1.getRepository(typeorm_1.getRepository);
-            const urlToDelete = yield WebsiteurlRepo.findById(id);
-            if (urlToDelete)
-                yield websiteurlRepo.delete(urlToDelete);
-        });
-    }
 }
 exports.WebsiteurlRepo = WebsiteurlRepo;
 //# sourceMappingURL=websiteurl.repo.js.map

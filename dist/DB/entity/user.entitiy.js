@@ -37,6 +37,10 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "analyticToken", void 0);
 __decorate([
+    typeorm_1.Column({ nullable: true }),
+    __metadata("design:type", String)
+], User.prototype, "accountNumber", void 0);
+__decorate([
     typeorm_1.OneToMany(type => campaign_entity_1.Campaign, campaign => campaign.user),
     __metadata("design:type", Array)
 ], User.prototype, "campaigns", void 0);

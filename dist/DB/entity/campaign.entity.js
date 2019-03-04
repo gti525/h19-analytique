@@ -28,7 +28,7 @@ __decorate([
     __metadata("design:type", Date)
 ], Campaign.prototype, "endDate", void 0);
 __decorate([
-    typeorm_1.OneToMany(banner => banner_entity_1.Banner, banner => banner.campaigns, { cascade: true }),
+    typeorm_1.OneToMany(banner => banner_entity_1.Banner, banner => banner.campaigns, { cascade: true, onDelete: "CASCADE" }),
     __metadata("design:type", Array)
 ], Campaign.prototype, "banners", void 0);
 __decorate([
@@ -36,7 +36,7 @@ __decorate([
     __metadata("design:type", user_entitiy_1.User)
 ], Campaign.prototype, "user", void 0);
 __decorate([
-    typeorm_1.ManyToMany(profiles => profile_entitiy_1.Profile),
+    typeorm_1.ManyToMany(profiles => profile_entitiy_1.Profile, profiles => profiles.campaigns),
     typeorm_1.JoinTable(),
     __metadata("design:type", Array)
 ], Campaign.prototype, "profiles", void 0);

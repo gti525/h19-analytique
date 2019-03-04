@@ -37,7 +37,11 @@ class ProfileService {
     }
     deleteProfile(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield profile_repo_1.ProfileRepo.deleteById(id);
+            const profile = yield profile_repo_1.ProfileRepo.findById(id);
+            if (profile.campaigns.length > 0) {
+                throw new Error("Impossible de supprimer un profil qui est lié à une campagne");
+            }
+            return yield profile_repo_1.ProfileRepo.delete(profile);
         });
     }
 }

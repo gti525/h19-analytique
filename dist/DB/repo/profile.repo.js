@@ -20,7 +20,11 @@ class ProfileRepo {
     static findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const profileRepo = typeorm_1.getRepository(profile_entitiy_1.Profile);
-            return yield profileRepo.findOne(id, { relations: ["urls"] });
+            return yield profileRepo.createQueryBuilder("profile")
+                .whereInIds([id])
+                .leftJoinAndSelect("profile.campaigns", "campaigns")
+                .leftJoinAndSelect("profile.urls", "urls")
+                .getOne();
         });
     }
     static findAll(filter) {
@@ -35,18 +39,11 @@ class ProfileRepo {
             return yield profileRepo.save(profile);
         });
     }
-    static deleteById(id) {
+    static delete(profileToDelete) {
         return __awaiter(this, void 0, void 0, function* () {
             const profileRepo = typeorm_1.getRepository(profile_entitiy_1.Profile);
-            const profileToDelete = yield ProfileRepo.findById(id);
             if (profileToDelete)
                 return yield profileRepo.remove(profileToDelete);
-        });
-    }
-    static delete(filter) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const profileRepo = typeorm_1.getRepository(profile_entitiy_1.Profile);
-            yield profileRepo.delete(filter);
         });
     }
 }

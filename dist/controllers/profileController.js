@@ -12,6 +12,7 @@ const profile_service_1 = require("../service/profile.service");
 const profile_entitiy_1 = require("../DB/entity/profile.entitiy");
 const websiteurl_entity_1 = require("../DB/entity/websiteurl.entity");
 const baseController_1 = require("./baseController");
+const check_1 = require("express-validator/check");
 class ProfileController extends baseController_1.BaseController {
     constructor() {
         super(...arguments);
@@ -19,8 +20,7 @@ class ProfileController extends baseController_1.BaseController {
     }
     index(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const profiles = yield this.profileService.getProfilesByUser(yield this.getUser(req));
-            yield this.sendResponse(req, res, 'profile/index', { profiles });
+            this.generateIndexPage(req, res);
         });
     }
     create(req, res, next) {
@@ -53,20 +53,24 @@ class ProfileController extends baseController_1.BaseController {
             }
         });
     }
-
-    validateProfile(req, res, next){
-
-        var profile = new profile_entitiy_1.Profile();
-        profile.identifier = req.body.identifier;
-        profile.type = req.body.type;
-        profile.urls = urls;
-
-        req.checkBody('identifier', 'Name is required').notEmpty();
-        req.checkBody('type', 'type is required').notEmpty();
-
+    validationProfil(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (req.method == 'POST') {
+                const identifier = req.body.identifier;
+                const type = req.body.type;
+                const urls = req.body.urls;
+                check_1.check('identifier')
+                    .isLength({ min: 1 }).trim().withMessage('Name empty.')
+                    .isAlpha().withMessage('Name must be alphabet letters.');
+                check_1.check('type')
+                    .isLength({ min: 1 }).trim().withMessage('Name empty.')
+                    .isAlpha().withMessage('Name must be alphabet letters.');
+                check_1.check('url')
+                    .isLength({ min: 40 }).trim().withMessage('Name empty.')
+                    .isURL().withMessage('must be url.');
+            }
+        });
     }
-
-
     edit(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             if (req.method !== 'GET' && req.method !== 'POST') {
@@ -81,7 +85,7 @@ class ProfileController extends baseController_1.BaseController {
                     yield this.sendResponse(req, res, 'profile/edit', { profile: profile });
                 }
                 catch (error) {
-                    return res.json(error).status(500);
+                    yield this.generateIndexPage(req, res, error);
                 }
             }
             else {
@@ -119,11 +123,16 @@ class ProfileController extends baseController_1.BaseController {
                 }
             }
             catch (error) {
-                return res.json(error).status(500);
+                yield this.generateIndexPage(req, res, error);
             }
+        });
+    }
+    generateIndexPage(req, res, errors = {}) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const profiles = yield this.profileService.getProfilesByUser(yield this.getUser(req));
+            yield this.sendResponse(req, res, 'profile/index', { profiles, errors });
         });
     }
 }
 exports.ProfileController = ProfileController;
-//ACM 499 token required, c'est le code a renvoyer si on a pas de token.
 //# sourceMappingURL=profileController.js.map

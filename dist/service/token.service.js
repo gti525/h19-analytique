@@ -30,16 +30,15 @@ class TokenService {
             return jwt.verify(token, secret);
         }
         catch (_a) {
-            console.log('Token was not valid');
             return undefined;
         }
     }
     isTokenValid(token) {
         return __awaiter(this, void 0, void 0, function* () {
             const decoded = this.decodeToken(token);
-            if (decoded) {
+            if (decoded !== undefined) {
                 const userService = new user_service_1.UserService();
-                return userService.userExists(decoded.id);
+                return yield userService.userExists(decoded.id);
             }
             return false;
         });

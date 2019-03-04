@@ -24,6 +24,7 @@ class InitService {
                     user.role = role_enums_1.UserRoles.ADMIN;
                     user.username = u;
                     if (u === 'webadmin') {
+                        user.id = 123;
                         user.analyticToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIzLCJpYXQiOjE1NDg4MTQ4MTF9.Lnx1ENTHmzfBkNsDFs-zFsAK86cgKqH0_Fw8R5VEqlk";
                         user.role = role_enums_1.UserRoles.WEBSITEADMIN;
                         const income = yield income_repo_1.IncomeRepo.create(new income_entitiy_1.Income());

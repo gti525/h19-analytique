@@ -26,7 +26,7 @@ class StatistiqueRepo {
         return __awaiter(this, void 0, void 0, function* () {
             const statistiqueRepo = typeorm_1.getRepository(client_entity_1.Client);
             return yield statistiqueRepo.find({
-                select: ['latitude'],
+                select: ['country'],
                 where: {
                     userId: SiteWebId
                 },
