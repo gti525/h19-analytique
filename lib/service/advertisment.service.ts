@@ -22,9 +22,10 @@ export class AdvertismentService {
      */
     public async getBanner(client: Client, user:User, bannerType, url): Promise<any> {
         const response: any = {};
-        const banner = await this.findTargeterBanner(client, bannerType);
+        const [banner,isTargeted] = await this.findTargeterBanner(client, bannerType);
+        client.isTargeted = isTargeted;
         if (!banner)
-        return undefined;
+            return undefined;
         const clientStatistic = await this.addClientStatistic(client,user, url, banner);
         response.url = banner.url;
         response.img = banner.image;
@@ -52,7 +53,7 @@ export class AdvertismentService {
 
     }
 
-    private async findTargeterBanner(client: Client, bannerType): Promise<Banner> {
+    private async findTargeterBanner(client: Client, bannerType): Promise<any[]> {
         let bannerOrientation;
         switch (bannerType) {
             case BannerOrientation.vertical:
@@ -66,15 +67,15 @@ export class AdvertismentService {
                 break;
         }
         let banners = await BannerRepo.getTargettedBanners(client.id,bannerOrientation);
-        client.isTargeted = true;
+        let isTargeted = true;
         if(banners.length === 0){
-            client.isTargeted = false;
+            isTargeted = false;
             banners = await BannerRepo.getUntargettedBanners(bannerOrientation);
         }
         const max = banners.length;
         if (max < 1)
             throw new Error("No banners found!");
-        return banners[Math.floor(Math.random() * max)];
+        return [banners[Math.floor(Math.random() * max)],isTargeted];
     }
 
     private getBannerSize(bannerType): any {
