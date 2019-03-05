@@ -68,23 +68,19 @@ export class CampaignController extends BaseController{
         return result || await this.sendResponse(req,res,'campaign/create', content);
     }
 
-    public async edit(req: Request, res: Response, next){
-        let result;
-        if (req.method !== 'GET' && req.method !== 'POST') {
-            result = next()
-        }
-
+    public async edit(req: Request, res: Response){
         let content: {[k: string]: any} = {};
         content.campaignTypes = await this.enumsToArray.translateEnumToSelectArray(BannerType);
         content.profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
         content.campaign = await this.campaignService.getCampaignById(req.params.id);
+
 
         content.moment = require("moment");
         if (req.method == 'POST'){
             const vResult = validationResult(req);
             if(vResult.isEmpty()) {
                 try {
-                    const campaign = await this.campaignService.getCampaignById(req.body.id);
+                    const campaign = await this.campaignService.getCampaignById(req.params.id);
                     campaign.startDate = req.body.startDate;
                     campaign.endDate = req.body.endDate;
 

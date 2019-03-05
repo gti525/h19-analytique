@@ -97,11 +97,11 @@ export class Routes {
             .post(this.campaignController.validate(), async (req, res, next) => this.campaignController.create(req, res, next))
             .get(campaingManagerGuard, async (req, res, next) => this.campaignController.create(req, res, next));
 
-        app.route("/campaign/edit")
-            .post(this.campaignController.validate(), async (req, res, next) => this.campaignController.edit(req, res, next));
+        app.route("/campaign/edit/:id")
+            .post(this.campaignController.validate(), async (req, res) => this.campaignController.edit(req, res));
 
         app.route("/campaign/edit/:id")
-            .get(campaingManagerGuard, async (req, res, next) => this.campaignController.edit(req, res, next));
+            .get(campaingManagerGuard, async (req, res) => this.campaignController.edit(req, res));
 
         app.route("/campaign/delete/:id")
             .get(campaingManagerGuard, async (req, res) => this.campaignController.delete(req, res));

@@ -4,7 +4,7 @@ block content
     div.page-actions
         h3 Modifier une campagne
 
-    form(method="post", action="/campaign/edit")
+    form(method="post", action=`/campaign/edit/${campaign.id}`)
         h5 Information générale
         div.row
             div.col-md-4.form-group

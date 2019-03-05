@@ -68,9 +68,6 @@ export class ProfileController extends BaseController {
 }
 
     public async edit(req: Request, res: Response, next) {
-        if (req.method !== 'GET' && req.method !== 'POST') {
-            return next()
-        }
         if (req.method == 'GET'){
             try {
                 let profile: any;
