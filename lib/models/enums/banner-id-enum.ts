@@ -6,7 +6,7 @@ export enum BannerOrientation {
 
 export enum BannerSize {
     horizontalHeight = 200,
-    horizontalWidth = 300,
+    horizontalWidth = 400,
     verticalHeight = 300,
     verticalWidth = 200,
     mobileHeight = 200,

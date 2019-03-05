@@ -1,20 +1,15 @@
 import { BannerOrientation, BannerSize } from "../models/enums/banner-id-enum";
-import { CampaignRepo } from "../DB/repo/campaign.repo";
 import { Banner } from "../DB/entity/banner.entity";
 import { BannerType, Campaign } from "../DB/entity/campaign.entity"
 import { Client } from "../DB/entity/client.entity";
 import { ClientStatistic } from "../DB/entity/clientStats";
 import { ClientStatisticsService } from "./clientStatistics.service";
-import * as moment from 'moment';
-import { WebsiteurlService } from "./websiteurl.service";
-import { ClientService } from "./client.service";
 import * as _ from 'lodash'
 import { User } from "../DB/entity/user.entitiy";
 import { BannerRepo } from "../DB/repo/banner.repo";
+import { ClientStatisticRepo } from "../DB/repo/stats.repo";
 
 export class AdvertismentService {
-    private webSiteUrlService = new WebsiteurlService();
-    private clientService = new ClientService()
     private clientStatisticsService = new ClientStatisticsService()
     
     /**
@@ -29,14 +24,19 @@ export class AdvertismentService {
         const clientStatistic = await this.addClientStatistic(client,user, url, banner);
         response.url = banner.url;
         response.img = banner.image;
-        response.clientStatisticId = clientStatistic.id;
+        response.clientStatisticId = _.get(clientStatistic,'id',-1);
         response.bannerType = bannerType;
         response.size = this.getBannerSize(bannerType);
         return response;
     }
 
     public async addClientStatistic(client: Client,user: User, url: string, banner: Banner, isClick = false): Promise<ClientStatistic> {
+        const maxVisitsPerMinutes = 30;
         if (client) {
+            const numberOfEntrys = await ClientStatisticRepo.countLastMinuteEntry(client,user);
+            if (numberOfEntrys >= maxVisitsPerMinutes){
+                return;
+            }
             let stats = new ClientStatistic();
             stats.url = url;
             stats.banner = banner;
