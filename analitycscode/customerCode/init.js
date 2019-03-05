@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded',
             const storageKey = "gti525analytic";
             if (typeof (Storage) !== "undefined" && localStorage.getItem(storageKey)) {
                 const infos = JSON.parse(localStorage.getItem(storageKey));
-                if (new Date(infos.expiration).getTime() < new Date().getTime())
+                if (new Date(infos.expiration).getTime() > new Date().getTime())
                     return infos.clientId;
             }
             return undefined;
