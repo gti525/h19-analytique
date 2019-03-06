@@ -19,7 +19,6 @@ export class BannerRepo {
                       and campaign.endDate > '${moment(new Date()).endOf('day').format(format)}'
                       and campaign.startDate < '${moment(new Date()).startOf('day').format(format)}';`
         ) as Banner[]
-
     }
 
     public static async findById(id: number): Promise<Banner> {
