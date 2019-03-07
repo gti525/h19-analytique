@@ -23,7 +23,9 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const PORT = 3000;
 const HOST = "localhost";
+const { check } = require('express-validator/check');
 const cookieParser = require('cookie-parser');
+const expressValidator = require('express-validator');
 const httpsOptions = {
     key: fs.readFileSync('./config/key.pem'),
     cert: fs.readFileSync('./config/cert.pem')
@@ -31,12 +33,10 @@ const httpsOptions = {
 class App {
     constructor() {
         this.routePrv = new routes_1.Routes();
+        this.setDbConfig();
         typeorm_1.createConnection().then((connection) => __awaiter(this, void 0, void 0, function* () {
             try {
                 this.app = express();
-                //view engine setup
-                this.app.set('views', path.join(__dirname, 'views'));
-                this.app.set('view engine', 'pug');
                 this.config();
                 this.routePrv.routes(this.app);
                 if (process.env.NODE_ENV === 'test') {
@@ -57,13 +57,43 @@ class App {
             }
         })).catch(error => console.log("TypeORM connection error: ", error));
     }
+    setDbConfig() {
+        console.log("setting up db configs");
+        if (process.env.NODE_ENV === 'production') {
+            process.env.TYPEORM_CONNECTION = "mariadb",
+                process.env.TYPEORM_HOST = "am1shyeyqbxzy8gc.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+                process.env.TYPEORM_PORT = "3306",
+                process.env.TYPEORM_USERNAME = "xockne52cd09d9im",
+                process.env.TYPEORM_PASSWORD = "fd13twc56v4sld3m",
+                process.env.TYPEORM_DATABASE = "h4hqzs3onggdslcg",
+                process.env.TYPEORM_SYNCHRONIZE = "true",
+                process.env.TYPEORM_LOGGING = "false",
+                process.env.TYPEORM_ENTITIES = "lib/DB/entity/*.ts";
+        }
+        else {
+            process.env.TYPEORM_CONNECTION = "mariadb",
+                process.env.TYPEORM_HOST = "localhost",
+                process.env.TYPEORM_PORT = "3306",
+                process.env.TYPEORM_USERNAME = "root",
+                process.env.TYPEORM_PASSWORD = "gti525h2019analytics",
+                process.env.TYPEORM_DATABASE = "analytics",
+                process.env.TYPEORM_SYNCHRONIZE = "true",
+                process.env.TYPEORM_LOGGING = "false",
+                process.env.TYPEORM_ENTITIES = "lib/DB/entity/*.ts";
+        }
+    }
     config() {
+        //view engine setup
+        this.app.set('views', path.join(__dirname, 'views'));
+        this.app.set('view engine', 'pug');
         //Cookie parser
         this.app.use(cookieParser());
         // support application/json type post data
         this.app.use(bodyParser.json());
         //support application/x-www-form-urlencoded post data
         this.app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
+        //express validator
+        this.app.use(expressValidator());
         //sass middleware support
         this.app.use(nodeSassMiddleware({
             src: __dirname + '/public/styles/sass',

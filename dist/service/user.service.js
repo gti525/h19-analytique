@@ -20,9 +20,9 @@ class UserService {
         return __awaiter(this, void 0, void 0, function* () {
             user.password = sha1(user.password);
             if (user.role === role_enums_1.UserRoles.WEBSITEADMIN) {
+                const savedUser = yield user_repo_1.UserRepo.createOrUpdate(user);
+                user.analyticToken = this.tokenService.createToken(savedUser.id);
             }
-            const savedUser = yield user_repo_1.UserRepo.createOrUpdate(user);
-            user.analyticToken = this.tokenService.createToken(savedUser.id);
             return yield user_repo_1.UserRepo.createOrUpdate(user);
         });
     }

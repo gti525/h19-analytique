@@ -6,18 +6,30 @@ export class CampaignRepo {
 
     public static async findById(id:number): Promise<Campaign>{
         const campaignRepo = getRepository(Campaign);
-        return await campaignRepo.findOne(id, { relations: ["banners", "profiles"] });
+        return await campaignRepo.createQueryBuilder("campaign")
+            .whereInIds([id])
+            .leftJoinAndSelect("campaign.profiles", "profiles")
+            .leftJoinAndSelect("campaign.banners", "banners")
+            .getOne();
     }
 
     public static async findByUser(user:User): Promise<Campaign[]>{
         const campaignRepo = getRepository(Campaign);
-        return await campaignRepo.find({where: {user}, relations: ["banners", "profiles"] });
+        return await campaignRepo.createQueryBuilder("campaign")
+            .leftJoinAndSelect("campaign.profiles", "profiles")
+            .leftJoinAndSelect("campaign.user", "user")
+            .where(`user.id = :id`, {id: user.id})
+            .leftJoinAndSelect("campaign.banners", "banners")
+            .getMany();
     }
 
 
     public static async findAll(): Promise<Campaign[]>{
         const campaignRepo = getRepository(Campaign);
-        return await campaignRepo.find({ relations: ["banners", "profiles"] });
+        return await campaignRepo.createQueryBuilder("campaign")
+            .leftJoinAndSelect("campaign.profiles", "profiles")
+            .leftJoinAndSelect("campaign.banners", "banners")
+            .getMany();
     }
 
     public static async createOrUpdate(campaign: Campaign): Promise<Campaign>{
@@ -25,11 +37,9 @@ export class CampaignRepo {
         return await campaignRepo.save(campaign);
     }
 
-    public static async deleteById(id: number){
+    public static async deleteById(campaignToDelete: Campaign){
         const campaignRepo = getRepository(Campaign);
-        const campaignToDelete  = await CampaignRepo.findById(id);
         if (campaignToDelete)
-            await CampaignRepo.deleteBanners(campaignToDelete.banners);
             return await campaignRepo.remove(campaignToDelete);
     }
 

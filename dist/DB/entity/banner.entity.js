@@ -31,7 +31,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Banner.prototype, "type", void 0);
 __decorate([
-    typeorm_1.ManyToOne(type => campaign_entity_1.Campaign, campaign => campaign.banners),
+    typeorm_1.ManyToOne(type => campaign_entity_1.Campaign, campaign => campaign.banners, { onDelete: "CASCADE" }),
     __metadata("design:type", campaign_entity_1.Campaign)
 ], Banner.prototype, "campaigns", void 0);
 __decorate([

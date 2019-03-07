@@ -47,8 +47,8 @@ class AccountController {
     getRegisterPage(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             const roles = {};
-            roles[role_enums_1.UserRoles.CAMPAIGNMANAGER] = "Campaign administrator";
-            roles[role_enums_1.UserRoles.WEBSITEADMIN] = "Website administrator";
+            roles[role_enums_1.UserRoles.CAMPAIGNMANAGER] = role_enums_1.UserRoles.CAMPAIGNMANAGER;
+            roles[role_enums_1.UserRoles.WEBSITEADMIN] = role_enums_1.UserRoles.WEBSITEADMIN;
             res.render('account/register', { roles });
         });
     }
@@ -59,6 +59,7 @@ class AccountController {
                 user.username = req.body.username;
                 user.role = req.body.role;
                 user.password = req.body.password;
+                user.accountNumber = req.body.accountNumber;
                 user.income = new income_entitiy_1.Income();
                 yield this.userService.adduser(user);
                 this.createUserSession(req, user, res);

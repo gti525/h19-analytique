@@ -15,19 +15,31 @@ class CampaignRepo {
     static findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const campaignRepo = typeorm_1.getRepository(campaign_entity_1.Campaign);
-            return yield campaignRepo.findOne(id, { relations: ["banners", "profiles"] });
+            return yield campaignRepo.createQueryBuilder("campaign")
+                .whereInIds([id])
+                .leftJoinAndSelect("campaign.profiles", "profiles")
+                .leftJoinAndSelect("campaign.banners", "banners")
+                .getOne();
         });
     }
     static findByUser(user) {
         return __awaiter(this, void 0, void 0, function* () {
             const campaignRepo = typeorm_1.getRepository(campaign_entity_1.Campaign);
-            return yield campaignRepo.find({ where: { user }, relations: ["banners", "profiles"] });
+            return yield campaignRepo.createQueryBuilder("campaign")
+                .leftJoinAndSelect("campaign.profiles", "profiles")
+                .leftJoinAndSelect("campaign.user", "user")
+                .where(`user.id = :id`, { id: user.id })
+                .leftJoinAndSelect("campaign.banners", "banners")
+                .getMany();
         });
     }
     static findAll() {
         return __awaiter(this, void 0, void 0, function* () {
             const campaignRepo = typeorm_1.getRepository(campaign_entity_1.Campaign);
-            return yield campaignRepo.find({ relations: ["banners", "profiles"] });
+            return yield campaignRepo.createQueryBuilder("campaign")
+                .leftJoinAndSelect("campaign.profiles", "profiles")
+                .leftJoinAndSelect("campaign.banners", "banners")
+                .getMany();
         });
     }
     static createOrUpdate(campaign) {
@@ -36,13 +48,11 @@ class CampaignRepo {
             return yield campaignRepo.save(campaign);
         });
     }
-    static deleteById(id) {
+    static deleteById(campaignToDelete) {
         return __awaiter(this, void 0, void 0, function* () {
             const campaignRepo = typeorm_1.getRepository(campaign_entity_1.Campaign);
-            const campaignToDelete = yield CampaignRepo.findById(id);
             if (campaignToDelete)
-                yield CampaignRepo.deleteBanners(campaignToDelete.banners);
-            return yield campaignRepo.remove(campaignToDelete);
+                return yield campaignRepo.remove(campaignToDelete);
         });
     }
     static deleteBanners(banners) {

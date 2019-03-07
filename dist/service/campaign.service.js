@@ -37,7 +37,8 @@ class CampaignService {
     }
     deleteCampaign(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield campaign_repo_1.CampaignRepo.deleteById(id);
+            const campaignToDelete = yield campaign_repo_1.CampaignRepo.findById(id);
+            return yield campaign_repo_1.CampaignRepo.deleteById(campaignToDelete);
         });
     }
 }

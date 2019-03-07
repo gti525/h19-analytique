@@ -13,6 +13,7 @@ const typeorm_1 = require("typeorm");
 const campaign_entity_1 = require("./campaign.entity");
 const income_entitiy_1 = require("./income.entitiy");
 const profile_entitiy_1 = require("./profile.entitiy");
+const clientStats_1 = require("./clientStats");
 let User = class User {
 };
 __decorate([
@@ -36,9 +37,17 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "analyticToken", void 0);
 __decorate([
+    typeorm_1.Column({ nullable: true }),
+    __metadata("design:type", String)
+], User.prototype, "accountNumber", void 0);
+__decorate([
     typeorm_1.OneToMany(type => campaign_entity_1.Campaign, campaign => campaign.user),
     __metadata("design:type", Array)
 ], User.prototype, "campaigns", void 0);
+__decorate([
+    typeorm_1.OneToMany(type => clientStats_1.ClientStatistic, clientStatistics => clientStatistics.user),
+    __metadata("design:type", Array)
+], User.prototype, "clientStatistics", void 0);
 __decorate([
     typeorm_1.OneToMany(type => profile_entitiy_1.Profile, profile => profile.user),
     __metadata("design:type", Array)

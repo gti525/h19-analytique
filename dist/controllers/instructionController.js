@@ -8,13 +8,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const instruction_service_1 = require("../service/instruction.service");
 const baseController_1 = require("./baseController");
-class DashboardController extends baseController_1.BaseController {
+class InstructionController extends baseController_1.BaseController {
+    constructor() {
+        super(...arguments);
+        this.instructionService = new instruction_service_1.InstructionService();
+    }
     index(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.sendResponse(req, res, 'index', {});
+            const instructions = this.instructionService.getInstructions(yield this.getUser(req));
+            yield this.sendResponse(req, res, 'instruction/index', { instructions });
         });
     }
 }
-exports.DashboardController = DashboardController;
-//# sourceMappingURL=dashboardController.js.map
+exports.InstructionController = InstructionController;
+//ACM 499 token required, c'est le code a renvoyer si on a pas de token.
+//# sourceMappingURL=instructionController.js.map

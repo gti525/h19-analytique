@@ -12,4 +12,8 @@ export class IncomeRepo {
         return await incomeRepository.save(income);
     }
 
+    public static async createOrUpdate(income: Income): Promise<Income>{
+        const incomeRepository = getRepository(Income);
+        return await incomeRepository.save(income);
+    }
 }

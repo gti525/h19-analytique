@@ -23,6 +23,12 @@ class IncomeRepo {
             return yield incomeRepository.save(income);
         });
     }
+    static createOrUpdate(income) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const incomeRepository = typeorm_1.getRepository(income_entitiy_1.Income);
+            return yield incomeRepository.save(income);
+        });
+    }
 }
 exports.IncomeRepo = IncomeRepo;
 //# sourceMappingURL=income.repo.js.map

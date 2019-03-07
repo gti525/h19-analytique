@@ -10,11 +10,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const jwt = require("jsonwebtoken");
 const user_service_1 = require("./user.service");
-var secret = 'JFEAN9832u42348329048234FJNJKfjkjdlkf92349032'; // TODO mettre ca dans la config
+var secret = 'JFEAN9832u42348329048234FJNJKfjkjdlkf92349032';
 class TokenService {
     constructor() {
     }
-    // TODO set enum not string
     createToken(id) {
         return jwt.sign({
             id
@@ -31,16 +30,15 @@ class TokenService {
             return jwt.verify(token, secret);
         }
         catch (_a) {
-            console.log('Token was not valid');
             return undefined;
         }
     }
     isTokenValid(token) {
         return __awaiter(this, void 0, void 0, function* () {
             const decoded = this.decodeToken(token);
-            if (decoded) {
+            if (decoded !== undefined) {
                 const userService = new user_service_1.UserService();
-                return userService.userExists(decoded.id);
+                return yield userService.userExists(decoded.id);
             }
             return false;
         });

@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const income_entitiy_1 = require("../DB/entity/income.entitiy");
+const income_repo_1 = require("../DB/repo/income.repo");
 const _ = require("lodash");
 const clientStatistics_service_1 = require("./clientStatistics.service");
 class IncomeService {
@@ -24,6 +25,11 @@ class IncomeService {
             income.targetedClicks = yield this.clientStatisticService.countBannersClicked(user, true);
             income.targetedViews = yield this.clientStatisticService.countBannersViewed(user, true);
             return income;
+        });
+    }
+    updateIncome(income) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield income_repo_1.IncomeRepo.createOrUpdate(income);
         });
     }
 }

@@ -1,6 +1,8 @@
 import {getRepository} from "typeorm";
 import { Profile } from "../entity/profile.entitiy";
 import { User } from "../entity/user.entitiy";
+import { WebSiteUrl } from "DB/entity/websiteurl.entity";
+import { WebsiteurlRepo } from "./websiteurl.repo";
 export class ProfileRepo {
     public static async findUserProfile(user: User):Promise<Profile[]> {
         const profileRepo = getRepository(Profile);
@@ -9,7 +11,11 @@ export class ProfileRepo {
 
     public static async findById(id:number): Promise<Profile>{
         const profileRepo = getRepository(Profile);
-        return await profileRepo.findOne(id, { relations: ["urls"] });
+        return await profileRepo.createQueryBuilder("profile")
+            .whereInIds([id])
+            .leftJoinAndSelect("profile.campaigns", "campaigns")
+            .leftJoinAndSelect("profile.urls", "urls")
+            .getOne();
     }
 
     public static async findAll(filter?: any): Promise<Profile[]>{
@@ -22,15 +28,9 @@ export class ProfileRepo {
         return await profileRepo.save(profile);
     }
 
-    public static async deleteById(id: number){
+    public static async delete(profileToDelete: Profile): Promise<Profile>{
         const profileRepo = getRepository(Profile);
-        const profileToDelete  = await ProfileRepo.findById(id);
         if (profileToDelete)
             return await profileRepo.remove(profileToDelete);
-    }
-
-    public static async delete(filter: any){
-        const profileRepo = getRepository(Profile);
-        await profileRepo.delete(filter);
     }
 }

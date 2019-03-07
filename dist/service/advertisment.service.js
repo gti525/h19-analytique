@@ -11,37 +11,38 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const banner_id_enum_1 = require("../models/enums/banner-id-enum");
 const campaign_repo_1 = require("../DB/repo/campaign.repo");
 const campaign_entity_1 = require("../DB/entity/campaign.entity");
-const client_service_1 = require("./client.service");
 const clientStats_1 = require("../DB/entity/clientStats");
 const clientStatistics_service_1 = require("./clientStatistics.service");
 const moment = require("moment");
-const typeorm_1 = require("typeorm");
 const websiteurl_service_1 = require("./websiteurl.service");
+const client_service_1 = require("./client.service");
+const _ = require("lodash");
+const banner_repo_1 = require("../DB/repo/banner.repo");
 class AdvertismentService {
     constructor() {
-        this.clientService = new client_service_1.ClientService();
         this.webSiteUrlService = new websiteurl_service_1.WebsiteurlService();
+        this.clientService = new client_service_1.ClientService();
         this.clientStatisticsService = new clientStatistics_service_1.ClientStatisticsService();
     }
     /**
-     * Va permettre de donner les infos de la baniere et aussi d'empêcher de se faire hacker
+     * Retourne les bannieres ciblees
      */
-    getBanner(client, bannerType, url) {
+    getBanner(client, user, bannerType, url) {
         return __awaiter(this, void 0, void 0, function* () {
             const response = {};
             const banner = yield this.findTargeterBanner(client, bannerType);
             if (!banner)
                 return undefined;
+            const clientStatistic = yield this.addClientStatistic(client, user, url, banner);
             response.url = banner.url;
             response.img = banner.image;
-            response.bannerId = banner.id;
+            response.clientStatisticId = clientStatistic.id;
             response.bannerType = bannerType;
             response.size = this.getBannerSize(bannerType);
-            yield this.addClientStatistic(client, url, banner);
             return response;
         });
     }
-    addClientStatistic(client, url, banner, isClick = false) {
+    addClientStatistic(client, user, url, banner, isClick = false) {
         return __awaiter(this, void 0, void 0, function* () {
             if (client) {
                 let stats = new clientStats_1.ClientStatistic();
@@ -49,9 +50,10 @@ class AdvertismentService {
                 stats.banner = banner;
                 stats.isClick = isClick;
                 stats.isView = !isClick;
-                stats.isTargeted = client.isTargettable;
+                stats.isTargeted = client.isTargeted;
                 stats.client = client;
-                stats = yield this.clientStatisticsService.save(stats);
+                stats.user = user;
+                return yield this.clientStatisticsService.save(stats);
             }
             else {
                 throw new Error("CLIENT WAS NOT FOUND WHEN ADDING STATISTIC");
@@ -85,26 +87,47 @@ class AdvertismentService {
     }
     getTargetedCampaigns(client) {
         return __awaiter(this, void 0, void 0, function* () {
+            client.isTargeted = false;
+            try {
+                const banners = yield banner_repo_1.BannerRepo.getTargettedBanners(client.id);
+                console.log(banners);
+            }
+            catch (e) {
+                console.log(e);
+            }
+            let targettedCampaigns = undefined;
+            const campaigns = (yield campaign_repo_1.CampaignRepo.findAll()).filter(c => moment(new Date()).endOf('day').isSameOrBefore(c.endDate)
+                && moment(new Date()).startOf('day').isSameOrAfter(c.startDate));
             const tagettedUrls = this.getTargettedUrls(client);
-            const campaigns = (yield campaign_repo_1.CampaignRepo.findAll()).filter(c => moment(c.endDate).endOf('day').isSameOrBefore(new Date()) &&
-                moment(c.startDate).startOf('day').isSameOrAfter(new Date()));
-            this.webSiteUrlService.findProfilesByUrl({ url: typeorm_1.In(tagettedUrls) });
-            //finding the existing campaings
-            tagettedUrls.forEach(url => {
-            });
-            return campaigns;
+            const webSiteUrls = (yield this.webSiteUrlService.findProfilesByUrl(tagettedUrls)).filter(p => !_.isEmpty(p.profile));
+            if (campaigns.length > 0 && webSiteUrls.length > 0) {
+                //finding the existing campaings that have profiles that matches the urls
+                targettedCampaigns = campaigns.map(c => {
+                    for (const w of webSiteUrls) {
+                        for (const profile of c.profiles) {
+                            if (profile.id === w.profile.id) {
+                                return c;
+                            }
+                        }
+                    }
+                });
+            }
+            client.isTargeted = !_.isEmpty(targettedCampaigns);
+            return _.isEmpty(targettedCampaigns) ? campaigns : targettedCampaigns;
         });
     }
     getTargettedUrls(client) {
         const url_visits = {};
+        const minimumNumberOfVisits = 10;
         const tagettedUrls = [];
         // grouping urls and counting the number of occurences
-        client.clientStats.forEach(s => {
-            url_visits[s.url] = (url_visits[s.url] || 0) + 1;
-        });
+        for (const stat of client.clientStats) {
+            url_visits[stat.url] = (url_visits[stat.url] || 0) + 1;
+        }
+        ;
         // if 10 or more visits
         Object.keys(url_visits).forEach(k => {
-            if (url_visits[k] > 20) {
+            if (url_visits[k] >= minimumNumberOfVisits) {
                 tagettedUrls.push(k);
             }
         });

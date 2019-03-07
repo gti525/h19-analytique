@@ -1,5 +1,6 @@
 import { Income } from "../DB/entity/income.entitiy";
 import { UserService } from "./user.service";
+import { IncomeRepo } from "../DB/repo/income.repo";
 import { User } from "../DB/entity/user.entitiy";
 import * as _ from 'lodash'
 import { ClientStatisticsService } from "./clientStatistics.service";
@@ -17,5 +18,8 @@ export class IncomeService {
         return income;
     }
 
+    public async updateIncome(income: Income): Promise<Income> {
+        return await IncomeRepo.createOrUpdate(income);
+    }
 
 }

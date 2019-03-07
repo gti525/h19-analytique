@@ -1,17 +1,16 @@
-
 document.addEventListener('DOMContentLoaded',
     function gti525Analyze() {
-        const ___analyticsToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIzLCJpYXQiOjE1NDg4MTQ4MTF9.Lnx1ENTHmzfBkNsDFs-zFsAK86cgKqH0_Fw8R5VEqlk";
-        const url = "http://localhost:3000/api/v1/analytics/code"
+        const analyticsToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIzLCJpYXQiOjE1NDg4MTQ4MTF9.Lnx1ENTHmzfBkNsDFs-zFsAK86cgKqH0_Fw8R5VEqlk";
         function getAnalyticsCode() {
+            const url = "http://localhost:3000/api/v1/analytics/code"
             let xmlHttp = new XMLHttpRequest();
-            xmlHttp.open("GET", url, true); // false for synchronous request
+            xmlHttp.open("GET", url, true);
             xmlHttp.onload = function (e) {
                 if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                    Function(`return (${xmlHttp.responseText})`)()(___analyticsToken);
+                    Function(`return (${xmlHttp.responseText})`)()(analyticsToken);
                 }
             };
-            xmlHttp.setRequestHeader('x-access-token', ___analyticsToken)
+            xmlHttp.setRequestHeader('x-access-token', analyticsToken)
             xmlHttp.send();
         }
 
@@ -21,33 +20,29 @@ document.addEventListener('DOMContentLoaded',
             getAnalyticsCode();
         }
         else {
-            ___getAdvertisment(clientId);
+            getAdvertisment(clientId);
         }
 
         function getClientId() {
-            const storageKeyClient = "gti525clientId";
-            const storageKeyDate = "gti525date";
-            if (typeof (Storage) !== "undefined" && localStorage.getItem(storageKeyClient) && localStorage.getItem(storageKeyDate)) {
-                console.log(localStorage.getItem(storageKeyDate))
-                const date = localStorage.getItem(storageKeyDate);
-                console.log(date)
-                if (new Date(date).getTime() < new Date().getTime())
-                    return localStorage.getItem(storageKeyClient);
+            const storageKey = "gti525analytic";
+            if (typeof (Storage) !== "undefined" && localStorage.getItem(storageKey)) {
+                const infos = JSON.parse(localStorage.getItem(storageKey));
+                if (new Date(infos.expiration).getTime() > new Date().getTime())
+                    return infos.clientId;
             }
             return undefined;
         }
 
-        function ___getAdvertisment(clientId) {
-            console.log('ici');
+        function getAdvertisment(clientId) {
             const url = `http://localhost:3000/api/v1/banners/code`
             let xmlHttp = new XMLHttpRequest();
             xmlHttp.open("GET", url, true); // false for synchronous request
             xmlHttp.onload = function (e) {
                 if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                    Function(`return (${xmlHttp.responseText})`)()(clientId, ___analyticsToken);
+                    Function(`return (${xmlHttp.responseText})`)()(clientId, analyticsToken);
                 }
             };
-            xmlHttp.setRequestHeader('x-access-token', ___analyticsToken)
+            xmlHttp.setRequestHeader('x-access-token', analyticsToken)
             xmlHttp.send();
         }
 

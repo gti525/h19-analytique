@@ -23,7 +23,11 @@ export class ProfileService {
         return await ProfileRepo.createOrUpdate(profile);
     }
 
-    public async deleteProfile(id: number): Promise<Profile>{
-        return await ProfileRepo.deleteById(id);
+    public async deleteProfile(id: number){
+        const profile =  await ProfileRepo.findById(id);
+        if (profile.campaigns.length > 0){
+            throw new Error("Impossible de supprimer un profil qui est lié à une campagne");
+        }
+        return await ProfileRepo.delete(profile);
     }
 }

@@ -8,14 +8,21 @@ import { ClientStatistic } from "./clientStats";
 export class User{
     @PrimaryGeneratedColumn()
     id: number;
+
     @Column({unique:true})
     username: string;
+
     @Column()
     password?: string;
+
     @Column()
     role: string;
+
     @Column({nullable:true})
     analyticToken: string;
+
+    @Column({nullable:true })
+    accountNumber: string;
 
     @OneToMany(type => Campaign, campaign => campaign.user)
     campaigns: Campaign[];

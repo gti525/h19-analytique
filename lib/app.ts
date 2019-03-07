@@ -13,6 +13,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const PORT = 3000;
 const HOST = "localhost";
+const { check } = require('express-validator/check')
 const cookieParser = require('cookie-parser');
 const expressValidator = require('express-validator');
 
@@ -55,7 +56,7 @@ class App {
             process.env.TYPEORM_HOST = "am1shyeyqbxzy8gc.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
             process.env.TYPEORM_PORT = "3306",
             process.env.TYPEORM_USERNAME = "xockne52cd09d9im",
-            process.env.TYPEORM_PASSWORD = "pcvckz00n0p5slna",
+            process.env.TYPEORM_PASSWORD = "fd13twc56v4sld3m",
             process.env.TYPEORM_DATABASE  =  "h4hqzs3onggdslcg",
             process.env.TYPEORM_SYNCHRONIZE  = "true",
             process.env.TYPEORM_LOGGING  = "false",

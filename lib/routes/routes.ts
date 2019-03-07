@@ -12,9 +12,7 @@ import { AdvertiseController } from "../controllers/advertiseController";
 import { analyticsTokenGuard } from "../middlewares/token.guard"
 import { IncomeController } from "../controllers/incomeController";
 import { CampaignController } from "../controllers/campaignController";
-import { raw } from "body-parser";
 import { InstructionController } from "../controllers/instructionController";
-import { User } from "DB/entity/user.entitiy";
 
 export class Routes {
     private dashboardController: DashboardController;
@@ -37,8 +35,8 @@ export class Routes {
         this.instructionController = new InstructionController();
     }
     public routes(app: express.Application): void {
-        const webAdminGuard = [sessionGuard, roleGuard([UserRoles.ADMIN,UserRoles.WEBSITEADMIN])]
-        const campaingManagerGuard = [sessionGuard, roleGuard([UserRoles.ADMIN,UserRoles.CAMPAIGNMANAGER])]
+        const webAdminGuard = [sessionGuard, roleGuard([UserRoles.ADMIN,UserRoles.WEBSITEADMIN])];
+        const campaingManagerGuard = [sessionGuard, roleGuard([UserRoles.ADMIN,UserRoles.CAMPAIGNMANAGER])];
         //Dashboard
         app.route('/')
             .get(sessionGuard,
@@ -63,27 +61,31 @@ export class Routes {
             
             //Income
         app.route('/income')
-            .get(webAdminGuard,async (req, res) => this.incomeController.index(req, res));
-            
+            .get(webAdminGuard,async (req, res, next) => this.incomeController.index(req, res, next));
+
+        app.route('/income/transfer')
+            .get(webAdminGuard,async (req, res, next) => this.incomeController.transfer(req, res, next))
+            //.get(webAdminGuard,async (req, res, next) => this.incomeController.index(req, res, next));
+
             //Profile
         app.route('/profile')
-            .get(campaingManagerGuard,async (req, res) => this.profileController.index(req, res));
+            .get(campaingManagerGuard, async (req, res) => this.profileController.index(req, res));
             
         app.route('/profile/create')
             .post(async (req, res, next) => this.profileController.create(req, res, next))
-            .get(campaingManagerGuard,async (req, res, next) => this.profileController.create(req, res, next));
+            .get(campaingManagerGuard, async (req, res, next) => this.profileController.create(req, res, next));
             
         app.route('/profile/edit')
             .post(async (req, res, next) => this.profileController.edit(req, res, next));
 
         app.route("/profile/edit/:id")
-            .get(campaingManagerGuard,async (req, res, next) => this.profileController.edit(req, res, next));
+            .get(campaingManagerGuard, async (req, res, next) => this.profileController.edit(req, res, next));
 
         app.route('/profile/delete/:id')
-            .get(campaingManagerGuard, async (req, res) => this.profileController.delete(req, res));
+            .get(campaingManagerGuard , async (req, res) => this.profileController.delete(req, res));
         //Instruction
         app.route('/instruction')
-            .get(webAdminGuard,async (req, res) => this.instructionController.index(req, res));
+            .get(webAdminGuard, async (req, res) => this.instructionController.index(req, res));
         //Website Statistique
         app.route('/statistique')
             .get(campaingManagerGuard, async (req, res, next) => this.statistiqueController.index(req, res, next));
@@ -92,14 +94,14 @@ export class Routes {
             .get(campaingManagerGuard, async (req, res) => this.campaignController.index(req, res));
 
         app.route("/campaign/create")
-            .post(async (req, res, next) => this.campaignController.create(req, res, next))
+            .post(this.campaignController.validate(), async (req, res, next) => this.campaignController.create(req, res, next))
             .get(campaingManagerGuard, async (req, res, next) => this.campaignController.create(req, res, next));
 
-        app.route("/campaign/edit")
-            .post(async (req, res, next) => this.campaignController.edit(req, res, next));
+        app.route("/campaign/edit/:id")
+            .post(this.campaignController.validate(), async (req, res) => this.campaignController.edit(req, res));
 
         app.route("/campaign/edit/:id")
-            .get(campaingManagerGuard, async (req, res, next) => this.campaignController.edit(req, res, next));
+            .get(campaingManagerGuard, async (req, res) => this.campaignController.edit(req, res));
 
         app.route("/campaign/delete/:id")
             .get(campaingManagerGuard, async (req, res) => this.campaignController.delete(req, res));
@@ -109,7 +111,7 @@ export class Routes {
         // **************************************
 
         app.use(cors());
-        app.use('/api/v1',analyticsTokenGuard())
+        app.use('/api/v1',analyticsTokenGuard());
         app.route('/api/v1/analytics/code')
             .get(async (req, res) => this.advertiseController.getAnalitycsCode(req, res));
         app.route('/api/v1/analytics/client')

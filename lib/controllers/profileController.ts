@@ -3,13 +3,15 @@ import { ProfileService } from '../service/profile.service';
 import { Profile } from '../DB/entity/profile.entitiy';
 import { WebSiteUrl } from '../DB/entity/websiteurl.entity';
 import { BaseController } from './baseController';
+import {check} from "express-validator/check";
 
 export class ProfileController extends BaseController {
     private profileService: ProfileService = new ProfileService();
 
+
+
     public async index(req: Request, res: Response) {
-        const profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
-        await this.sendResponse(req,res,'profile/index',{ profiles })
+        this.generateIndexPage(req,res)
     }
 
     public async create(req: Request, res: Response, next) {
@@ -42,10 +44,30 @@ export class ProfileController extends BaseController {
         }
     }
 
+    public async validationProfil(req: Request, res: Response, next) {
+
+        if (req.method == 'POST'){
+
+           const identifier = req.body.identifier;
+           const type = req.body.type;
+           const urls = req.body.urls;
+
+            check('identifier')
+                .isLength({ min: 1 }).trim().withMessage('Name empty.')
+                .isAlpha().withMessage('Name must be alphabet letters.')
+
+            check('type')
+                .isLength({ min: 1 }).trim().withMessage('Name empty.')
+                .isAlpha().withMessage('Name must be alphabet letters.')
+
+            check('url')
+                .isLength({ min: 40 }).trim().withMessage('Name empty.')
+                .isURL().withMessage('must be url.')
+            
+    }
+}
+
     public async edit(req: Request, res: Response, next) {
-        if (req.method !== 'GET' && req.method !== 'POST') {
-            return next()
-        }
         if (req.method == 'GET'){
             try {
                 let profile: any;
@@ -55,9 +77,9 @@ export class ProfileController extends BaseController {
                 await this.sendResponse(req,res,'profile/edit',{ profile: profile })
             }
             catch (error) {
-                return res.json(error).status(500);
+                await this.generateIndexPage(req, res, error);
             }
-        }else {
+        } else {
             try {
                 const profile = await this.profileService.getProfileById(req.body.id);
                 if (profile) {
@@ -94,9 +116,12 @@ export class ProfileController extends BaseController {
             }
         }
         catch (error) {
-            return res.json(error).status(500);
+            await this.generateIndexPage(req, res, error);
         }
     }
-}
 
-//ACM 499 token required, c'est le code a renvoyer si on a pas de token.
+    private async generateIndexPage(req: Request, res: Response, errors: any = {}) {
+        const profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
+        await this.sendResponse(req, res, 'profile/index', { profiles, errors });
+    }
+}
