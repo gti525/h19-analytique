@@ -122,8 +122,8 @@ export class ProfileController extends BaseController {
 
      validateform = () => {
         return [
-            check("identifier", "identifiant est requis pour sinscrire.").not().isEmpty().isAlphanumeric().isLength({min:3}),
-            check("type", "Le type est réquis pour sinscrire.").not().isEmpty().isAlphanumeric().isLength({min:3}),
+            check("identifier", "l'identifiant est requis pour s'inscrire.").not().isEmpty().isAlphanumeric().isLength({min:3}),
+            check("type", "Le type est réquis pour s'inscrire.").not().isEmpty().isAlphanumeric().isLength({min:3}),
             check("urls[0]", "Le url est requis.").not().isEmpty().isURL(),
         ]
     }
