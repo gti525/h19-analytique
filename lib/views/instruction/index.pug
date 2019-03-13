@@ -1,21 +1,36 @@
 extends ../shared/_layout.pug
 
 block content
-    link(rel='stylesheet', type='text/css')
 
     h1 Instructions
-
-    div(class="content")
-        br
-        h3 Étape 1
-        include instruction-1.pug
+    br
+    h3 Étape 1
+    select.form-control(name="language", id="language_dropdown")
+        option(selected="") Sélectionner votre langage de programmation
+            option= "Le Reste"
+            option= "Angular-Ionicv3"
+    div(class="content" style = "display:none", id="le_reste")
         br
         h3 Étape 2
-        include instruction-2.pug
+        include instruction-1.pug
+        br
         h3 Étape 3
+        include instruction-2.pug
+    div(class="content" style = "display:none", id="angular")
+        br
+        h3 Étape 2
+        include instruction-1.pug
+        br
+        h3 Étape 3
+        include instruction-2.pug
+        h3 Étape Finale
         p Faire de l'argent en réclamant vos dus   
             a(href=`/income`) ici
     
+
+block stylesheets
+    link(rel='stylesheet', type='text/css', href='/styles/instruction.css')
+
 block javascript
     script(src="/javascripts/instruction.js")
     script(src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js")

@@ -50,6 +50,7 @@ export class ClientInfo {
         if (this.os.indexOf("Mac")            != -1) return "Mac/iOS";
         if (this.os.indexOf("X11")            != -1) return "UNIX";
         if (this.os.indexOf("Linux")          != -1) return "Linux";
+        if (this.os.indexOf("Mobile")          != -1) return "Mobile";
         else return "Unkown";
     };
 }

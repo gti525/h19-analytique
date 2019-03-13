@@ -16,12 +16,6 @@ export class ClientRepo {
 
     public static async findAll(user:User): Promise<Client[]>{
         const userRepository = getRepository(Client);
-        console.log(await userRepository.createQueryBuilder("client")
-        .leftJoin("client.clientStats","clientStatistic")
-        .leftJoin("clientStatistic.banner","banner")
-        .leftJoin("banner.campaigns","campaigns")
-        .where(`campaigns.userId = :id`, {id: user.id})
-        .getMany())
         return await userRepository.createQueryBuilder("client")
         .leftJoin("client.clientStats","clientStatistic")
         .leftJoin("clientStatistic.banner","banner")
