@@ -47,7 +47,7 @@ export class Routes {
             .get(loginGuard,(req, res, next) => {
                 this.accountController.getLoginPage(req, res, next)
             })
-            .post(async (req, res, next) => this.accountController.login(req, res, next));
+            .post(this.accountController.validate(),async (req, res, next) => this.accountController.login(req, res, next));
         app.route('/logout')
             .get((req, res, next) => {
                 req.session.destroy( (err) => res.redirect('/login'));
@@ -57,7 +57,7 @@ export class Routes {
             .get(loginGuard,(req, res, next) => {
                 this.accountController.getRegisterPage(req, res, next);
             })
-            .post(async (req, res, next) => this.accountController.register(req, res, next));
+            .post(this.accountController.validate(),async (req, res, next) => this.accountController.register(req, res, next));
             
             //Income
         app.route('/income')

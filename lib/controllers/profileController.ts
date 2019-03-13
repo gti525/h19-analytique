@@ -54,44 +54,12 @@ export class ProfileController extends BaseController {
         return result || await this.sendResponse(req,res,"profile/create", content);
     }
 
-    public async edit(req: Request, res: Response){
-        let content: {[k: string]: any} = {};
-       // content.campaignTypes = await this.enumsToArray.translateEnumToSelectArray(BannerType);
-        content.profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
-       // content.campaign = await this.campaignService.getCampaignById(req.params.id);
 
-
-        content.moment = require("moment");
-        if (req.method == 'POST'){
-            const vResult = validationResult(req);
-            if(vResult.isEmpty()) {
-                try {
-                    const profile = await this.profileService.getProfileById(req.params.id);
-
-
-                    const profileIds = req.body.profileIds.map(function (value) {
-                        return parseInt(value, 10);
-                    });
-
-                    await this.profileService.updateProfile(profile);
-
-                    res.redirect("/profile");
-                }
-                catch (error) {
-                    content.errors = [error];
-                }
-            }else{
-                content.errors = this.formatErrors(vResult.array());
-            }
-        }
-        await this.sendResponse(req, res,'profile/edit', content);
-    }
-
-
-   /* public async edit(req: Request, res: Response) {
+    public async edit(req: Request, res: Response) {
 
         let content: {[k: string]: any} = {};
         content.profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
+
         if (req.method == 'GET'){
             try {
                 let profile: any;
@@ -132,7 +100,7 @@ export class ProfileController extends BaseController {
             }
         }
     }
-    }*/
+    }
 
     public async delete(req: Request, res: Response) {
         try {

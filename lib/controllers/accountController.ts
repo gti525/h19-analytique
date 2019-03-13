@@ -4,20 +4,21 @@ import {QueryFailedError} from "typeorm";
 import {User} from "../DB/entity/user.entitiy";
 import {UserRoles} from "../models/enums/role-enums";
 import { Income } from '../DB/entity/income.entitiy';
+import {check, validationResult} from "express-validator/check";
+import { error } from 'util';
 
 export class AccountController {
 
     private userService: UserService = new UserService();
 
     public async login(req: Request, res: Response, next) {
-        try{
+        try {
             const username = req.body.username;
-            const password =  req.body.password;
+            const password = req.body.password;
             const user = await this.userService.authenticate(username, password);
             this.userService.findByToken
             this.createUserSession(req, user, res);
-        }
-        catch{
+        } catch {
             res.status(401).send('Invalid credentials');
         }
     }
@@ -39,11 +40,14 @@ export class AccountController {
         const roles = {};
         roles[UserRoles.CAMPAIGNMANAGER] = UserRoles.CAMPAIGNMANAGER;
         roles[UserRoles.WEBSITEADMIN] = UserRoles.WEBSITEADMIN;
-        res.render('account/register', { roles });
+        res.render('account/register', {roles});
     }
 
     public async register(req: Request, res: Response, next) {
-        try{
+        let content: {[k: string]: any} = {};
+            const vResult = validationResult(req);
+            if(vResult.isEmpty()) {
+        try {
             const user = new User();
             user.username = req.body.username;
             user.role = req.body.role;
@@ -54,14 +58,22 @@ export class AccountController {
             await this.userService.adduser(user);
 
             this.createUserSession(req, user, res);
-        }
-        catch(error){
-            if (error instanceof QueryFailedError && (error as any).code === 'ER_DUP_ENTRY'){
+        } catch (error) {
+            if (error instanceof QueryFailedError && (error as any).code === 'ER_DUP_ENTRY') {
                 res.status(409).json(error.message);
-            }
-            else{
+            } else {
                 res.status(500).json(error);
             }
         }
+    }
+    }
+
+    validate = () => {
+        return [
+            check("usernsme", "l'identifiant est requis pour s'inscrire.").not().isEmpty().isAlphanumeric().isLength({min: 3}),
+            check("role", "Le type est réquis pour s'inscrire.").not().isEmpty(),
+            check("password", "Le url est requis.").not().isEmpty(),
+            check("accountNumber", "Le url est requis.").not().isEmpty().isNumeric()
+        ]
     }
 }
