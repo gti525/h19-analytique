@@ -3,19 +3,19 @@ block content
     div.container
         div.row
             div.Absolute-Center.is-Responsive
-                h4.card-title.mt-3.text-center Create Account
+                h4.card-title.mt-3.text-center Créer un compte
                 form(action="/register", method="post")
                     div.form-group.input-group
                         div.input-group-prepend
                             span.input-group-text
                                 i.fa.fa-user
-                        input.form-control(name="username", placeholder="Username" type="text")
+                        input.form-control(name="username", placeholder="Nom d'utilisateur" type="text")
                     div.form-group.input-group
                         div.input-group-prepend
                             span.input-group-text
                                 i.fa.fa-users
                         select.form-control(name="role", id="role_dropdown")
-                            option(selected="") Select a role
+                            option(selected="") Sélectionner un rôle
                             each role in roles
                                 option= role
                     div.form-group.input-group(style = "display:none", id="accountNumber")
@@ -27,16 +27,16 @@ block content
                         div.input-group-prepend
                             span.input-group-text
                                 i.fa.fa-lock
-                        input.form-control(name="password", placeholder="Password" type="password")
+                        input.form-control(name="password", placeholder="Mot de passe" type="password")
                     div.form-group.input-group
                         div.input-group-prepend
                             span.input-group-text
                                 i.fa.fa-lock
-                        input.form-control(name="passwordConfirmation", placeholder="Repeat password" type="password")
+                        input.form-control(name="passwordConfirmation", placeholder="Répéter le mot de passe" type="password")
                     div.form-group
-                        button.brn.btn-primary.btn-block(type="submit") Create Account
-                    p.text-center Have an account? &nbsp;
-                        a(href="/login") Log In
+                        button.brn.btn-primary.btn-block(type="submit") Créer un compte
+                    p.text-center Vous avez déjà un compte? &nbsp;
+                        a(href="/login") Se connecter
 block javascript
     script(src="/javascripts/register.js")
 
