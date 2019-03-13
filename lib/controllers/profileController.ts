@@ -4,10 +4,6 @@ import { Profile } from '../DB/entity/profile.entitiy';
 import { WebSiteUrl } from '../DB/entity/websiteurl.entity';
 import { BaseController } from './baseController';
 import {check , validationResult} from "express-validator/check";
-import {Banner} from "../DB/entity/banner.entity";
-import {In} from "typeorm";
-import {BannerType, Campaign} from "../DB/entity/campaign.entity";
-
 
 export class ProfileController extends BaseController {
     private profileService: ProfileService = new ProfileService();
@@ -19,46 +15,33 @@ export class ProfileController extends BaseController {
     }
 
     public async create(req: Request, res: Response, next) {
-        let result;
         if (req.method !== 'GET' && req.method !== 'POST') {
-            result= next();
+            return next()
         }
-        let content: {[k: string]: any} = {};
-        content.profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
+        if (req.method == 'GET'){
+            await this.sendResponse(req,res,'profile/create')
+        }else {
+            try {
+                const urls = [];
+                req.body.urls.forEach(function (url) {
+                    const websiteUrl = new WebSiteUrl();
+                    websiteUrl.url = url;
+                    urls.push(websiteUrl);
+                });
 
-        if (req.method == 'POST') {
-            const vResult = validationResult(req);
-            if (vResult.isEmpty()) {
-                try {
-                    const urls = [];
-                    req.body.urls.forEach(function (url) {
-                        const websiteUrl = new WebSiteUrl();
-                        websiteUrl.url = url;
-                        urls.push(websiteUrl);
-                    });
+                const profile = new Profile();
+                profile.identifier = req.body.identifier;
+                profile.type = req.body.type;
+                profile.urls = urls;
+                profile.user = await this.getUser(req);
 
-                    const profileIds = req.body.profileIds.map(function (value) {
-                        return parseInt(value, 10);
-                    });
-                    const profiles = await this.profileService.getProfiles({id: In(profileIds)});
-
-                    const profile = new Profile();
-                    profile.identifier = req.body.identifier;
-                    profile.type = req.body.type;
-                    profile.urls = urls;
-                    profile.user = await this.getUser(req);
-
-                    await this.profileService.addProfile(profile);
-                    result = res.redirect("/profile")
-
-                } catch (error) {
-                    content.errors = [error];
-                }
-            } else {
-                content.errors = this.formatErrors(vResult.array());
+                await this.profileService.addProfile(profile);
+                res.redirect("/profile")
+            }
+            catch (error) {
+                return res.json(error).status(500);
             }
         }
-        return result || await this.sendResponse(req,res,"profile/create", content);
     }
 
 

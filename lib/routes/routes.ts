@@ -76,7 +76,7 @@ export class Routes {
             .get(campaingManagerGuard, async (req, res, next) => this.profileController.create(req, res, next));
             
         app.route('/profile/edit')
-            .post(async (req, res, next) => this.profileController.edit(req, res, next));
+            .post(this.profileController.validateform(), async (req, res, next)=> this.profileController.edit(req, res, next));
 
         app.route("/profile/edit/:id")
             .get(campaingManagerGuard, async (req, res, next) => this.profileController.edit(req, res, next));
