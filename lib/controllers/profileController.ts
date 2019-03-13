@@ -33,10 +33,10 @@ export class ProfileController extends BaseController {
                         urls.push(websiteUrl);
                     });
 
-                    //     const profileIds = req.body.profileIds.map(function (value) {
-                    //       return parseInt(value, 10);
-                    //   });
-                    //  const profiles = await this.profileService.getProfiles({id: In(profileIds)});
+                        const profileIds = req.body.profileIds.map(function (value) {
+                          return parseInt(value, 10);
+                      });
+                     const profiles = await this.profileService.getProfiles({id: (profileIds)});
 
                     const profile = new Profile();
                     profile.identifier = req.body.identifier;
@@ -59,6 +59,8 @@ export class ProfileController extends BaseController {
     }
     public async edit(req: Request, res: Response, next) {
         if (req.method == 'GET'){
+            const vResult = validationResult(req);
+            if (vResult.isEmpty()) {
             try {
                 let profile: any;
                 if (req.params.id) {
@@ -94,7 +96,7 @@ export class ProfileController extends BaseController {
             }
         }
     }
-
+    }
     public async delete(req: Request, res: Response) {
         try {
             if (req.params.id) {
