@@ -35,21 +35,21 @@ export class Ad implements OnInit {
 
     
     private async postClientInfos(): Promise<any> {
-        const url = "http://localhost:3000/api/v1/analytics/client"
+        const url = "https://gti525-analitycs.herokuapp.com/api/v1/analytics/client"
         return await this.http
             .post(url,this.clientInfos,{headers: this.headers,responseType:'text'})
             .toPromise()
     }
 
     private async getAdvertisment(): Promise<any> {
-        const url = `http://localhost:3000/api/v1/banner/mobile-analityc-banner/${this.clientId}`
+        const url = `https://gti525-analitycs.herokuapp.com/api/v1/banner/mobile-analityc-banner/${this.clientId}`
         const response = await this.http.get(url,{headers:this.headers,responseType:'json'}).toPromise()
         return response;
         
     }
 
     public async bannerClick() {
-        const url = `http://localhost:3000/api/v1/banner/click/${this.clientStatisticId}`
+        const url = `https://gti525-analitycs.herokuapp.com/api/v1/banner/click/${this.clientStatisticId}`
         await this.http.post(url,{},{headers:this.headers,responseType:'json'}).toPromise()
     }
 

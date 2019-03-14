@@ -1,5 +1,17 @@
 
-h4 Ajouter ce code javascript à votre site web.
-h5 Le code javascript
+h4 Ajouter la banière à votre Module.
+h5 Le code html
 pre(class="prettyprint" data-tippy="Cliquez pour copier" data-tippy-arrow="true") 
-    |#{instructions.javascript}
+    |#{instructions.html[3]}
+h5 Ajouter le module dans vos imports
+pre(class="prettyprint" data-tippy="Cliquez pour copier" data-tippy-arrow="true") 
+    |@NgModule({
+    |  imports: [
+    |    ...
+    |    AdModule,
+    |  ],
+    |  ....
+    |})   
+
+
+

@@ -54,6 +54,7 @@ export class AdvertiseController extends BaseController {
             }
         }
         catch (error){
+            console.log(error);
             res.status(500).send({message:JSON.stringify(error)});
         }
     }
