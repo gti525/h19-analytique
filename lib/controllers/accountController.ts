@@ -24,6 +24,7 @@ export class AccountController extends BaseController {
                     const password = req.body.password;
                     const user = await this.userService.authenticate(username, password);
                     this.createUserSession(req, user, res);
+                    res.redirect("/");
                 } catch(error) {
                     content.errors = [error.message];
                 }
@@ -55,6 +56,7 @@ export class AccountController extends BaseController {
 
                     await this.userService.adduser(user);
                     this.createUserSession(req, user, res);
+                    res.redirect("/");
                 } catch (error) {
                     content.errors = [error.message];
                 }
@@ -84,8 +86,7 @@ export class AccountController extends BaseController {
         return [
             check("username", "Le username est requis.").not().isEmpty(),
             check("role", "Le rôle est requis.").not().isEmpty(),
-            check("password", "Le mot de passe est requis.").not().isEmpty(),
-            check("accountNumber", "Le numéro de compte est requis.").not().isEmpty().isNumeric()
+            check("password", "Le mot de passe est requis.").not().isEmpty()
         ]
     }
 }
