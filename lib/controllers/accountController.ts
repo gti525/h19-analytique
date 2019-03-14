@@ -70,10 +70,10 @@ export class AccountController {
 
     validate = () => {
         return [
-            check("usernsme", "l'identifiant est requis pour s'inscrire.").not().isEmpty().isAlphanumeric().isLength({min: 3}),
-            check("role", "Le type est réquis pour s'inscrire.").not().isEmpty(),
-            check("password", "Le url est requis.").not().isEmpty(),
-            check("accountNumber", "Le url est requis.").not().isEmpty().isNumeric()
+            check("username", "username est réquis pour s'inscrire.").not().isEmpty().isAlphanumeric().isLength({min: 3}),
+            check("role", "selectionner un role pour s'inscrire.").not().isEmpty(),
+            check("password", "password est requis.").not().isEmpty(),
+            check("accountNumber", "account nummber est requis.").not().isEmpty().isNumeric()
         ]
     }
 }

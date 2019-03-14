@@ -55,8 +55,9 @@ export class ProfileController extends BaseController {
     }
 
 
-    public async edit(req: Request, res: Response) {
+    public async edit(req: Request, res: Response, next) {
 
+        const vResult = validationResult(req);
         let content: {[k: string]: any} = {};
         content.profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
 
@@ -69,15 +70,15 @@ export class ProfileController extends BaseController {
                 await this.sendResponse(req,res,'profile/edit',{ profile: profile })
             }
             catch (error) {
-                await this.generateIndexPage(req, res, error);
+                content.errors = this.formatErrors(vResult.array());
+              //  await this.generateIndexPage(req, res, error);
             }
 
         } else {
-            const vResult = validationResult(req);
             if (vResult.isEmpty()) {
             try {
                 const profile = await this.profileService.getProfileById(req.body.id);
-                if (profile) {
+                 if (profile) {
 
                     const urls = [];
                     req.body.urls.forEach(function (url) {
@@ -126,7 +127,7 @@ export class ProfileController extends BaseController {
         return [
             check("identifier", "l'identifiant est requis pour s'inscrire.").not().isEmpty().isAlphanumeric().isLength({min:3}),
             check("type", "Le type est réquis pour s'inscrire.").not().isEmpty().isAlphanumeric().isLength({min:3}),
-            check("urls[0]", "Le url est requis.").not().isEmpty().isURL(),
+            check("urls", "Le url est requis.").not().isEmpty().isURL(),
         ]
     }
 }

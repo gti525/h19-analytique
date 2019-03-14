@@ -48,6 +48,7 @@ export class Routes {
                 this.accountController.getLoginPage(req, res, next)
             })
             .post(this.accountController.validate(),async (req, res, next) => this.accountController.login(req, res, next));
+
         app.route('/logout')
             .get((req, res, next) => {
                 req.session.destroy( (err) => res.redirect('/login'));
@@ -56,6 +57,7 @@ export class Routes {
         app.route('/register')
             .get(loginGuard,(req, res, next) => {
                 this.accountController.getRegisterPage(req, res, next);
+
             })
             .post(this.accountController.validate(),async (req, res, next) => this.accountController.register(req, res, next));
             
@@ -75,14 +77,15 @@ export class Routes {
             .post(this.profileController.validateform(), async (req, res, next) => this.profileController.create(req, res, next))
             .get(campaingManagerGuard, async (req, res, next) => this.profileController.create(req, res, next));
             
-        app.route('/profile/edit')
-            .post(this.profileController.validateform(), async (req, res)=> this.profileController.edit(req, res));
+        app.route('/profile/edit/:id')
+            .post(this.profileController.validateform(), async (req, res, next)=> this.profileController.edit(req, res, next));
 
         app.route("/profile/edit/:id")
-            .get(campaingManagerGuard, async (req, res) => this.profileController.edit(req, res));
+            .get(campaingManagerGuard, async (req, res, next) => this.profileController.edit(req, res, next));
 
         app.route('/profile/delete/:id')
             .get(campaingManagerGuard , async (req, res) => this.profileController.delete(req, res));
+
         //Instruction
         app.route('/instruction')
             .get(webAdminGuard, async (req, res) => this.instructionController.index(req, res));
