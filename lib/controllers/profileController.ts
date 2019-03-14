@@ -55,52 +55,40 @@ export class ProfileController extends BaseController {
     }
 
 
-    public async edit(req: Request, res: Response, next) {
-
-        const vResult = validationResult(req);
+    public async edit(req: Request, res: Response) {
         let content: {[k: string]: any} = {};
-        content.profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
+        content.profile = await this.profileService.getProfileById(req.params.id);
 
-        if (req.method == 'GET'){
-            try {
-                let profile: any;
-                if (req.params.id) {
-                    profile = await this.profileService.getProfileById(req.params.id);
-                }
-                await this.sendResponse(req,res,'profile/edit',{ profile: profile })
-            }
-            catch (error) {
-                content.errors = this.formatErrors(vResult.array());
-              //  await this.generateIndexPage(req, res, error);
-            }
-
-        } else {
+        if (req.method == 'POST'){
+            const vResult = validationResult(req);
             if (vResult.isEmpty()) {
-            try {
-                const profile = await this.profileService.getProfileById(req.body.id);
-                 if (profile) {
+                try {
+                    const profile = await this.profileService.getProfileById(req.body.id);
+                     if (profile) {
 
-                    const urls = [];
-                    req.body.urls.forEach(function (url) {
-                        const websiteUrl = new WebSiteUrl();
-                        websiteUrl.url = url;
-                        urls.push(websiteUrl);
-                    });
+                        const urls = [];
+                        req.body.urls.forEach(function (url) {
+                            const websiteUrl = new WebSiteUrl();
+                            websiteUrl.url = url;
+                            urls.push(websiteUrl);
+                        });
 
-                    profile.identifier = req.body.identifier;
-                    profile.type = req.body.type;
-                    profile.urls = urls;
+                        profile.identifier = req.body.identifier;
+                        profile.type = req.body.type;
+                        profile.urls = urls;
 
-                    await this.profileService.updateProfile(profile);
-                    await this.sendResponse(req,res,'profile/edit', { profile: profile })
+                        await this.profileService.updateProfile(profile);
+                        res.redirect("/profile")
+                    }
                 }
-            }
-            catch (error) {
+                catch (error) {
+                    content.errors = [error];
+                }
+            } else{
                 content.errors = this.formatErrors(vResult.array());
-               // return res.json(error).status(500);
             }
         }
-    }
+        return await this.sendResponse(req,res,'profile/edit', content);
     }
 
     public async delete(req: Request, res: Response) {
@@ -123,11 +111,14 @@ export class ProfileController extends BaseController {
         await this.sendResponse(req, res, 'profile/index', { profiles, errors });
     }
 
-     validateform = () => {
+    validate = () => {
         return [
-            check("identifier", "l'identifiant est requis pour s'inscrire.").not().isEmpty().isAlphanumeric().isLength({min:3}),
-            check("type", "Le type est réquis pour s'inscrire.").not().isEmpty().isAlphanumeric().isLength({min:3}),
-            check("urls", "Le url est requis.").not().isEmpty().isURL(),
+            check("identifier", "l'identifiant est requis.").not().isEmpty(),
+            check('identifier', 'L"identifiant doit ètre composé de 3 caractères minimum.').isLength({min:3}),
+            check("type", "Le type est réquis.").not().isEmpty(),
+            check("type", "Le type doit être composé de 3 caractères minimum").isLength({min:3}),
+            check("urls", "Le url est requis.").not().isEmpty(),
+            check("urls", "Le url entré n'est pas valide.").isURL()
         ]
     }
 }

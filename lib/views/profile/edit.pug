@@ -4,7 +4,7 @@ block content
     div.page-actions
         h3 Modifier un profile
 
-    form(action="/profile/edit", method="post")
+    form(action=`/profile/edit/${profile.id}`, method="post")
         input.form-control(name="id", type="hidden", value=profile.id)
         div.row
             div.col-md-6.form-group

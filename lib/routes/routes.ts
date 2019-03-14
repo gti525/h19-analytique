@@ -74,14 +74,14 @@ export class Routes {
             .get(campaingManagerGuard, async (req, res) => this.profileController.index(req, res));
             
         app.route('/profile/create')
-            .post(this.profileController.validateform(), async (req, res, next) => this.profileController.create(req, res, next))
+            .post(this.profileController.validate(), async (req, res, next) => this.profileController.create(req, res, next))
             .get(campaingManagerGuard, async (req, res, next) => this.profileController.create(req, res, next));
             
         app.route('/profile/edit/:id')
-            .post(this.profileController.validateform(), async (req, res, next)=> this.profileController.edit(req, res, next));
+            .post(this.profileController.validate(), async (req, res, next)=> this.profileController.edit(req, res));
 
         app.route("/profile/edit/:id")
-            .get(campaingManagerGuard, async (req, res, next) => this.profileController.edit(req, res, next));
+            .get(campaingManagerGuard, async (req, res, next) => this.profileController.edit(req, res));
 
         app.route('/profile/delete/:id')
             .get(campaingManagerGuard , async (req, res) => this.profileController.delete(req, res));
