@@ -78,7 +78,8 @@ export class AccountController extends BaseController {
 
     validateLogin = () => {
         return [
-            check("username", "Le nom d'utilisateur est requis.").not().isEmpty()
+            check("username", "Le nom d'utilisateur est requis.").not().isEmpty(),
+            check("username", "Le mot de passe est requis.").not().isEmpty()
         ]
     };
 

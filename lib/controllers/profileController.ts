@@ -113,12 +113,9 @@ export class ProfileController extends BaseController {
 
     validate = () => {
         return [
-            check("identifier", "l'identifiant est requis.").not().isEmpty(),
-            check('identifier', 'L"identifiant doit ètre composé de 3 caractères minimum.').isLength({min:3}),
-            check("type", "Le type est réquis.").not().isEmpty(),
-            check("type", "Le type doit être composé de 3 caractères minimum").isLength({min:3}),
-            check("urls", "Le url est requis.").not().isEmpty(),
-            check("urls", "Le url entré n'est pas valide.").isURL()
+            check('identifier', 'L"identifiant  est requis  doit être composé de 3 caractères minimum.').not().isEmpty().isLength({min:3}),
+            check("type", "Le type est réquis doit être composé de 3 caractères minimum").not().isEmpty().isLength({min:3}),
+            check("urls", "Le url est requis il doit être  valide.").not().isEmpty().isURL()
         ]
     }
 }
