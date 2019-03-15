@@ -14,8 +14,10 @@ export class BaseController{
 
     protected async sendResponse(req: Request, res: Response,path: string, content: any = {}) {
         const user = await this.getUser(req);
-        content['name'] = user.username;
-        content['role'] = user.role;
+        if(user){
+            content['name'] = user.username;
+            content['role'] = user.role;
+        }
         res.render(path,content);
     }
 

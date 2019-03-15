@@ -44,27 +44,22 @@ export class Routes {
             
         //Account
         app.route('/login')
-            .get(loginGuard,(req, res, next) => {
-                this.accountController.getLoginPage(req, res, next)
-            })
-            .post(async (req, res, next) => this.accountController.login(req, res, next));
+            .get(loginGuard, async (req, res, next) => { this.accountController.login(req, res, next) })
+            .post(this.accountController.validateLogin(),async (req, res, next) => this.accountController.login(req, res, next));
+
         app.route('/logout')
-            .get((req, res, next) => {
-                req.session.destroy( (err) => res.redirect('/login'));
-            })
+            .get((req, res, next) => { req.session.destroy( (err) => res.redirect('/login')); })
             .post(async (req, res, next) => this.accountController.login(req, res, next));
         app.route('/register')
-            .get(loginGuard,(req, res, next) => {
-                this.accountController.getRegisterPage(req, res, next);
-            })
-            .post(async (req, res, next) => this.accountController.register(req, res, next));
+            .get(loginGuard, async (req, res, next) => { this.accountController.register(req, res, next); })
+            .post(this.accountController.validateRegister(), async (req, res, next) => this.accountController.register(req, res, next));
             
             //Income
         app.route('/income')
-            .get(webAdminGuard,async (req, res, next) => this.incomeController.index(req, res, next));
+            .get(webAdminGuard, async (req, res, next) => this.incomeController.index(req, res, next));
 
         app.route('/income/transfer')
-            .get(webAdminGuard,async (req, res, next) => this.incomeController.transfer(req, res, next))
+            .get(webAdminGuard, async (req, res, next) => this.incomeController.transfer(req, res, next));
             //.get(webAdminGuard,async (req, res, next) => this.incomeController.index(req, res, next));
 
             //Profile
@@ -72,17 +67,18 @@ export class Routes {
             .get(campaingManagerGuard, async (req, res) => this.profileController.index(req, res));
             
         app.route('/profile/create')
-            .post(async (req, res, next) => this.profileController.create(req, res, next))
+            .post(this.profileController.validate(), async (req, res, next) => this.profileController.create(req, res, next))
             .get(campaingManagerGuard, async (req, res, next) => this.profileController.create(req, res, next));
             
-        app.route('/profile/edit')
-            .post(async (req, res, next) => this.profileController.edit(req, res, next));
+        app.route('/profile/edit/:id')
+            .post(this.profileController.validate(), async (req, res, next)=> this.profileController.edit(req, res));
 
         app.route("/profile/edit/:id")
-            .get(campaingManagerGuard, async (req, res, next) => this.profileController.edit(req, res, next));
+            .get(campaingManagerGuard, async (req, res, next) => this.profileController.edit(req, res));
 
         app.route('/profile/delete/:id')
             .get(campaingManagerGuard , async (req, res) => this.profileController.delete(req, res));
+
         //Instruction
         app.route('/instruction')
             .get(webAdminGuard, async (req, res) => this.instructionController.index(req, res));

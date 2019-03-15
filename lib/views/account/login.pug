@@ -1,20 +1,17 @@
 extends ../shared/_anonymous.pug
 block content
-    div.container
-        div.row
-            div.Absolute-Center.is-Responsive
-                div.logo-contaioner
-                div.col-sm-12.col-md-12.col-md-offset-1
-                    form(action="/login", id = "loginForm", method="post")
-                        div.form-group.input-group
-                            span.input-group-text
-                                i.fa.fa-user.fa-lg
-                            input.form-control(type = "text", name="username", placeholder="Nom d'utilisateur")
-                        div.form-group.input-group
-                            span.input-group-text
-                                i.fa.fa-lock.fa-lg
-                            input.form-control(type="password", name="password", placeholder="Mot de passe")
-                        div.form-group
-                            button.btn.btn-def.btn-block(type="submit") Se connecter
-                        div.form-group.text-center
-                            a(href="/register") S'inscrire
+    div.logo-contaioner
+    div.col-sm-12.col-md-12.col-md-offset-1
+        form(action="/login", id = "loginForm", method="post")
+            div.form-group.input-group
+                span.input-group-text
+                    i.fa.fa-user.fa-lg
+                input.form-control(type = "text", name="username", placeholder="Nom d'utilisateur" )
+            div.form-group.input-group
+                span.input-group-text
+                    i.fa.fa-lock.fa-lg
+                input.form-control(type="password", name="password", placeholder="Mot de passe" )
+            div.form-group
+                button.btn.btn-def.btn-block(type="submit") Se connecter
+            div.form-group.text-center
+                a(href="/register") S'inscrire

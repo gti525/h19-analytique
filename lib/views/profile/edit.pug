@@ -4,15 +4,15 @@ block content
     div.page-actions
         h3 Modifier un profile
 
-    form(action="/profile/edit", method="post")
+    form(action=`/profile/edit/${profile.id}`, method="post")
         input.form-control(name="id", type="hidden", value=profile.id)
         div.row
             div.col-md-6.form-group
                 label Identifiant
-                input.form-control(name="identifier", type="text", value=profile.identifier  pattern="[a-z]{5,15}")
+                input.form-control(name="identifier", type="text", value=profile.identifier )
             div.col-md-6.form-group
                 label Type de profile
-                input.form-control(name="type", type="text", value=profile.type pattern="[a-z]{5,15}")
+                input.form-control(name="type", type="text", value=profile.type )
         div.row
             div.url-list.col-md-6
                 label Liste des URL
@@ -23,7 +23,7 @@ block content
                         each url, i in profile.urls
                             tr
                                 td(colspan=(i === 0 ? 2 : 1))
-                                    input.form-control(name="urls[" + i + "]", type="url", value=url.url pattern="https?://.+")
+                                    input.form-control(name="urls[" + i + "]", type="url", value=url.url )
                                 if i !== 0
                                     td
                                         input.ibtnDel.btn.btn-md.btn-danger(value="Supprimer")
