@@ -32,8 +32,8 @@ export class BannerRepo {
                 JOIN campaign ON campaign.id = banner.campaignsId
                 JOIN campaign_profiles_profile ON campaign_profiles_profile.campaignId = campaign.id
                 where banner.type = ${bannerOrientation}
-                    and campaign.endDate > '${moment(new Date()).endOf('day').format(format)}'
-                    and campaign.startDate < '${moment(new Date()).startOf('day').format(format)}';`
+                    and campaign.endDate >= '${moment(new Date()).endOf('day').format(format)}'
+                    and campaign.startDate <= '${moment(new Date()).startOf('day').format(format)}';`
         ) as Banner[]
     }
 }
