@@ -16,8 +16,8 @@ export class BannerRepo {
                                            group by client_statistic.clientId having count(*) > 5)
                       and client_statistic.clientId = ${clientId}
                       and banner.type = ${bannerOrientation}
-                      and campaign.endDate > '${moment(new Date()).endOf('day').format(format)}'
-                      and campaign.startDate < '${moment(new Date()).startOf('day').format(format)}';`
+                      and campaign.endDate >= '${moment(new Date()).endOf('day').format(format)}'
+                      and campaign.startDate <= '${moment(new Date()).startOf('day').format(format)}';`
         ) as Banner[]
     }
 
