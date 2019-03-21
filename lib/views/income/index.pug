@@ -3,88 +3,89 @@ extends ../shared/_layout.pug
 block content
     div.page-actions
         a.btn.btn-info(href="/income/transfer", role="button") Récupérer ses revenus
-    h1  Profits
-    h2 Légende
-    table.table.table-striped.table-bordered(id="chartGrid")
-        thead
-            tr
-                th Vue régulière
-                th Vue ciblée
-                th Clique régulier
-                th Clique ciblé
-        tbody
-            tr
-                td #{incomeChart.regularView.toPrecision(1)}$
-                td #{incomeChart.targetedView.toPrecision(1)}$
-                td #{incomeChart.regularClick.toPrecision(1)}$
-                td #{incomeChart.targetedClick.toPrecision(2)}$
-    hr
-    h2  Profits à encaisser
-    table.table.table-striped.table-bordered
-        thead
-            tr
-                th Type de client
-                th Nombre de vue
-                th Nombre de clique
-                th Montant du
-        tbody
-            tr
-                td client regulier
-                td #{income.regularViews - income.cashedRegularViews}
-                td #{income.regularClicks - income.cashedRegularClicks}
-                td 
-                    b #{((income.regularViews - income.cashedRegularViews) * incomeChart.regularView + (income.regularClicks - income.cashedRegularClicks) * incomeChart.regularClick).toFixed(2)}$
-            tr
-                td client ciblé
-                td #{income.targetedViews - income.cashedTargetedViews}
-                td #{income.targetedClicks - income.cashedTargetedClicks}
-                td 
-                    b #{((income.targetedClicks - income.cashedTargetedClicks) * incomeChart.targetedClick + (income.targetedViews - income.cashedTargetedViews) * incomeChart.targetedView).toFixed(2)}$
-    hr
-    h2  Profits générés au total
-    table.table.table-striped.table-bordered
-        thead
-            tr
-                th Type de client
-                th Nombre de vue
-                th Nombre de clique
-                th Montant total
-        tbody
-            tr
-                td client regulier
-                td #{income.regularViews}
-                td #{income.regularClicks}
-                td 
-                    b #{(income.regularViews * incomeChart.regularView + income.regularClicks * incomeChart.regularClick).toFixed(2)}$
-            tr
-                td client ciblé
-                td #{income.targetedViews}
-                td #{income.targetedClicks}
-                td 
-                 b #{(income.targetedClicks * incomeChart.targetedClick + income.targetedViews * incomeChart.targetedView).toFixed(2)}$
-    hr
-    h2  Montant déjà encaissé
-    table.table.table-striped.table-bordered
-        thead
-            tr
-                th Type de client
-                th Nombre de vue
-                th Nombre de clique
-                th Montant récupéré
-        tbody
-            tr
-                td client regulier
-                td #{income.cashedRegularViews}
-                td #{income.cashedRegularClicks}
-                td 
-                    b #{(income.cashedRegularViews * incomeChart.regularView + income.cashedRegularClicks * incomeChart.regularClick).toFixed(2)}$
-            tr
-                td client ciblé
-                td #{income.cashedTargetedViews}
-                td #{income.cashedTargetedClicks}
-                td 
-                    b #{(income.cashedTargetedClicks * incomeChart.targetedClick + income.cashedTargetedViews * incomeChart.targetedView).toFixed(2)}$
-    hr
+    div.row
+        div.col-md-6.col-sm-12
+            h5 Légende
+            table.table.table-striped.table-bordered
+                thead
+                    tr
+                        th Vue régulière
+                        th Vue ciblée
+                        th Clique régulier
+                        th Clique ciblé
+                tbody
+                    tr
+                        td #{incomeChart.regularView.toPrecision(1)}$
+                        td #{incomeChart.targetedView.toPrecision(1)}$
+                        td #{incomeChart.regularClick.toPrecision(1)}$
+                        td #{incomeChart.targetedClick.toPrecision(2)}$
+        div.col-md-6.col-sm-12
+            h5  Profits à encaisser
+            table.table.table-striped.table-bordered
+                thead
+                    tr
+                        th Type de client
+                        th Nombre de vue
+                        th Nombre de clique
+                        th Montant du
+                tbody
+                    tr
+                        td client regulier
+                        td #{income.regularViews - income.cashedRegularViews}
+                        td #{income.regularClicks - income.cashedRegularClicks}
+                        td
+                            b #{((income.regularViews - income.cashedRegularViews) * incomeChart.regularView + (income.regularClicks - income.cashedRegularClicks) * incomeChart.regularClick).toFixed(2)}$
+                    tr
+                        td client ciblé
+                        td #{income.targetedViews - income.cashedTargetedViews}
+                        td #{income.targetedClicks - income.cashedTargetedClicks}
+                        td
+                            b #{((income.targetedClicks - income.cashedTargetedClicks) * incomeChart.targetedClick + (income.targetedViews - income.cashedTargetedViews) * incomeChart.targetedView).toFixed(2)}$
+    div.row
+        div.col-md-6.col-sm-12
+            h5  Profits générés au total
+            table.table.table-striped.table-bordered
+                thead
+                    tr
+                        th Type de client
+                        th Nombre de vue
+                        th Nombre de clique
+                        th Montant total
+                tbody
+                    tr
+                        td client regulier
+                        td #{income.regularViews}
+                        td #{income.regularClicks}
+                        td
+                            b #{(income.regularViews * incomeChart.regularView + income.regularClicks * incomeChart.regularClick).toFixed(2)}$
+                    tr
+                        td client ciblé
+                        td #{income.targetedViews}
+                        td #{income.targetedClicks}
+                        td
+                            b #{(income.targetedClicks * incomeChart.targetedClick + income.targetedViews * incomeChart.targetedView).toFixed(2)}$
+        div.col-md-6.col-sm-12
+            h5  Montant déjà encaissé
+            table.table.table-striped.table-bordered
+                thead
+                    tr
+                        th Type de client
+                        th Nombre de vue
+                        th Nombre de clique
+                        th Montant récupéré
+                tbody
+                    tr
+                        td client regulier
+                        td #{income.cashedRegularViews}
+                        td #{income.cashedRegularClicks}
+                        td
+                            b #{(income.cashedRegularViews * incomeChart.regularView + income.cashedRegularClicks * incomeChart.regularClick).toFixed(2)}$
+                    tr
+                        td client ciblé
+                        td #{income.cashedTargetedViews}
+                        td #{income.cashedTargetedClicks}
+                        td
+                            b #{(income.cashedTargetedClicks * incomeChart.targetedClick + income.cashedTargetedViews * incomeChart.targetedView).toFixed(2)}$
             
 
 

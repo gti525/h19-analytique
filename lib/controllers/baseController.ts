@@ -12,11 +12,12 @@ export class BaseController{
         return undefined
     }
 
-    protected async sendResponse(req: Request, res: Response,path: string, content: any = {}) {
+    protected async sendResponse(req, res: Response,path: string, content: any = {}) {
         const user = await this.getUser(req);
         if(user){
             content['name'] = user.username;
             content['role'] = user.role;
+            content['successes'] = req.flash('successes');
         }
         res.render(path,content);
     }

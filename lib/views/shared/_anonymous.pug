@@ -21,6 +21,14 @@ html
                                         li= error
                                 button.close(type="button", data-dismiss="alert", aria-label="Fermer")
                                     span(aria-hidden="true") &times;
+                    if successes && successes.length > 0
+                        div.successes
+                            div.alert.alert-success(role="alert")
+                                ul.success-list
+                                    each success in successes
+                                        li= success
+                                button.close(type="button", data-dismiss="alert", aria-label="Fermer")
+                                    span(aria-hidden="true") &times;
                     block content
         script(src="https://code.jquery.com/jquery-3.3.1.min.js", integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=", crossorigin="anonymous")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js", integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q", crossorigin="anonymous")
