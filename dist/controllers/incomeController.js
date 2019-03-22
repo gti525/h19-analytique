@@ -57,7 +57,9 @@ class IncomeController extends baseController_1.BaseController {
                         console.log(income);
                         console.log(somme);
                         //request({ url: 'https://apigti525-jlc.herokuapp.com/api', method: 'PUT', json: {message: "TOTO"}});
-                        var result = yield request({ url: 'https://h19-passerelle.herokuapp.com/transaction/create', method: 'POST',
+                        var requestA = yield request({ url: 'https://banque2-h19.herokuapp.com/api/v1/challenge/22251450', method: 'GET'}) 
+                        console.log(requestA);
+                        /*var result = yield request({ url: 'https://h19-passerelle.herokuapp.com/transaction/create', method: 'POST',
                             json: {
                                 API_KEY: "string",
                                 amount: somme,
@@ -84,8 +86,8 @@ class IncomeController extends baseController_1.BaseController {
                             else {
                                 return res.json({ 'error': 'Echec de la requête, merci de contacter le créateur du site Analytics' });
                             }
-                        });
-                        yield this.incomeService.updateIncome(income);
+                        });*/
+                        //yield this.incomeService.updateIncome(income);
                     }
                 }
                 res.redirect("/income");

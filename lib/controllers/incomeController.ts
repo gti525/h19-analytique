@@ -29,12 +29,14 @@ export class IncomeController extends BaseController{
     }*/
 
     public async transfer(req: Request, res: Response, next) {
+        console.log("rez")
         if (req.method !== 'GET') {
             return next()
         }
         try {
             const user = await this.getUser(req);
             const income = await this.incomeService.getIncome(user);
+            console.log("toto")
             if (income) {
                 let diffTargetedViews = income.targetedViews - income.cashedTargetedViews;
                 let diffTargetedClicks = income.targetedClicks - income.cashedTargetedClicks;
@@ -44,7 +46,7 @@ export class IncomeController extends BaseController{
                 let somme = diffTargetedViews * IncomeChart.targetedView +
                 diffTargetedClicks * IncomeChart.targetedClick +
                 diffRegularViews * IncomeChart.regularView + diffRegularClicks * IncomeChart.regularClick;
-                if(somme != 0){
+                if(somme != 1){
 
                     console.log(income)
 
@@ -52,7 +54,41 @@ export class IncomeController extends BaseController{
                     console.log(somme)
                     //request({ url: 'https://apigti525-jlc.herokuapp.com/api', method: 'PUT', json: {message: "TOTO"}});
 
-                    var result = await request({ url: 'https://h19-passerelle.herokuapp.com/transaction/create', method: 'POST', 
+                    
+                    var result1 = await request({ url: 'https://banque2-h19.herokuapp.com/api/v1/challenge/22251450', method: 'GET'})
+                    var result2 = await request({ url: 'https://banque2-h19.herokuapp.com/api/v1/challenge/22251450/validate', method: 'POST',form: {
+                        userResponse: "banque 2"                
+                    }}); 
+                    result2 = JSON.parse(result2)
+                    console.log(result2.token)
+                    var result3 = await request({ url: 'https://banque2-h19.herokuapp.com/login', method: 'POST', 
+                    
+                    form: {
+                        password: "qwerty",
+                        token: result2.token                
+                    }}, function(error, response, body) {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            console.log(body, response.statusCode);
+                            request(response.headers['location'], function(error, response, html) {
+                                console.log(html);
+                            });
+                        }
+                    }); 
+                    
+                    console.log(result3.headers['set-cookie'][0]);
+                    var result4 = await request({ url: 'https://banque2-h19.herokuapp.com/api/v1/transaction/bankTransfer', method: 'POST',
+                    followAllRedirects: true,
+                    header: {'Content-Type' : 'application/json'}, 
+                    json: {
+                        "sourceAccountNumber": 22251450,
+                        "targetAccountNumber": user.accountNumber,
+                        "amount": somme
+                    }}); 
+                    console.log(result4)
+                    
+                    /*var result = await request({ url: 'https://h19-passerelle.herokuapp.com/transaction/create', method: 'POST', 
                     json: {
                         
                             API_KEY: "string",
@@ -80,7 +116,7 @@ export class IncomeController extends BaseController{
                         }else{
                             return res.json({'error': 'Echec de la requête, merci de contacter le créateur du site Analytics'});
                         }
-                    });
+                    });*/
 
                     await this.incomeService.updateIncome(income);
                 }

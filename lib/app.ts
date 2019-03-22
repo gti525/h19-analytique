@@ -67,7 +67,7 @@ class App {
             process.env.TYPEORM_HOST = "localhost",
             process.env.TYPEORM_PORT = "3306",
             process.env.TYPEORM_USERNAME = "root",
-            process.env.TYPEORM_PASSWORD = "gti525h2019analytics",
+            process.env.TYPEORM_PASSWORD = "root",
             process.env.TYPEORM_DATABASE  =  "analytics",
             process.env.TYPEORM_SYNCHRONIZE  = "true",
             process.env.TYPEORM_LOGGING  = "false",
