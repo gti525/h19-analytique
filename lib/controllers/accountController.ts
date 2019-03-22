@@ -24,7 +24,6 @@ export class AccountController extends BaseController {
                     const password = req.body.password;
                     const user = await this.userService.authenticate(username, password);
                     this.createUserSession(req, user, res);
-                    res.redirect("/");
                 } catch(error) {
                     content.errors = [error.message];
                 }
@@ -32,7 +31,7 @@ export class AccountController extends BaseController {
                 content.errors = this.formatErrors(vResult.array());
             }
         }
-        return this.sendResponse(req, res,'account/login', content);
+        this.sendResponse(req, res,'account/login', content);
     }
 
     public async register(req, res: Response, next) {
@@ -53,18 +52,16 @@ export class AccountController extends BaseController {
                     user.password = req.body.password;
                     user.accountNumber = req.body.accountNumber;
                     user.income = new Income();
-
                     await this.userService.adduser(user);
                     this.createUserSession(req, user, res);
-                    res.redirect("/");
                 } catch (error) {
-                    content.errors = [error.message];
+                    content.errors = ["Utilisateur déjà utilisé"];
                 }
             }else{
                 content.errors = this.formatErrors(vResult.array());
             }
         }
-        return this.sendResponse(req, res,'account/register', content);
+        this.sendResponse(req, res,'account/register', content);
     }
 
     private createUserSession(req: Request, user: User, res: Response) {
