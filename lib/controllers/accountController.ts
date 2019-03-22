@@ -35,7 +35,7 @@ export class AccountController extends BaseController {
         return this.sendResponse(req, res,'account/login', content);
     }
 
-    public async register(req: Request, res: Response, next) {
+    public async register(req, res: Response, next) {
 
         let content: {[k: string]: any} = {};
         const roles = {};

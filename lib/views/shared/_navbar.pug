@@ -1,6 +1,6 @@
 nav.navbar.navbar-expand-lg.navbar-light.bg-light
     div.container-fluid
-        button.btn.btn-info(type="button" id="sidebarCollapse")
+        button.btn.btn-info(type="button" id="sidebarCollapse", title="Réduire/Ouvrir le menu")
             i.fa.fa-align-left &nbsp;
         div.collapse.navbar-collapse(id="navbarSupportedContent")
             ul.nav.navbar-nav.ml-auto
@@ -15,6 +15,15 @@ if errors && errors.length > 0
             ul.error-list
                 each error in errors
                     li= error
+            button.close(type="button", data-dismiss="alert", aria-label="Fermer")
+                span(aria-hidden="true") &times;
+
+if successes && successes.length > 0
+    div.successes
+        div.alert.alert-success(role="alert")
+            ul.success-list
+                each success in successes
+                    li= success
             button.close(type="button", data-dismiss="alert", aria-label="Fermer")
                 span(aria-hidden="true") &times;
 

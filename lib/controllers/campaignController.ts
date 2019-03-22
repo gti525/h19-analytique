@@ -20,7 +20,7 @@ export class CampaignController extends BaseController{
         await this.sendResponse(req, res,'campaign/index', { campaigns, moment: require("moment") });
     }
 
-    public async create(req: Request, res: Response, next){
+    public async create(req, res: Response, next){
         let result;
         if (req.method !== 'GET' && req.method !== 'POST') {
             result = next()
@@ -55,7 +55,7 @@ export class CampaignController extends BaseController{
                     campaign.profiles = profiles;
                     campaign.user = await this.getUser(req);
                     await this.campaignService.addCampaign(campaign);
-
+                    req.flash('successes', ['La campagne a été créée avec succès!']);
                     result = res.redirect("/campaign");
                 }
                 catch (error) {
@@ -68,7 +68,7 @@ export class CampaignController extends BaseController{
         return result || await this.sendResponse(req,res,'campaign/create', content);
     }
 
-    public async edit(req: Request, res: Response){
+    public async edit(req, res: Response){
         let content: {[k: string]: any} = {};
         content.campaignTypes = await this.enumsToArray.translateEnumToSelectArray(BannerType);
         content.profiles = await this.profileService.getProfilesByUser(await this.getUser(req));
@@ -99,7 +99,7 @@ export class CampaignController extends BaseController{
                     campaign.profiles = await this.profileService.getProfiles({id: In(profileIds)});
 
                     await this.campaignService.updateCampaign(campaign);
-
+                    req.flash('successes', ['La campagne a été modifiée avec succès!']);
                     res.redirect("/campaign");
                 }
                 catch (error) {

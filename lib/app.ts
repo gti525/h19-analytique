@@ -16,6 +16,7 @@ const HOST = "localhost";
 const { check } = require('express-validator/check')
 const cookieParser = require('cookie-parser');
 const expressValidator = require('express-validator');
+const flash = require('connect-flash');
 
 const httpsOptions = {
     key: fs.readFileSync('./config/key.pem'),
@@ -112,6 +113,8 @@ class App {
                 url: 'mongodb://root:gti525h2019analytics@ds135305.mlab.com:35305/heroku_pff57jrg'
               })
         }));
+
+        this.app.use(flash());
 
         process.on('uncaughtException', (err) => {
             console.log('uncaughtException in app.ts', err);
