@@ -4,8 +4,6 @@ import { Profile } from '../DB/entity/profile.entitiy';
 import { WebSiteUrl } from '../DB/entity/websiteurl.entity';
 import { BaseController } from './baseController';
 import {check , validationResult} from "express-validator/check";
-import {BannerType} from "../DB/entity/campaign.entity";
-import {In} from "typeorm";
 
 export class ProfileController extends BaseController {
     private profileService: ProfileService = new ProfileService();
@@ -16,7 +14,7 @@ export class ProfileController extends BaseController {
         this.generateIndexPage(req,res)
     }
 
-    public async create(req: Request, res: Response, next) {
+    public async create(req, res: Response, next) {
         let result;
         if (req.method !== 'GET' && req.method !== 'POST') {
             result= next();
@@ -42,6 +40,7 @@ export class ProfileController extends BaseController {
                     profile.user = await this.getUser(req);
 
                     await this.profileService.addProfile(profile);
+                    req.flash('successes', ['Le profile a été créé avec succès!']);
                     result = res.redirect("/profile")
 
                 } catch (error) {
@@ -55,7 +54,7 @@ export class ProfileController extends BaseController {
     }
 
 
-    public async edit(req: Request, res: Response) {
+    public async edit(req, res: Response) {
         let content: {[k: string]: any} = {};
         content.profile = await this.profileService.getProfileById(req.params.id);
 
@@ -78,6 +77,7 @@ export class ProfileController extends BaseController {
                         profile.urls = urls;
 
                         await this.profileService.updateProfile(profile);
+                        req.flash('successes', ['Le profile a été modifié avec succès!']);
                         res.redirect("/profile")
                     }
                 }
@@ -102,7 +102,7 @@ export class ProfileController extends BaseController {
             }
         }
         catch (error) {
-            await this.generateIndexPage(req, res, error);
+            await this.generateIndexPage(req, res, ["Impossible de supprimer un profile ayant déjà généré des revenus."]);
         }
     }
 
