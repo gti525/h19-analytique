@@ -1,9 +1,9 @@
 import { Income } from "../DB/entity/income.entitiy";
-import { UserService } from "./user.service";
 import { IncomeRepo } from "../DB/repo/income.repo";
 import { User } from "../DB/entity/user.entitiy";
 import * as _ from 'lodash'
 import { ClientStatisticsService } from "./clientStatistics.service";
+import { IncomeChart } from "../models/enums/incomechart-enum";
 
 export class IncomeService {
     private clientStatisticService: ClientStatisticsService = new ClientStatisticsService();
@@ -18,8 +18,19 @@ export class IncomeService {
         return income;
     }
 
-    public async updateIncome(income: Income): Promise<Income> {
+    public async cashIncome(income: Income): Promise<Income> {
+        income.cashedRegularClicks+= income.regularClicks;
+        income.cashedRegularViews+= income.regularViews;
+        income.cashedTargetedClicks+= income.targetedClicks;
+        income.cashedTargetedViews+= income.targetedViews;
         return await IncomeRepo.createOrUpdate(income);
+    }
+
+    public calculateProfits(income: Income){
+        return  (income.regularClicks-income.cashedRegularClicks)*IncomeChart.regularClick+
+                (income.targetedClicks-income.cashedTargetedClicks)*IncomeChart.targetedClick+
+                (income.regularViews-income.cashedRegularViews)*IncomeChart.regularView+
+                (income.targetedViews-income.cashedTargetedViews)*IncomeChart.targetedView
     }
 
 }

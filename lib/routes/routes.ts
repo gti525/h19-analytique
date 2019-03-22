@@ -13,6 +13,7 @@ import { analyticsTokenGuard } from "../middlewares/token.guard"
 import { IncomeController } from "../controllers/incomeController";
 import { CampaignController } from "../controllers/campaignController";
 import { InstructionController } from "../controllers/instructionController";
+var cookieParser = require('cookie-parser');
 
 export class Routes {
     private dashboardController: DashboardController;
@@ -35,6 +36,7 @@ export class Routes {
         this.instructionController = new InstructionController();
     }
     public routes(app: express.Application): void {
+        app.use(cookieParser());
         const webAdminGuard = [sessionGuard, roleGuard([UserRoles.ADMIN,UserRoles.WEBSITEADMIN])];
         const campaingManagerGuard = [sessionGuard, roleGuard([UserRoles.ADMIN,UserRoles.CAMPAIGNMANAGER])];
         //Dashboard
