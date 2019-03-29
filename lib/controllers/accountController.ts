@@ -52,16 +52,19 @@ export class AccountController extends BaseController {
                     user.password = req.body.password;
                     user.accountNumber = req.body.accountNumber;
                     user.income = new Income();
-                    await this.userService.adduser(user);
-                    this.createUserSession(req, user, res);
+                    const newUser = await this.userService.adduser(user);
+                    this.createUserSession(req, newUser, res);
                 } catch (error) {
+                    console.log(error)
                     content.errors = ["Utilisateur déjà utilisé"];
                 }
             }else{
                 content.errors = this.formatErrors(vResult.array());
             }
         }
-        this.sendResponse(req, res,'account/register', content);
+        else{
+            this.sendResponse(req, res,'account/register', content);
+        }
     }
 
     private createUserSession(req: Request, user: User, res: Response) {
