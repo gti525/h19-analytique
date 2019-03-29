@@ -25,13 +25,16 @@ export class AccountController extends BaseController {
                     const user = await this.userService.authenticate(username, password);
                     this.createUserSession(req, user, res);
                 } catch(error) {
-                    content.errors = [error.message];
+                    content.errors = ['erreur lors de la connexion'];
+                    this.sendResponse(req, res,'account/login', content);
                 }
             }else{
                 content.errors = this.formatErrors(vResult.array());
             }
         }
-        this.sendResponse(req, res,'account/login', content);
+        else{
+            this.sendResponse(req, res,'account/login', content);
+        }
     }
 
     public async register(req, res: Response, next) {
@@ -51,11 +54,12 @@ export class AccountController extends BaseController {
                     user.role = req.body.role;
                     user.password = req.body.password;
                     user.accountNumber = req.body.accountNumber;
-                    user.income = new Income();
+                    
                     const newUser = await this.userService.adduser(user);
                     this.createUserSession(req, newUser, res);
                 } catch (error) {
                     content.errors = ["Utilisateur déjà utilisé"];
+                    this.sendResponse(req, res,'account/register', content);
                 }
             }else{
                 content.errors = this.formatErrors(vResult.array());
