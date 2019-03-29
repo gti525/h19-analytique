@@ -56,7 +56,8 @@ export class CampaignController extends BaseController{
                     campaign.user = await this.getUser(req);
                     await this.campaignService.addCampaign(campaign);
                     req.flash('successes', ['La campagne a été créée avec succès!']);
-                    result = res.redirect("/campaign");
+                    res.redirect("/campaign");
+                    return;
                 }
                 catch (error) {
                     content.errors = [error];
@@ -65,7 +66,7 @@ export class CampaignController extends BaseController{
                 content.errors = this.formatErrors(vResult.array());
             }
         }
-        return result || await this.sendResponse(req,res,'campaign/create', content);
+        await this.sendResponse(req,res,'campaign/create', content);
     }
 
     public async edit(req, res: Response){
@@ -101,6 +102,7 @@ export class CampaignController extends BaseController{
                     await this.campaignService.updateCampaign(campaign);
                     req.flash('successes', ['La campagne a été modifiée avec succès!']);
                     res.redirect("/campaign");
+                    return;
                 }
                 catch (error) {
                     content.errors = [error];
