@@ -19,10 +19,10 @@ export class IncomeService {
     }
 
     public async cashIncome(income: Income): Promise<Income> {
-        income.cashedRegularClicks+= income.regularClicks;
-        income.cashedRegularViews+= income.regularViews;
-        income.cashedTargetedClicks+= income.targetedClicks;
-        income.cashedTargetedViews+= income.targetedViews;
+        income.cashedRegularClicks = income.regularClicks;
+        income.cashedRegularViews = income.regularViews;
+        income.cashedTargetedClicks = income.targetedClicks;
+        income.cashedTargetedViews = income.targetedViews;
         return await IncomeRepo.createOrUpdate(income);
     }
 
