@@ -55,7 +55,6 @@ export class AccountController extends BaseController {
                     const newUser = await this.userService.adduser(user);
                     this.createUserSession(req, newUser, res);
                 } catch (error) {
-                    console.log(error)
                     content.errors = ["Utilisateur déjà utilisé"];
                 }
             }else{
